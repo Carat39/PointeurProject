@@ -1,4 +1,7 @@
 package pointingApplication;
 
-public class TestSerialisation {
+import java.io.Serializable;
+
+public class TestSerialisation implements Serializable{
+
 }
