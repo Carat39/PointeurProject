@@ -1,5 +1,9 @@
 package pointingApplication;
 
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 public class Pointing {
     //Attributes
     private int idStaff;
@@ -11,7 +15,7 @@ public class Pointing {
 
 
     //Methods
-    public void serialisation(){
+    public void serialisation() throws Exception {
 
     }
 }

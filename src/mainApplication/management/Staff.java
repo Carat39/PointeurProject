@@ -2,11 +2,11 @@ package mainApplication.management;
 
 public class Staff {
     //Attributes
-    final private int idStaff;
-    final private String name;
-    final private String surname;
-    final private int extratime; //en minutes
-    final private Departement departement;
+    private int idStaff;
+    private String name;
+    private String surname;
+    private int extratime; //en minutes
+    private Departement departement;
 
     //Constructors
     public Staff(){
