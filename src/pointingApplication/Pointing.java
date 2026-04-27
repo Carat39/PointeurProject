@@ -11,6 +11,10 @@ public class Pointing {
 
 
     //Methods
+    public void getStartHour(){
+
+    }
+
     public void serialisation(){
 
     }
