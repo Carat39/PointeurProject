@@ -7,7 +7,8 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Pointing {
+
+public class Pointing implements Serializable{
     //Attributes
     private int idStaff;
     private LocalTime startHour;
@@ -16,18 +17,51 @@ public class Pointing {
 
     //Constructors
 
+    public Pointing(){
+        idStaff = 0;
+        startHour = LocalTime.MIN;
+        endHour = LocalTime.MIN;
+        date = LocalDate.MIN;
+    }
+
+    public Pointing(int L_idStaff){
+        idStaff = L_idStaff;
+        setStartHour();
+        setEndHour();
+        setDate();
+    }
 
     //Methods
-    public static void Ex1() throws Exception{
-        //Serialisation
-        try(FileOutputStream fos = new FileOutputStream("donnees.ser");
+    public void serialisation(String filename) throws Exception{
+        try(FileOutputStream fos = new FileOutputStream(filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
         ){
-            //oos.writeObject();
+            oos.writeObject(this);
         }
-        //DeSerialisation
-    public void serialisation() {
+    }
 
+    public Pointing deserialisation(String filename) throws Exception{
+        Pointing les_donnees = null;
+        try(FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file);
+        ) {
+            les_donnees = (Pointing) in.readObject();
+        }
+        return les_donnees;
+    }
+    public static void serialisationtest() throws Exception{
+        Pointing p = new Pointing(1);
+
+        //Serialisation
+        p.serialisation("donnees.ser");
+        //DeSerialisation
+
+        Pointing les_donnees = new Pointing();
+        les_donnees = les_donnees.deserialisation("donnees.ser");
+        System.out.println(les_donnees.idStaff);
+        System.out.println(les_donnees.startHour);
+        System.out.println(les_donnees.endHour);
+        System.out.println(les_donnees.date);
     }
 
     public void setStartHour(){
@@ -38,13 +72,7 @@ public class Pointing {
         endHour= LocalTime.now();
     }
 
-        Pointing les_donnees = null;
-        try(FileInputStream file = new FileInputStream("donnees.ser");
-            ObjectInputStream in = new ObjectInputStream(file);
-        ) {
-            les_donnees = (Pointing) in.readObject();
-            System.out.println(les_donnees.date);
-        }
+
     public void setDate(){
         date= LocalDate.now();
     }
