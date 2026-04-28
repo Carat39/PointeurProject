@@ -49,27 +49,13 @@ public class Pointing implements Serializable{
         }
         return les_donnees;
     }
-    public static void serialisationtest() throws Exception{
-        Pointing p = new Pointing(1);
-
-        //Serialisation
-        p.serialisation("donnees.ser");
-        //DeSerialisation
-
-        Pointing les_donnees = new Pointing();
-        les_donnees = les_donnees.deserialisation("donnees.ser");
-        System.out.println(les_donnees.idStaff);
-        System.out.println(les_donnees.startHour);
-        System.out.println(les_donnees.endHour);
-        System.out.println(les_donnees.date);
-    }
 
     public void setStartHour(){
-        startHour= LocalTime.now();
+        startHour = round(LocalTime.now());
     }
 
     public void setEndHour(){
-        endHour= LocalTime.now();
+        endHour= round(LocalTime.now());
     }
 
 
@@ -105,5 +91,29 @@ public class Pointing implements Serializable{
             }
         }
         return newTime;
+    }
+
+    public static void serialisationtest() throws Exception{
+        Pointing p = new Pointing(1);
+
+        //Serialisation
+        p.serialisation("donnees.ser");
+        //DeSerialisation
+
+        Pointing les_donnees = new Pointing();
+        les_donnees = les_donnees.deserialisation("donnees.ser");
+        System.out.println(les_donnees.idStaff);
+        System.out.println(les_donnees.startHour);
+        System.out.println(les_donnees.endHour);
+        System.out.println(les_donnees.date);
+    }
+
+    public static void testarroundi(){
+        Pointing p = new Pointing();
+        p.setStartHour();
+        LocalTime heuretest= p.getStartHour();
+        System.out.println("Il est : " + heuretest);
+        heuretest= p.round(heuretest);
+        System.out.println("Arrondis à la quinzaine : " + heuretest);
     }
 }
