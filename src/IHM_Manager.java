@@ -19,15 +19,24 @@ public class IHM_Manager extends JPanel {
 
         JFrame frame = new JFrame("Pointeuse Manager");
         IHM_Manager panel = new IHM_Manager();
+        IHM_Manager panel2 = new IHM_Manager();
 
         frame.setSize(width, height);
         frame.setUndecorated(true);
 
         panel.setBackground(pastelPeach);
+        panel2.setBackground(pastelYellow);
+
+
+        // Creation d'un menu de pages de l'IHM
+        CardLayout menu = new CardLayout();
+        JPanel menuPanel = new JPanel(menu);
+
+//************************** Premiere Fenetre ****************************//
 
         //creation du bouton close
         panel.setLayout(null);
-        JButton closeBtn = new JButton("X");
+        JButton closeBtn = new JButton("");
         closeBtn.setBounds(width - 40, 10, 30, 30);
         closeBtn.setBackground(pastelPink);
 
@@ -35,7 +44,6 @@ public class IHM_Manager extends JPanel {
         closeBtn.addActionListener(e -> frame.dispose());
 
         panel.add(closeBtn);
-        frame.setContentPane(panel);
 
         //creation du bouton pointage enregistré
         JButton checkBtn = new JButton("Saved Work time");
@@ -43,7 +51,7 @@ public class IHM_Manager extends JPanel {
         checkBtn.setBackground(pastelPurple);
         checkBtn.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
 
-        //checkBtn.addActionListener(e -> frame.dispose());
+        checkBtn.addActionListener(e -> menu.show(menuPanel, "page 2"));
 
         panel.add(checkBtn);
 
@@ -55,34 +63,55 @@ public class IHM_Manager extends JPanel {
         clockedBtn.setBackground(pastelPurple);
         clockedBtn.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
 
-        //clockedBtn.addActionListener(e -> frame.dispose());
+        clockedBtn.addActionListener(e -> menu.show(menuPanel, "page 2"));
 
         panel.add(clockedBtn);
 
-
-        //jsp btn 3 or smth
-        JButton A = new JButton ("JSP");
-        A.setBounds((width-300)/2, height - 6*(height/5), 300,30);
-        A.setBackground(pastelPurple);
-        A.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
-
-        //clockedBtn.addActionListener(e -> frame.dispose());
-
-        panel.add(A);
-
-
-
         //creation du titre de la page
-        JLabel label = new JLabel("Time Tracker v1.0");
+        JLabel label = new JLabel("Time Tracker v1.1");
         label.setBounds((width-300)/2, 5, 300, 40);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(Color.DARK_GRAY);
         label.setFont(new Font("Lucida Handwriting", Font.BOLD, 22));
 
+        //on met a jour le panel
         panel.add(label);
 
+//************************************** DEUXIEME FENETRE *****************************************************
+
+        //creation du bouton close
+        panel2.setLayout(null);
+        panel2.add(closeBtn);
+
+        //creation du bouton pointage enregistré
+        JButton Backbtn = new JButton("Retournons page 1");
+        Backbtn.setBounds((width-300)/2, height - 7*(height/10), 300, 30);
+        Backbtn.setBackground(pastelPurple);
+        Backbtn.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
+
+        Backbtn.addActionListener(e -> menu.show(menuPanel, "page 1"));
+
+        panel2.add(Backbtn);
+
+        //creation du titre de la page
+        JLabel label2 = new JLabel("Page 2");
+        label2.setBounds((width-300)/2, 5, 300, 40);
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
+        label2.setForeground(Color.DARK_GRAY);
+        label2.setFont(new Font("Lucida Handwriting", Font.BOLD, 22));
+
+        //on met a jour le panel
+        panel2.add(label2);
 
 
+
+
+
+
+        //Creation de la page numéro 1
+        menuPanel.add(panel,"page 1");
+        menuPanel.add(panel2,"page 2");
+        frame.setContentPane(menuPanel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
