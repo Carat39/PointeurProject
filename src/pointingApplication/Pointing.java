@@ -1,13 +1,12 @@
 package pointingApplication;
 
+import java.io.*;
+import java.time.LocalTime;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-
-public class Pointing {
+public class Pointing implements Serializable {
     //Attributes
     private int idStaff;
-    private  Float startHour;
+    private LocalTime startHour;
     private Float endHour;
     private String date;
 
@@ -15,7 +14,21 @@ public class Pointing {
 
 
     //Methods
-    public void serialisation() throws Exception {
+    public static void Ex1() throws Exception{
+        //Serialisation
+        try(FileOutputStream fos = new FileOutputStream("donnees.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+        ){
+            //oos.writeObject();
+        }
+        //DeSerialisation
 
+        Pointing les_donnees = null;
+        try(FileInputStream file = new FileInputStream("donnees.ser");
+            ObjectInputStream in = new ObjectInputStream(file);
+        ) {
+            les_donnees = (Pointing) in.readObject();
+            System.out.println(les_donnees.date);
+        }
     }
 }
