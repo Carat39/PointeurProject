@@ -8,6 +8,6 @@ void main() throws Exception{
         IO.println("on m'appelle l'ovni = " + i);
     }
 
-    Pointing.testarroundi();
+    TimeManagement.roundtest();
     //Pointing.serialisationtest();
 }
