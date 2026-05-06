@@ -55,10 +55,7 @@ public class Pointing implements Serializable{
         return uuidStaff;
     }
 
-    public void setStartHour(){
-        startHour = round(LocalTime.now());
-    }
-    public void setIdStaff(int newId){ idStaff=newId; }
+    public void setIdStaff(UUID newId){ uuidStaff=newId; }
 
     public void setStartHour(LocalTime newSHour){
         //gérer exception starthour = 23h45
@@ -80,7 +77,7 @@ public class Pointing implements Serializable{
 
     public static void serialisationtest() throws Exception{
         Pointing p = new Pointing();
-        p.setIdStaff(1);
+        p.setIdStaff(UUID.randomUUID());
 
         //Serialisation
         p.serialisation("donnees.ser");
