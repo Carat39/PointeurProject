@@ -1,8 +1,10 @@
 package mainApplication.management;
 
+import java.util.UUID;
+
 public class Staff {
     //Attributes
-    private int idStaff;
+    private UUID uiidStaff;
     private String name;
     private String surname;
     private int extratime; //en minutes
@@ -10,16 +12,16 @@ public class Staff {
 
     //Constructors
     public Staff(){
-        idStaff = 0;
+        uiidStaff = UUID.randomUUID();
         name = "";
         surname = "";
         extratime = 0;
         departement = Departement.WORKERS;
     }
 
-    public Staff(int the_Id, String the_Name,
+    public Staff(String the_Name,
                  String the_Surname, Departement the_Departement){
-        idStaff = the_Id;
+        uiidStaff = UUID.randomUUID();
         name = the_Name;
         surname = the_Surname;
         extratime = 0;

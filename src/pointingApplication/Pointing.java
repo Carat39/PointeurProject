@@ -6,11 +6,12 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 
 public class Pointing implements Serializable{
     //Attributes
-    private int idStaff;
+    private UUID uuidStaff;
     private LocalTime startHour;
     private LocalTime endHour;
     private LocalDate date;
@@ -18,14 +19,14 @@ public class Pointing implements Serializable{
     //Constructors
 
     public Pointing(){
-        idStaff = 0;
+        uuidStaff = UUID.randomUUID();
         startHour = LocalTime.MIN;
         endHour = LocalTime.MIN;
         date = LocalDate.MIN;
     }
 
-    public Pointing(int L_idStaff){
-        idStaff = L_idStaff;
+    public Pointing(UUID L_idStaff){
+        uuidStaff = L_idStaff;
         setStartHour();
         setEndHour();
         setDate();
@@ -48,6 +49,10 @@ public class Pointing implements Serializable{
             les_donnees = (Pointing) in.readObject();
         }
         return les_donnees;
+    }
+
+    public UUID getUuidStaff() {
+        return uuidStaff;
     }
 
     public void setStartHour(){
@@ -94,7 +99,7 @@ public class Pointing implements Serializable{
     }
 
     public static void serialisationtest() throws Exception{
-        Pointing p = new Pointing(1);
+        Pointing p = new Pointing();
 
         //Serialisation
         p.serialisation("donnees.ser");
@@ -102,7 +107,7 @@ public class Pointing implements Serializable{
 
         Pointing les_donnees = new Pointing();
         les_donnees = les_donnees.deserialisation("donnees.ser");
-        System.out.println(les_donnees.idStaff);
+        System.out.println(les_donnees.uuidStaff);
         System.out.println(les_donnees.startHour);
         System.out.println(les_donnees.endHour);
         System.out.println(les_donnees.date);
