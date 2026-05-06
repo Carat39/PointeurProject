@@ -3,6 +3,6 @@ import pointingApplication.Pointing;
 
 void main() throws Exception{
     //TimeManagement.roundtest();
-    //Pointing.serialisationtest();
+    Pointing.serialisationtest();
     //PointingList.testArrayPointing();
 }

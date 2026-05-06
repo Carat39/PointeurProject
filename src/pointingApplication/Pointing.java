@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
+import Time.TimeManagement;
 
 
 public class Pointing implements Serializable{
@@ -26,6 +27,7 @@ public class Pointing implements Serializable{
     }
 
     public Pointing(UUID L_idStaff, LocalTime shour, LocalTime ehour, LocalDate d){
+        //Importer Timemanagement puis faire TimeManagement.
         uuidStaff = L_idStaff;
         setStartHour(shour);
         setEndHour(ehour);
