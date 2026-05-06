@@ -25,17 +25,17 @@ public class Pointing implements Serializable{
         date = LocalDate.MIN;
     }
 
-    public Pointing(UUID L_idStaff){
+    public Pointing(UUID L_idStaff, LocalTime shour, LocalTime ehour, LocalDate d){
         uuidStaff = L_idStaff;
-        setStartHour();
-        setEndHour();
-        setDate();
+        setStartHour(shour);
+        setEndHour(ehour);
+        setDate(d);
     }
 
     //Methods
     public void serialisation(String filename) throws Exception{
         try(FileOutputStream fos = new FileOutputStream(filename);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)
         ){
             oos.writeObject(this);
         }
@@ -44,7 +44,7 @@ public class Pointing implements Serializable{
     public Pointing deserialisation(String filename) throws Exception{
         Pointing les_donnees = null;
         try(FileInputStream file = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(file);
+            ObjectInputStream in = new ObjectInputStream(file)
         ) {
             les_donnees = (Pointing) in.readObject();
         }
@@ -58,48 +58,29 @@ public class Pointing implements Serializable{
     public void setStartHour(){
         startHour = round(LocalTime.now());
     }
+    public void setIdStaff(int newId){ idStaff=newId; }
 
-    public void setEndHour(){
-        endHour= round(LocalTime.now());
+    public void setStartHour(LocalTime newSHour){
+        //gérer exception starthour = 23h45
+        startHour = newSHour;
     }
 
-
-    public void setDate(){
-        date= LocalDate.now();
+    public void setEndHour(LocalTime newEhour){
+        //gérer exception endhour < starthour + starthour et endhour pas sur la même date
+        endHour= newEhour;
     }
 
-    public LocalTime getStartHour(){
-        return startHour;
-    }
+    public void setDate(LocalDate newDate){ date= newDate; }
 
-    public LocalTime getEndHour(){
-        return endHour;
-    }
+    public LocalTime getStartHour(){ return startHour; }
 
-    public LocalDate getDate(){
-        return date;
-    }
+    public LocalTime getEndHour(){ return endHour; }
 
-    public LocalTime round(LocalTime time){
-        int m= time.getMinute();
-        LocalTime newTime= time;
-        if (m%15!=0){
-            if((m%15)<8){
-                newTime= time.minusMinutes(m%15);
-                newTime= newTime.minusSeconds(newTime.getSecond());
-                newTime= newTime.minusNanos(newTime.getNano());
-            }
-            else{
-                newTime= time.plusMinutes(15-m%15);
-                newTime= newTime.minusSeconds(newTime.getSecond());
-                newTime= newTime.minusNanos(newTime.getNano());
-            }
-        }
-        return newTime;
-    }
+    public LocalDate getDate(){ return date; }
 
     public static void serialisationtest() throws Exception{
         Pointing p = new Pointing();
+        p.setIdStaff(1);
 
         //Serialisation
         p.serialisation("donnees.ser");
@@ -111,14 +92,5 @@ public class Pointing implements Serializable{
         System.out.println(les_donnees.startHour);
         System.out.println(les_donnees.endHour);
         System.out.println(les_donnees.date);
-    }
-
-    public static void testarroundi(){
-        Pointing p = new Pointing();
-        p.setStartHour();
-        LocalTime heuretest= p.getStartHour();
-        System.out.println("Il est : " + heuretest);
-        heuretest= p.round(heuretest);
-        System.out.println("Arrondis à la quinzaine : " + heuretest);
     }
 }

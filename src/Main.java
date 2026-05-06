@@ -2,7 +2,7 @@ import mainApplication.management.PointingList;
 import pointingApplication.Pointing;
 
 void main() throws Exception{
-    //Pointing.testarroundi();
+    TimeManagement.roundtest();
     //Pointing.serialisationtest();
     PointingList.testArrayPointing();
 }
