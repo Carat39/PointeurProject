@@ -14,7 +14,7 @@ public class TimeManagement {
 
     //Methods
 
-    public static void setHour(){ hour= round(LocalTime.now()); }
+    public static void setHour(){ hour= LocalTime.now(); }
 
     public static void setDate(){ date = LocalDate.now(); }
 
