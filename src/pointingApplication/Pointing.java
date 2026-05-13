@@ -83,8 +83,8 @@ public class Pointing implements Serializable{
 
         //Serialisation
         p.serialisation("donnees.ser");
-        //DeSerialisation
 
+        //DeSerialisation
         Pointing les_donnees = new Pointing();
         les_donnees = les_donnees.deserialisation("donnees.ser");
         System.out.println(les_donnees.uuidStaff);
