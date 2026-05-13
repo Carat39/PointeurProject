@@ -25,7 +25,7 @@ public class Pointing implements Serializable{
         date = LocalDate.MIN;
     }
 
-    public Pointing(UUID L_idStaff, LocalTime shour, LocalTime ehour, LocalDate d){
+    public Pointing(UUID L_idStaff, LocalTime shour, LocalTime ehour, LocalDate d) throws Exception{
         uuidStaff = L_idStaff;
         setStartHour(shour);
         setEndHour(ehour);
@@ -57,13 +57,19 @@ public class Pointing implements Serializable{
 
     public void setIdStaff(UUID newId){ uuidStaff=newId; }
 
-    public void setStartHour(LocalTime newSHour){
-        //gérer exception starthour = 23h45
+    public void setStartHour(LocalTime newSHour) throws Exception{
+        if ((newSHour.toString()).equals("23:45")){
+            throw new Exception("Error: cannot point at 23:45 (day schedule terminated)");
+        }
         startHour = newSHour;
     }
 
-    public void setEndHour(LocalTime newEhour){
-        //gérer exception endhour < starthour + starthour et endhour pas sur la même date
+    public void setEndHour(LocalTime newEhour) throws Exception{
+        //handle exception endhour < starthour + starthour and endhour not on the same date
+        if (endHour.isBefore(startHour)){
+            throw new Exception("Error: Endhour cannot be earlier than Starthour.");
+        }
+        //Exception dates différentes...
         endHour= newEhour;
     }
 

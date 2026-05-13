@@ -1,8 +1,6 @@
 package mainApplication.management;
 
-import java.lang.reflect.Array;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WorkSchedule {
@@ -27,13 +25,13 @@ public class WorkSchedule {
 
     //Constructors
     public WorkSchedule(){
-        schedule= new LocalTime[12];
+        schedule= new LocalTime[14];
     }
 
-    public WorkSchedule(LocalTime[] timetable){
-        schedule= new LocalTime[12];
-        if (Arrays.stream(timetable).count()<12){
-
+    public WorkSchedule(LocalTime[] timetable) throws Exception{
+        schedule= new LocalTime[14];
+        if (Arrays.stream(timetable).count()>14){
+            throw new Exception("Error: cannot work more than 7 days per week.");
         }
         else{
             int iterator = 0;
@@ -44,9 +42,9 @@ public class WorkSchedule {
     }
 
     //Methods
-    public void setSchedule(LocalTime[] timetable){
-        if (Arrays.stream(timetable).count()<12){
-
+    public void setSchedule(LocalTime[] timetable) throws Exception{
+        if (Arrays.stream(timetable).count()<14){
+            throw new Exception("Error: cannot work more than 7 days per week.");
         }
         else{
             int iterator = 0;
