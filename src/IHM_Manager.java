@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class IHM_Manager extends JPanel {
 
@@ -34,12 +35,58 @@ public class IHM_Manager extends JPanel {
         return backbtn;
     }
 
+    public JLabel create_title(String str){
+        JLabel title = new JLabel(str);
+        title.setBounds((width-300)/2, 5, 300, 40);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setForeground(Color.DARK_GRAY);
+        title.setFont(new Font("Lucida Handwriting", Font.BOLD, 22));
+
+        return title;
+    }
+
+    public JComboBox<String> create_employees_list(ArrayList<String> liste){
+        JComboBox<String> employees_list = new JComboBox<>();
+        employees_list.setBounds((width-300)/2, height - 7*(height/10), 300, 30);
+        employees_list.setBackground(pastelPurple);
+        employees_list.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
+
+        for (String employee : liste){
+            employees_list.addItem(employee);
+        }
+        return employees_list;
+    }
+
+    public JComboBox<String> create_year_choices(){
+        JComboBox<String> year_choices = new JComboBox<>();
+        year_choices.setBounds((width-300)/2, height - 12*(height/20), 300, 30);
+        year_choices.setBackground(pastelPurple);
+        year_choices.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
+
+        year_choices.addItem("2026");
+        year_choices.addItem("2025");
+        year_choices.addItem("2024");
+        year_choices.addItem("2023");
+        year_choices.addItem("2022");
+        year_choices.addItem("2021");
+        year_choices.addItem("2020");
+        year_choices.addItem("2019");
+        year_choices.addItem("2018");
+        year_choices.addItem("2017");
+        year_choices.addItem("2016");
+
+        return year_choices;
+    }
+
     public void first_page(JPanel menuPanel, CardLayout menu, JFrame frame){
         this.setLayout(null);
 
         //creation du bouton close
         JButton closeBtn1 = this.create_closebtn();
         closeBtn1.addActionListener(e -> frame.dispose());
+
+        //creation du titre de la page
+        JLabel title = this.create_title("Time Tracker v1.1");
 
 
         //creation du bouton pointage enregistré
@@ -57,15 +104,8 @@ public class IHM_Manager extends JPanel {
         clockedBtn.setBackground(pastelPurple);
         clockedBtn.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
 
-        clockedBtn.addActionListener(e -> menu.show(menuPanel, "page 2"));
+        clockedBtn.addActionListener(e -> menu.show(menuPanel, "page 3"));
 
-
-        //creation du titre de la page
-        JLabel title = new JLabel("Time Tracker v1.1");
-        title.setBounds((width-300)/2, 5, 300, 40);
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setForeground(Color.DARK_GRAY);
-        title.setFont(new Font("Lucida Handwriting", Font.BOLD, 22));
 
         //on met a jour le panel
         this.add(closeBtn1);
@@ -75,7 +115,7 @@ public class IHM_Manager extends JPanel {
 
     }
 
-    public void second_page(JPanel menuPanel, CardLayout menu, JFrame frame){
+    public void second_page(JPanel menuPanel, CardLayout menu, JFrame frame,ArrayList<String> list_employees){
         this.setLayout(null);
 
         //creation du bouton fermeture
@@ -86,29 +126,58 @@ public class IHM_Manager extends JPanel {
         JButton BackBtn = this.create_backbtn();
         BackBtn.addActionListener(e -> menu.show(menuPanel, "page 1"));
 
-        //creation du bouton pointage enregistré
-        JButton NOTDONE = new JButton("Retournons page 1");
-        NOTDONE.setBounds((width-300)/2, height - 7*(height/10), 300, 30);
-        NOTDONE.setBackground(pastelPurple);
-        NOTDONE.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
-
-        NOTDONE.addActionListener(e -> menu.show(menuPanel, "page 1"));
-
         //creation du titre de la page
-        JLabel title = new JLabel("Page 2");
-        title.setBounds((width-300)/2, 5, 300, 40);
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setForeground(Color.DARK_GRAY);
-        title.setFont(new Font("Lucida Handwriting", Font.BOLD, 22));
+        JLabel title = this.create_title("Saved work time");
+
+        //creation du menu deroulant employee
+        JComboBox<String> employees = create_employees_list(list_employees);
+        //employees.addActionListener(e ->{
+        //    String choix = (String) employees.getSelectedItem();});
+
+        //creation du menu déroulant dates
+        JComboBox<String> year_choices = create_year_choices();
 
         //on met a jour le panel
         this.add(closeBtn);
         this.add(BackBtn);
-        this.add(NOTDONE);
+        this.add(employees);
         this.add(title);
+        this.add(year_choices);
+    }
+
+    public void third_page(JPanel menuPanel, CardLayout menu, JFrame frame, ArrayList<String> list_employees){
+        this.setLayout(null);
+
+        //creation du bouton fermeture
+        JButton closeBtn = this.create_closebtn();
+        closeBtn.addActionListener(e -> frame.dispose());
+
+        //creation du bouton back
+        JButton BackBtn = this.create_backbtn();
+        BackBtn.addActionListener(e -> menu.show(menuPanel, "page 1"));
+
+        //creation du titre de la page
+        JLabel title = this.create_title("Clocked in Now");
+
+        //creation menu deroulant employee
+        JComboBox<String> employees = create_employees_list(list_employees);
+
+        //on met a jour le panel
+        this.add(closeBtn);
+        this.add(BackBtn);
+        this.add(title);
+        this.add(employees);
+
     }
 
     public static void main(String[] args) {
+        //liste employees, a la main pour l'instant, serat récupérée via la serialization.
+        ArrayList<String> list_employees = new ArrayList<>();
+        list_employees.add("Nino Maigret");
+        list_employees.add("Romain Blaquart");
+        list_employees.add("Clément Sauger");
+        list_employees.add("Carl Esswein");
+        list_employees.add("Arthur Brajot");
 
         //couleurs
         Color pastelPink   = new Color(255, 182, 193);
@@ -118,15 +187,16 @@ public class IHM_Manager extends JPanel {
         Color pastelYellow = new Color(255, 255, 204);
         Color pastelPeach  = new Color(255, 218, 185);
 
+        //dimensions
         int width = 800;
         int height = 600;
 
+        //creation de la base
         JFrame frame = new JFrame("Pointeuse Manager");
 
         // Creation d'un menu de pages de l'IHM
         CardLayout menu = new CardLayout();
         JPanel menuPanel = new JPanel(menu);
-
 
         IHM_Manager panel = new IHM_Manager();
         IHM_Manager panel2 = new IHM_Manager();
@@ -137,63 +207,16 @@ public class IHM_Manager extends JPanel {
 
         panel.setBackground(pastelPeach);
         panel2.setBackground(pastelYellow);
+        panel3.setBackground(pastelYellow);
 
         panel.first_page(menuPanel, menu, frame);
-        panel2.second_page(menuPanel, menu, frame);
+        panel2.second_page(menuPanel, menu, frame, list_employees);
+        panel3.third_page(menuPanel, menu, frame, list_employees);
 
-
-
-
-//******************************** TROISIEME FENETRE ********************************
-        /*
-        panel3.setLayout(null);
-
-        //creation du bouton close
-        JButton closeBtn3 = new JButton("❌");
-        closeBtn3.setMargin(new Insets(0, 0, 0, 0));
-
-        closeBtn3.setBounds(width - 40, 10, 30, 30);
-        closeBtn3.setBackground(pastelPink);
-
-        closeBtn3  .addActionListener(e -> frame.dispose());
-
-        panel2.add(closeBtn3);
-
-        //creation du bouton back
-        JButton BackBtn2 = new JButton("\uD83D\uDD19");
-        BackBtn2.setMargin(new Insets(0, 0, 0, 0));
-        BackBtn2.setBounds(width - 40, height - 40, 30, 30);
-        BackBtn2.setBackground(pastelPink);
-
-        BackBtn2.addActionListener(e -> menu.show(menuPanel, "page 1"));
-
-        panel2.add(BackBtn);
-
-        //creation du bouton pointage enregistré
-        JButton NOTDONE = new JButton("Retournons page 1");
-        NOTDONE.setBounds((width-300)/2, height - 7*(height/10), 300, 30);
-        NOTDONE.setBackground(pastelPurple);
-        NOTDONE.setFont(new Font("Lucida Handwriting", Font.BOLD, 17));
-
-        NOTDONE.addActionListener(e -> menu.show(menuPanel, "page 1"));
-
-        panel2.add(NOTDONE);
-
-        //creation du titre de la page
-        JLabel label2 = new JLabel("Page 2");
-        label2.setBounds((width-300)/2, 5, 300, 40);
-        label2.setHorizontalAlignment(SwingConstants.CENTER);
-        label2.setForeground(Color.DARK_GRAY);
-        label2.setFont(new Font("Lucida Handwriting", Font.BOLD, 22));
-
-        //on met a jour le panel
-        panel2.add(label2);
-
-        */
-
-        //Creation de la page numéro 1
+        //creations des pages
         menuPanel.add(panel,"page 1");
         menuPanel.add(panel2,"page 2");
+        menuPanel.add(panel3,"page 3");
         frame.setContentPane(menuPanel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
