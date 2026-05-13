@@ -1,7 +1,8 @@
+package IhmInterface;
+
+import Utils.Style;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.border.Border;
 
 public class IhmInterface {
 
