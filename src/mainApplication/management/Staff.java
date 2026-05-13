@@ -28,5 +28,17 @@ public class Staff {
         departement = the_Departement;
     }
 
+    public UUID getuiidStaff(){return uiidStaff;}
+    public String getname(){return name;}
+    public String getsurname(){return surname;}
+    public int getextratime(){return extratime;}
+    public Departement getepartement(){return departement;}
+
+    public void setuiidStaff(UUID The_UUID){uiidStaff = The_UUID;}
+    public void setname(String The_Name){name = The_Name;}
+    public void setsurname(String The_Surname){surname = The_Surname;}
+    public void setextratime(int The_ExtraTime){extratime = The_ExtraTime;}
+    public void setepartement(Departement The_Departement){departement = The_Departement;}
+
 
 }
