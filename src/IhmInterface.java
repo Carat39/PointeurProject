@@ -60,16 +60,7 @@ public class IhmInterface {
         bottomPanel.setBackground(Style.pastelPeach);
 
         // 2. ComboBox employés
-        JComboBox<String> comboEmployees = new JComboBox<>(new String[]{
-                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart",
-                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart",
-                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart",
-                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart"
-
-        });
-        comboEmployees.setFont(new Font("Serif", Font.PLAIN, 25));
-        comboEmployees.setPreferredSize(new Dimension(450, 60));
-        comboEmployees.setBackground(Style.pastelBlue);
+        JComboBox<String> comboEmployees = getStringJComboBox();
         bottomPanel.add(comboEmployees);
 
         bottomPanel.add(Box.createHorizontalStrut(12));
@@ -89,5 +80,19 @@ public class IhmInterface {
 
         fen.setContentPane(panel);
         fen.setVisible(true);
+    }
+
+    private static JComboBox<String> getStringJComboBox() {
+        JComboBox<String> comboEmployees = new JComboBox<>(new String[]{
+                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart",
+                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart",
+                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart",
+                "Arthur Brajot", "Clément Sauger", "Nino Maigret", "Romain Blaquart"
+
+        });
+        comboEmployees.setFont(new Font("Serif", Font.PLAIN, 25));
+        comboEmployees.setPreferredSize(new Dimension(450, 60));
+        comboEmployees.setBackground(Style.pastelBlue);
+        return comboEmployees;
     }
 }
