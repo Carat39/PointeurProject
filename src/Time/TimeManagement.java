@@ -11,7 +11,10 @@ public class TimeManagement {
     private static LocalDate date;
 
     //Constructors
-
+    public TimeManagement(){
+        hour= round(LocalTime.now());
+        date = LocalDate.now();
+    }
 
     //Methods
 

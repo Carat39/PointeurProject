@@ -55,4 +55,14 @@ public class WorkSchedule {
     }
 
     public LocalTime[] getSchedule(){ return schedule; }
+
+    //Convert the day of the week from 0 to 6
+    public int convertWeekDay(String the_day){
+        switch (the_day){
+            case "Monday":
+                return 0;
+            default:
+                return -1;
+        }
+    }
 }
