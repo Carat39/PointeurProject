@@ -22,17 +22,33 @@ public class StaffList {
         theStafflist.remove(L_UUID);
     }
 
-
+    /*
+    * I'll be necesary find so no need to worry about the null
+    * */
+    public Staff find(String The_Name, String The_Surname){
+        boolean find = false;
+        Staff The_Staff = null;
+        int index = 0;
+        while (!find){
+            The_Staff = theStafflist.get(index);
+            if (The_Staff.getname().equals(The_Name) && The_Staff.getsurname().equals(The_Surname)) {
+                find = true;
+            }
+            index ++;
+        }
+        return The_Staff;
+    }
 
     public static void testStaffList(){
         StaffList ma_List = new StaffList();
         Staff staff1 = new Staff();
         Staff staff2 = new Staff();
         staff1.setname("JenMichel");
-        staff2.setname("Mathudi");
+        staff1.setsurname("Port");
+        staff1.setextratime(15);
+        staff2.setname("Matudis");
         ma_List.add(staff1);
-
-        //System.out.println(ma_List.get(staff1.getuiidStaff()).getname());
+        System.out.println(ma_List.find("JenMichel","Port").getextratime());
 
     }
 }
