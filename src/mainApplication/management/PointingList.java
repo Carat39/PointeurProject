@@ -2,6 +2,8 @@ package mainApplication.management;
 
 import pointingApplication.Pointing;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -29,9 +31,27 @@ public class PointingList {
         return thelist.get(indice);
     }
 
+
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
         thelist.add(pointing);
+    }
+
+    //Ajoute à partir d'un flux de donnée ou lève une exception après deserialisation
+    public void addElem(String filename) throws Exception{
+        Pointing pointing = deserialisation(filename);
+        thelist.add(pointing);
+    }
+
+    //déserialise à partir d'un flux de données
+    public Pointing deserialisation(String filename) throws Exception{
+        Pointing les_donnees = null;
+        try(FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file)
+        ) {
+            les_donnees = (Pointing) in.readObject();
+        }
+        return les_donnees;
     }
 
     public static void testArrayPointing(){
