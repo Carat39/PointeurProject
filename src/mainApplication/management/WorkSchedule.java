@@ -1,5 +1,6 @@
 package mainApplication.management;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
 
@@ -57,12 +58,34 @@ public class WorkSchedule {
     public LocalTime[] getSchedule(){ return schedule; }
 
     //Convert the day of the week from 0 to 6
-    public int convertWeekDay(String the_day){
+    public static int convertWeekDay(DayOfWeek the_day){
+        int inDay;
         switch (the_day){
-            case "Monday":
-                return 0;
+            case MONDAY:
+                inDay= 0;
+                break;
+            case TUESDAY:
+                inDay= 1;
+                break;
+            case WEDNESDAY:
+                inDay= 2;
+                break;
+            case THURSDAY:
+                inDay= 3;
+                break;
+            case FRIDAY:
+                inDay= 4;
+                break;
+            case SATURDAY:
+                inDay= 5;
+                break;
+            case SUNDAY:
+                inDay= 6;
+                break;
             default:
-                return -1;
+                inDay= -1;
+                break;
         }
+        return inDay;
     }
 }
