@@ -4,6 +4,7 @@ import pointingApplication.Pointing;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -17,11 +18,13 @@ public class PointingList {
     //Constructors
 
     //Methods
-    public Pointing getElemList(UUID l_id){
+    public Pointing getElemList(UUID l_id, LocalDate The_date){
+        Pointing the_pointing = null;
         boolean find = false;
         int indice = 0;
         while(indice < thelist.size() && !find){
-            if (thelist.get(indice).getUuidStaff() == l_id){
+            the_pointing = thelist.get(indice);
+            if (the_pointing.getUuidStaff() == l_id && the_pointing.getDate() == The_date){
                 find = true;
             }
             else{
@@ -30,7 +33,6 @@ public class PointingList {
         }
         return thelist.get(indice);
     }
-
 
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
@@ -61,7 +63,7 @@ public class PointingList {
             TheList.addElem(Thepoint1);
         }
         UUID stock = thelist.getFirst().getUuidStaff(); ;
-        Pointing lemploye = TheList.getElemList(stock);
+        Pointing lemploye = TheList.getElemList(stock, LocalDate.now());
         System.out.println(lemploye.getUuidStaff());
         System.out.println(lemploye.getStartHour());
         System.out.println(lemploye.getEndHour());

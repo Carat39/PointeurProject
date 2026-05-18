@@ -7,48 +7,57 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import Time.TimeManagement;
+import pointingApplication.Pointing;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class Staff {
     //Attributes
-    private UUID uiidStaff;
+    private UUID uuidStaff;
     private String name;
     private String surname;
     private int extratime; //en minutes
     private Departement departement;
+    private WorkSchedule workschedule;
     private PointingList pointingList;
 
     //Constructors
     public Staff(){
-        uiidStaff = UUID.randomUUID();
+        uuidStaff = UUID.randomUUID();
         name = "";
         surname = "";
         extratime = 0;
         departement = Departement.WORKERS;
     }
 
-    public Staff(String the_Name,
-                 String the_Surname, Departement the_Departement){
-        uiidStaff = UUID.randomUUID();
+    public Staff(String the_Name, String the_Surname,
+                 Departement the_Departement, WorkSchedule the_WorkSchedule){
+        uuidStaff = UUID.randomUUID();
         name = the_Name;
         surname = the_Surname;
         extratime = 0;
         departement = the_Departement;
+        workschedule = the_WorkSchedule;
     }
 
+    public UUID getuiidStaff(){return uuidStaff;}
     //Seteurs
     public UUID getuiidStaff(){return uiidStaff;}
     public String getname(){return name;}
     public String getsurname(){return surname;}
     public int getextratime(){return extratime;}
     public Departement getdepartement(){return departement;}
+    public WorkSchedule getworkschedule(){return workschedule;}
 
+    public void setuiidStaff(UUID The_UUID){uuidStaff = The_UUID;}
     //Getteurs
     public void setuiidStaff(UUID The_UUID){uiidStaff = The_UUID;}
     public void setname(String The_Name){name = The_Name;}
     public void setsurname(String The_Surname){surname = The_Surname;}
     public void setextratime(int The_ExtraTime){extratime = The_ExtraTime;}
     public void setdepartement(Departement The_Departement){departement = The_Departement;}
+    public void setworkschedule(WorkSchedule The_WorkSchedule){workschedule = The_WorkSchedule;}
 
     public void serialisation(String filename) throws Exception{
         try(FileOutputStream fos = new FileOutputStream(filename);
@@ -81,5 +90,10 @@ public class Staff {
         Pointing pointingRomain = new Pointing(Romain.getuiidStaff(),TimeManagement.getHour(),TimeManagement.getHour(),TimeManagement.getDate());
     }
 
+    public void calcExtraTime(){
+        PointingList the_list = null;
+        Pointing the_pointing = the_pointing = the_list.getElemList(uuidStaff, TimeManagement.getDate());
+        TimeManagement.getDate().getDayOfWeek();
 
+    }
 }
