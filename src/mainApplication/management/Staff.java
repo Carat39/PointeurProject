@@ -86,7 +86,7 @@ public class Staff {
         Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule);
         Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION,workSchedule);
         Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule);
-        Pointing pointingRomain = new Pointing(Romain.getuiidStaff(),TimeManagement.getHour(),TimeManagement.getHour(),TimeManagement.getDate());
+        //Pointing pointingRomain = new Pointing(Romain.getuuidStaff(),TimeManagement.getHour(),TimeManagement.getHour(),TimeManagement.getDate());
     }
 
     public void calcExtraTime(){
