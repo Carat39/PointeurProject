@@ -1,5 +1,9 @@
 package pointingApplication;
 
+import Time.TimeManagement;
+import mainApplication.management.Staff;
+import mainApplication.management.StaffList;
+
 import java.io.*;
 import java.time.LocalTime;
 import java.io.FileOutputStream;
@@ -23,6 +27,15 @@ public class Pointing implements Serializable{
         startHour = LocalTime.MIN;
         endHour = LocalTime.MIN;
         date = LocalDate.MIN;
+    }
+
+    //Creation du premier pointage d'un membre du Staff. C'est lui que Romain appellera
+    public Pointing(UUID L_idStaff) throws Exception{
+        uuidStaff = L_idStaff;
+        startHour = TimeManagement.getHourNow();
+        //Pas attribue car le premier
+        endHour = LocalTime.MIN;
+        date = TimeManagement.getDateNow();
     }
 
     public Pointing(UUID L_idStaff, LocalTime shour, LocalTime ehour, LocalDate d) throws Exception{
@@ -64,13 +77,13 @@ public class Pointing implements Serializable{
         startHour = newSHour;
     }
 
-    public void setEndHour(LocalTime newEhour) throws Exception{
+    public void setEndHour(LocalTime newEndhour) throws Exception{
         //handle exception endhour < starthour + starthour and endhour not on the same date
-        if (endHour.isBefore(startHour)){
+        if (newEndhour.isBefore(startHour)){
             throw new Exception("Error: Endhour cannot be earlier than Starthour.");
         }
         //Exception dates différentes...
-        endHour= newEhour;
+        endHour= newEndhour;
     }
 
     public void setDate(LocalDate newDate){ date= newDate; }
@@ -96,4 +109,21 @@ public class Pointing implements Serializable{
         System.out.println(les_donnees.endHour);
         System.out.println(les_donnees.date);
     }
+
+    //Sera dans l'API de Romain
+    public void Jepointe(String The_Name, String The_Surname) throws Exception{
+        Staff theStaff = StaffList.find(The_Name,The_Surname);
+        //Est-ce que le staff existe? Forcément mais renvoie la référence
+        if (theStaff != null){
+            Pointing thePointing = theStaff.existencePointingToday();
+            //Est-ce qu-il a pointé aujourd'hui
+            if (thePointing != null) {
+                thePointing.setEndHour(TimeManagement.getHourNow());
+            }
+            else{
+                thePointing = new Pointing(theStaff.getuuidStaff());
+            }
+        }
+    }
 }
+

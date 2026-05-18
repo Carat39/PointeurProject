@@ -25,7 +25,7 @@ public class StaffList {
     /*
     * I'll be necesary find so no need to worry about the null
     * */
-    public Staff find(String The_Name, String The_Surname){
+    public static Staff find(String The_Name, String The_Surname){
         boolean find = false;
         Staff The_Staff = null;
         int index = 0;
@@ -38,6 +38,8 @@ public class StaffList {
         }
         return The_Staff;
     }
+
+
 
     public static void testStaffList(){
         StaffList ma_List = new StaffList();

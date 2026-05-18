@@ -9,5 +9,8 @@ void main() throws Exception{
     //Pointing.serialisationtest();
     //PointingList.testArrayPointing();
     //StaffList.testStaffList();
-    Staff.testStaffPointing();
+    //Staff.testStaffPointing();
+
+    //Test Globale
+
 }
