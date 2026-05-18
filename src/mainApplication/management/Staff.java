@@ -41,18 +41,16 @@ public class Staff {
         workschedule = the_WorkSchedule;
     }
 
-    public UUID getuiidStaff(){return uuidStaff;}
     //Seteurs
-    public UUID getuiidStaff(){return uiidStaff;}
+    public UUID getuiidStaff(){return uuidStaff;}
     public String getname(){return name;}
     public String getsurname(){return surname;}
     public int getextratime(){return extratime;}
     public Departement getdepartement(){return departement;}
     public WorkSchedule getworkschedule(){return workschedule;}
 
-    public void setuiidStaff(UUID The_UUID){uuidStaff = The_UUID;}
     //Getteurs
-    public void setuiidStaff(UUID The_UUID){uiidStaff = The_UUID;}
+    public void setuiidStaff(UUID The_UUID){uuidStaff = The_UUID;}
     public void setname(String The_Name){name = The_Name;}
     public void setsurname(String The_Surname){surname = The_Surname;}
     public void setextratime(int The_ExtraTime){extratime = The_ExtraTime;}
@@ -82,11 +80,12 @@ public class Staff {
         pointingList.addElem(filename);
     }
 
-    public static void testStaffPointing(){
-        Staff Romain = new Staff("Blaquart","Romain",Departement.WORKERS);
-        Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION);
-        Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION);
-        Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT);
+    public static void testStaffPointing() throws Exception{
+        WorkSchedule workSchedule = null;
+        Staff Romain = new Staff("Blaquart","Romain",Departement.WORKERS,workSchedule);
+        Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule);
+        Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION,workSchedule);
+        Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule);
         Pointing pointingRomain = new Pointing(Romain.getuiidStaff(),TimeManagement.getHour(),TimeManagement.getHour(),TimeManagement.getDate());
     }
 
