@@ -39,6 +39,7 @@ public class Staff {
         extratime = 0;
         departement = the_Departement;
         workschedule = the_WorkSchedule;
+        pointingList = new PointingList();
     }
 
     //Seteurs
@@ -48,6 +49,7 @@ public class Staff {
     public int getextratime(){return extratime;}
     public Departement getdepartement(){return departement;}
     public WorkSchedule getworkschedule(){return workschedule;}
+    public PointingList getPointingList(){return pointingList;}
 
     //Getteurs
     public void setuuidStaff(UUID The_UUID){uuidStaff = The_UUID;}
@@ -56,6 +58,11 @@ public class Staff {
     public void setextratime(int The_ExtraTime){extratime = The_ExtraTime;}
     public void setdepartement(Departement The_Departement){departement = The_Departement;}
     public void setworkschedule(WorkSchedule The_WorkSchedule){workschedule = The_WorkSchedule;}
+    public void setPointingList(PointingList The_PointingList){pointingList = The_PointingList;}
+
+    public Pointing existencePointingToday(){
+        return pointingList.getElemList(uuidStaff,TimeManagement.getDateNow());
+    }
 
     public void serialisation(String filename) throws Exception{
         try(FileOutputStream fos = new FileOutputStream(filename);
@@ -86,7 +93,10 @@ public class Staff {
         Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule);
         Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION,workSchedule);
         Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule);
-        //Pointing pointingRomain = new Pointing(Romain.getuuidStaff(),TimeManagement.getHour(),TimeManagement.getHour(),TimeManagement.getDate());
+
+        //Création d'un pointing avec l'heure actuel
+        //Avant de créer, il faut vérifier si un pointeur existe déjà à la date donnée
+        Pointing pointingRomain = new Pointing(Romain.getuuidStaff(),TimeManagement.getHourNow(),TimeManagement.getHourNow(),TimeManagement.getDateNow());
     }
 
     public void calcExtraTime(){

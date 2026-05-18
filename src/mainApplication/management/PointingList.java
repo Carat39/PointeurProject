@@ -24,7 +24,7 @@ public class PointingList {
         int indice = 0;
         while(indice < thelist.size() && !find){
             the_pointing = thelist.get(indice);
-            if (the_pointing.getUuidStaff() == l_id && the_pointing.getDate() == The_date){
+            if (the_pointing.getDate() == The_date){
                 find = true;
             }
             else{
@@ -63,12 +63,12 @@ public class PointingList {
             TheList.addElem(Thepoint1);
         }
         UUID stock = thelist.getFirst().getUuidStaff(); ;
-        Pointing lemploye = TheList.getElemList(stock, LocalDate.now());
+        /*Pointing lemploye = TheList.getElemList(stock, LocalDate.now());
         System.out.println(lemploye.getUuidStaff());
         System.out.println(lemploye.getStartHour());
         System.out.println(lemploye.getEndHour());
         System.out.println(lemploye.getDate());
-
+        */
     }
 
 }
