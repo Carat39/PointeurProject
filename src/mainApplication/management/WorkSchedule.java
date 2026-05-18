@@ -36,8 +36,9 @@ public class WorkSchedule {
         }
         else{
             int iterator = 0;
-            for (LocalTime lt : schedule){
-                schedule[iterator] = timetable[iterator];
+            for (LocalTime lt : timetable){
+                schedule[iterator] = lt;
+                iterator ++;
             }
         }
     }
