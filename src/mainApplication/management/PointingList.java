@@ -40,7 +40,8 @@ public class PointingList {
         return the_pointing;
     }
 
-    public boolean existenceElemList(UUID l_id, LocalDate The_date){
+    //Voir pour voir s'il n'a pas pointé qu'une seule fois
+    public boolean existenceElemList(UUID l_id, LocalDate The_date,int cond){
         Pointing the_pointing = null;
         LocalTime Hourprec = LocalTime.MIN;
         boolean two = false;
@@ -48,16 +49,17 @@ public class PointingList {
         int indice = 0;
         while(indice < thelist.size() && !two){
             the_pointing = thelist.get(indice);
-            if (the_pointing.getHour() == Hourprec){
+            if (the_pointing.getHour().equals(Hourprec)){
                 two = true;
             }
-            if (the_pointing.getDate() == The_date){
+            if (the_pointing.getDate().equals(The_date)){
                 Hourprec = the_pointing.getHour();
                 comptage++;
                 if (comptage == 2){
                     two = true;
                 }
             }
+            indice ++;
         }
         return two;
     }

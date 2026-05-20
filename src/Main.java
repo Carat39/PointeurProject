@@ -32,6 +32,7 @@ void main() throws Exception{
     PointingList thePointingList = new PointingList();
     Pointing.Jepointe("Blaquart","Romain");
     Pointing.Jepointe("Blaquart","Romain");
+    Pointing.Jepointe("Blaquart","Romain");
     Romain.affichepointage();
     //Pour la séance d'ajourd'hui, continuer le main faut encore:
     //teste des jepointe avec des membres du Staff
