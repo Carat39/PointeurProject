@@ -1,4 +1,4 @@
-package utils;
+package views.utils;
 
 import javax.swing.*;
 import java.awt.*;

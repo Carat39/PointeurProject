@@ -1,22 +1,22 @@
 package controller;
 
-import views.View_pages;
+import views.Assembleur_pages;
 import utils.temp_serialisation;
 
 
 /**
  * CONTROLLER – Point d'entrée de l'application.
  * Instancie le Model, injecte les données, construit la View,
- * puis connecte tous les listeners de navigation.
+ * puis connecte tous les "listeners" de navigation.
  */
 public class IHM_Manager {
 
     private final temp_serialisation model;
-    private final View_pages view;
+    private final Assembleur_pages view;
 
     public IHM_Manager() {
         model = new temp_serialisation();
-        view  = new View_pages();
+        view  = new Assembleur_pages();
 
         loadData();   // <-- remplacer par la désérialisation réelle
         view.build(model.getEmployees(), model.getAvailableYears());

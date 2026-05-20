@@ -1,9 +1,8 @@
 package views;
 
-import utils.Variables;
+import views.utils.Variables;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * VIEW – Page d'accueil (page 1).

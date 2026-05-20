@@ -1,23 +1,22 @@
 package views;
 
-import utils.Variables;
+import views.utils.Variables;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * VIEW – Assembleur de l'interface Swing.
+ * VIEW – Assembleur de l'interface.
  *
- * Responsabilité unique : créer la fenêtre, assembler les pages dans
- * le CardLayout et exposer chaque sous-vue au Controller via des getters.
- * Aucune logique métier, aucun listener ici.
+ * Role : faire la fenetre principale et assemble dessus toutes
+ * les pages différentes de manière a créer notre IHM.
  *
- * Chaque page est déléguée à sa propre classe (Page1, Page2, Page3)
- * qui respecte le même contrat : construire son panneau + exposer ses
- * composants via getters.
+ * Chaque page est liée à sa propre classe (Page1, Page2, Page3)
+ * qui respecte le même schéma : construire de la basen et envoie
+ * des informations via les getters
  */
-public class View_pages {
+public class Assembleur_pages {
 
     private final JFrame frame;
     private final CardLayout cardLayout;
@@ -28,7 +27,7 @@ public class View_pages {
     private Page2 page2;
     private Page3 page3;
 
-    public View_pages() {
+    public Assembleur_pages() {
         frame      = new JFrame("Pointeuse Manager");
         cardLayout = new CardLayout();
         cardPanel  = new JPanel(cardLayout);
@@ -62,12 +61,12 @@ public class View_pages {
     public CardLayout  getCardLayout() { return cardLayout; }
     public JPanel      getCardPanel()  { return cardPanel; }
 
-    /** Sous-vue page 1 – le Controller y branche ses listeners. */
+    /** Sous-vue page 1 – lien controlleur et page */
     public Page1 getPage1() { return page1; }
 
-    /** Sous-vue page 2 – le Controller y branche ses listeners. */
+    /** Sous-vue page 2 – lien controlleur et page */
     public Page2 getPage2() { return page2; }
 
-    /** Sous-vue page 3 – le Controller y branche ses listeners. */
+    /** Sous-vue page 3 – lien controlleur et page */
     public Page3 getPage3() { return page3; }
 }

@@ -3,9 +3,8 @@ package utils;
 import java.util.ArrayList;
 
 /**
- * MODEL – Contient uniquement les données de l'application.
- * Les données (employés, années) seront injectées via setters
- * après désérialisation. Aucune valeur codée en dur ici.
+ * MODEL – Pour le moment il s'agit d'une "fausse" serialisation
+ * pour commencer les test sans attendre la fin du backend.
  */
 public class temp_serialisation {
 
