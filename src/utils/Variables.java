@@ -1,3 +1,5 @@
+package utils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,11 +12,11 @@ public class Variables {
 
     static final Color PASTEL_PINK   = new Color(255, 182, 193);
     static final Color PASTEL_PURPLE = new Color(216, 191, 216);
-    static final Color PASTEL_YELLOW = new Color(255, 255, 204);
-    static final Color PASTEL_PEACH  = new Color(255, 218, 185);
+    public static final Color PASTEL_YELLOW = new Color(255, 255, 204);
+    public static final Color PASTEL_PEACH  = new Color(255, 218, 185);
 
-    static final int WIDTH  = 800;
-    static final int HEIGHT = 600;
+    public static final int WIDTH  = 800;
+    public static final int HEIGHT = 600;
 
     public static JButton createCloseBtn() {
         JButton btn = new JButton("❌");

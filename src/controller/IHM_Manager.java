@@ -1,3 +1,9 @@
+package controller;
+
+import views.View_pages;
+import utils.temp_serialisation;
+
+
 /**
  * CONTROLLER – Point d'entrée de l'application.
  * Instancie le Model, injecte les données, construit la View,
@@ -37,7 +43,7 @@ public class IHM_Manager {
 
     /**
      * Attache tous les listeners de navigation et de fermeture.
-     * Le Controller dialogue avec chaque Page via les getters de View_pages,
+     * Le Controller dialogue avec chaque Page via les getters de views.View_pages,
      * puis via les getters de chaque Page.
      */
     private void bindActions() {

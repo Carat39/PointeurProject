@@ -1,3 +1,7 @@
+package views;
+
+import utils.Variables;
+
 import javax.swing.*;
 import java.awt.*;
 
