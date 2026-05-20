@@ -18,6 +18,8 @@ public class PointingList {
     //Constructors
 
     //Methods
+    public ArrayList<Pointing> getthelist(){return thelist;}
+
     public Pointing getElemList(UUID l_id, LocalDate The_date){
         Pointing the_pointing = null;
         boolean find = false;
@@ -31,7 +33,7 @@ public class PointingList {
                 indice ++;
             }
         }
-        return thelist.get(indice);
+        return the_pointing;
     }
 
     public void addElem(Pointing pointing){
@@ -41,7 +43,8 @@ public class PointingList {
 
     //Ajoute à partir d'un flux de donnée ou lève une exception après deserialisation
     public void addElem(String filename) throws Exception{
-        Pointing pointing = deserialisation(filename);
+        Pointing pointing = new Pointing();
+        pointing = deserialisation(filename);
         thelist.add(pointing);
     }
 

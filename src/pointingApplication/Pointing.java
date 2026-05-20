@@ -54,7 +54,7 @@ public class Pointing implements Serializable{
         }
     }
 
-    public Pointing deserialisation(String filename) throws Exception{
+    public static Pointing deserialisation(String filename) throws Exception{
         Pointing les_donnees = null;
         try(FileInputStream file = new FileInputStream(filename);
             ObjectInputStream in = new ObjectInputStream(file)
@@ -111,7 +111,7 @@ public class Pointing implements Serializable{
     }
 
     //Sera dans l'API de Romain
-    public void Jepointe(String The_Name, String The_Surname) throws Exception{
+    public static void Jepointe(String The_Name, String The_Surname) throws Exception{
         Staff theStaff = StaffList.find(The_Name,The_Surname);
         //Est-ce que le staff existe? Forcément mais renvoie la référence
         if (theStaff != null){
@@ -122,6 +122,12 @@ public class Pointing implements Serializable{
             }
             else{
                 thePointing = new Pointing(theStaff.getuuidStaff());
+                //On sérialise a ce moment la
+                thePointing.serialisation("pointing.ser");
+                Pointing Pointingdeserialise = new Pointing();
+                Pointingdeserialise = Pointing.deserialisation("pointing.ser");
+                theStaff.addPointing("pointing.ser");
+                theStaff.affichepointage();
             }
         }
     }

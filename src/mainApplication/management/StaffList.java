@@ -11,15 +11,26 @@ public class StaffList {
     private static ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors
-    public StaffList(){
-
-    }
 
     public void add(Staff Le_Staff){
         theStafflist.add(Le_Staff);
     }
     public void remove(UUID L_UUID){
-        theStafflist.remove(L_UUID);
+        theStafflist.remove(find(L_UUID));
+    }
+
+    public static Staff find(UUID L_UUID){
+        boolean find = false;
+        Staff The_Staff = null;
+        int index = 0;
+        while (!find){
+            The_Staff = theStafflist.get(index);
+            if (The_Staff.getuuidStaff().equals(L_UUID)) {
+                find = true;
+            }
+            index ++;
+        }
+        return The_Staff;
     }
 
     /*
