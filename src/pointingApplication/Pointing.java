@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 
@@ -33,9 +34,9 @@ public class Pointing implements Serializable{
         date = TimeManagement.getDateNow();
     }
 
-    public Pointing(UUID L_idStaff, LocalTime shour, LocalDate d) throws Exception{
+    public Pointing(UUID L_idStaff, LocalTime hour, LocalDate d) throws Exception{
         uuidStaff = L_idStaff;
-        setHour(shour);
+        setHour(hour);
         setDate(d);
     }
 
@@ -98,8 +99,8 @@ public class Pointing implements Serializable{
         //Est-ce que le staff existe? Forcément mais renvoie la référence
         if (theStaff != null){
             //Est-ce qu-il a pointé 2 fois aujourd'hui
-            if (theStaff.existence2PointingToday()) {
-                //Il a déjà pointé 2 fois
+            if (theStaff.existencePointingToday(2)) {
+                //Il a déjà pointé  fois
             }
             else{
                 Pointing thePointing = new Pointing(theStaff.getuuidStaff());

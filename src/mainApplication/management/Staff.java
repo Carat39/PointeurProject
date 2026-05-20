@@ -7,6 +7,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import Time.TimeManagement;
+import pointingApplication.Pointing;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class Staff {
@@ -57,8 +60,8 @@ public class Staff {
     public void setworkschedule(WorkSchedule The_WorkSchedule){workschedule = The_WorkSchedule;}
     public void setPointingList(PointingList The_PointingList){pointingList = The_PointingList;}
 
-    public boolean existence2PointingToday(){
-        return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow());
+    public boolean existencePointingToday(int cond){
+        return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow(),cond);
     }
 
     public void serialisation(String filename) throws Exception{
@@ -97,7 +100,7 @@ public class Staff {
 
         //Création d'un pointing avec l'heure actuel
         //Avant de créer, il faut vérifier si un pointeur existe déjà à la date donnée
-        Pointing pointingRomain = new Pointing(Romain.getuuidStaff(),TimeManagement.getHourNow(), TimeManagement.getDateNow());
+        Pointing pointingRomain = new Pointing(Romain.getuuidStaff(),TimeManagement.getHourNow(),TimeManagement.getDateNow());
     }
 
     public void calcExtraTime(){
