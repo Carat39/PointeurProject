@@ -11,6 +11,13 @@ public class StaffList {
     private static ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors
+    public StaffList(){}
+
+    public StaffList(ArrayList<Staff> otherStaffList){
+        for (Staff s : otherStaffList){
+            theStafflist.add(s);
+        }
+    }
 
     public void add(Staff Le_Staff){
         theStafflist.add(Le_Staff);
