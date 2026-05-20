@@ -15,6 +15,8 @@ public class PointingList {
     //Attributes
     private static ArrayList<Pointing> thelist = new ArrayList<Pointing>();
 
+    private static ArrayList<ArrayList<Pointing>> theDoubleList = new ArrayList<ArrayList<Pointing>>();
+
     //Constructors
 
     //Methods
