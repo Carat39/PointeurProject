@@ -112,7 +112,7 @@ public class Staff {
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
         //Calculate the difference between the arrival/departure time and the time scheduled on the timetable.
-        int startDif= workschedule.getSchedule()[the_day*2].compareTo(the_pointing.getStartHour());
+        int startDif= workschedule.getSchedule()[the_day*2].compareTo(the_pointing.getHour());
         int endDif= workschedule.getSchedule()[the_day*2+1].compareTo(the_pointing.getEndHour());
         //Adding/Deleting overtime hours if working hours have not been respected
         extratime += startDif;
