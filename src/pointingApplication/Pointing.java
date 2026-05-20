@@ -115,13 +115,12 @@ public class Pointing implements Serializable{
         Staff theStaff = StaffList.find(The_Name,The_Surname);
         //Est-ce que le staff existe? Forcément mais renvoie la référence
         if (theStaff != null){
-            Pointing thePointing = theStaff.existencePointingToday();
-            //Est-ce qu-il a pointé aujourd'hui
-            if (thePointing != null) {
-                thePointing.setEndHour(TimeManagement.getHourNow());
+            //Est-ce qu-il a pointé 2 fois aujourd'hui
+            if (!theStaff.existence2PointingToday()) {
+                //Il a déjà pointé 2 fois
             }
             else{
-                thePointing = new Pointing(theStaff.getuuidStaff());
+                Pointing thePointing = new Pointing(theStaff.getuuidStaff());
                 //On sérialise a ce moment la
                 thePointing.serialisation("pointing.ser");
                 Pointing Pointingdeserialise = new Pointing();

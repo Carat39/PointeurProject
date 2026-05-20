@@ -60,8 +60,8 @@ public class Staff {
     public void setworkschedule(WorkSchedule The_WorkSchedule){workschedule = The_WorkSchedule;}
     public void setPointingList(PointingList The_PointingList){pointingList = The_PointingList;}
 
-    public Pointing existencePointingToday(){
-        return pointingList.getElemList(uuidStaff,TimeManagement.getDateNow());
+    public boolean existence2PointingToday(){
+        return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow());
     }
 
     public void serialisation(String filename) throws Exception{

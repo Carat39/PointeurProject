@@ -2,9 +2,11 @@ package mainApplication.management;
 
 import pointingApplication.Pointing;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -35,6 +37,29 @@ public class PointingList {
         }
         return the_pointing;
     }
+
+    public boolean existenceElemList(UUID l_id, LocalDate The_date){
+        Pointing the_pointing = null;
+        LocalTime Hourprec = LocalTime.MIN;
+        boolean two = false;
+        int comptage = 0;
+        int indice = 0;
+        while(indice < thelist.size() && !two){
+            the_pointing = thelist.get(indice);
+            if (the_pointing.getHour() == Hourprec){
+                two = true;
+            }
+            if (the_pointing.getDate() == The_date){
+                Hourprec = the_pointing.getHour();
+                comptage++;
+                if (comptage == 2){
+                    two = true;
+                }
+            }
+        }
+        return two;
+    }
+
 
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
