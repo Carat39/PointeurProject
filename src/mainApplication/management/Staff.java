@@ -86,6 +86,10 @@ public class Staff {
     public void addPointing(String filename) throws Exception{
         pointingList.addElem(filename);
     }
+    public void affichepointage(){
+        System.out.println(pointingList.getthelist().size());
+    }
+
 
     public static void testStaffPointing() throws Exception{
         WorkSchedule workSchedule = null;

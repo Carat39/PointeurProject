@@ -23,4 +23,19 @@ void main() throws Exception{
     Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION,workSchedule1);
     Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
 
+    StaffList theStaffList = new StaffList();
+    theStaffList.add(Romain);
+    theStaffList.add(Arthur);
+    theStaffList.add(Clement);
+    theStaffList.add(Nino);
+
+    PointingList thePointingList = new PointingList();
+    Pointing.Jepointe("Blaquart","Romain");
+    Pointing.Jepointe("Blaquart","Romain");
+    Romain.affichepointage();
+    //Pour la séance d'ajourd'hui, continuer le main faut encore:
+    //teste des jepointe avec des membres du Staff
+
+
+
 }
