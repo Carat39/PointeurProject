@@ -110,6 +110,12 @@ public class Pointing implements Serializable{
                 theStaff.addPointing("pointing.ser");
                 theStaff.affichepointage();
             }
+            if (!theStaff.existencePointingYesterday(2)) {
+                //Il a déjà pointé 2 fois hier
+                System.out.println("Tu n'as pas pointé 2 fois hier");
+                //Le passer en anglais
+                throw new Exception("Tu n'as pas pointé 2 fois hier!!!");
+            }
         }
     }
 }

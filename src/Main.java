@@ -34,8 +34,8 @@ void main() throws Exception{
     Pointing.Jepointe("Blaquart","Romain");
     Pointing.Jepointe("Blaquart","Romain");
     Romain.affichepointage();
-    //Pour la séance d'ajourd'hui, continuer le main faut encore:
-    //teste des jepointe avec des membres du Staff
+
+    //Gerer les pairs de tableau dans pointingList
 
 
 

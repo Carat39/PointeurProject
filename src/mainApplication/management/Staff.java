@@ -61,6 +61,10 @@ public class Staff {
         return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow(),cond);
     }
 
+    public boolean existencePointingYesterday(int cond){
+        return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow().minusDays(1),cond);
+    }
+
     public void serialisation(String filename) throws Exception{
         try(FileOutputStream fos = new FileOutputStream(filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos)
