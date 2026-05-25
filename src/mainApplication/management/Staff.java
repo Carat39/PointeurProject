@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalTime;
 import java.util.UUID;
 
 public class Staff {
@@ -39,7 +40,7 @@ public class Staff {
         pointingList = new PointingList();
     }
 
-    //Seteurs
+    //Setters
     public UUID getuuidStaff(){return uuidStaff;}
     public String getname(){return name;}
     public String getsurname(){return surname;}
@@ -48,7 +49,7 @@ public class Staff {
     public WorkSchedule getworkschedule(){return workschedule;}
     public PointingList getPointingList(){return pointingList;}
 
-    //Getteurs
+    //Getters
     public void setuuidStaff(UUID The_UUID){uuidStaff = The_UUID;}
     public void setname(String The_Name){name = The_Name;}
     public void setsurname(String The_Surname){surname = The_Surname;}
@@ -57,12 +58,8 @@ public class Staff {
     public void setworkschedule(WorkSchedule The_WorkSchedule){workschedule = The_WorkSchedule;}
     public void setPointingList(PointingList The_PointingList){pointingList = The_PointingList;}
 
-    public boolean existencePointingToday(int cond){
-        return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow(),cond);
-    }
-
-    public boolean existencePointingYesterday(int cond){
-        return pointingList.existenceElemList(uuidStaff,TimeManagement.getDateNow().minusDays(1),cond);
+    public boolean condPointingADay(int cond, long lessDay){
+        return pointingList.pointingCondTimes(uuidStaff,TimeManagement.getDateNow().minusDays(lessDay),cond);
     }
 
     public void serialisation(String filename) throws Exception{
@@ -87,8 +84,9 @@ public class Staff {
     public void addPointing(String filename) throws Exception{
         pointingList.addElem(filename);
     }
-    public void affichepointage(){
-        System.out.println(pointingList.getthelist().size());
+
+    public int getnbpointage(){
+        return pointingList.getthelist().size();
     }
 
 

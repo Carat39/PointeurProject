@@ -15,9 +15,9 @@ import java.util.UUID;
 
 public class PointingList {
     //Attributes
-    private static ArrayList<Pointing> thelist = new ArrayList<Pointing>();
+    //Ne pas les mettre EN STATIC QUEL ERREUR! sinon tout le monde partage les pointages. On ne veut qu'un pointingList général
+    private ArrayList<Pointing> thelist = new ArrayList<Pointing>();
 
-    private static ArrayList<ArrayList<Pointing>> theDoubleList = new ArrayList<ArrayList<Pointing>>();
 
     //Constructors
 
@@ -40,28 +40,29 @@ public class PointingList {
         return the_pointing;
     }
 
-    //Voir pour voir s'il n'a pas pointé qu'une seule fois
-    public boolean existenceElemList(UUID l_id, LocalDate The_date,int cond){
+    //A-t-il pointé cond times à la date donnée ?
+    public boolean pointingCondTimes(UUID l_id, LocalDate The_date, int cond){
         Pointing the_pointing = null;
         LocalTime Hourprec = LocalTime.MIN;
-        boolean two = false;
+        boolean condPointing = true;
         int comptage = 0;
         int indice = 0;
-        while(indice < thelist.size() && !two){
+        while(indice < thelist.size() && condPointing){
             the_pointing = thelist.get(indice);
             if (the_pointing.getHour().equals(Hourprec)){
-                two = true;
+                condPointing = false;
             }
             if (the_pointing.getDate().equals(The_date)){
                 Hourprec = the_pointing.getHour();
                 comptage++;
-                if (comptage == 2){
-                    two = true;
+                // Il y a eu 2 pointage ou 1 pointage alors qu'on voulait observer qu'il n'y avait pas de pointage justement
+                if (comptage == 2 || cond == 0){
+                    condPointing = false;
                 }
             }
             indice ++;
         }
-        return two;
+        return comptage == cond;
     }
 
 
@@ -88,7 +89,7 @@ public class PointingList {
         return les_donnees;
     }
 
-    public static void testArrayPointing(){
+    public void testArrayPointing(){
         PointingList TheList = new PointingList();
         for(int indice = 0; indice < 10; indice++){
             Pointing Thepoint1 = new Pointing();
