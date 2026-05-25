@@ -1,5 +1,6 @@
 package Time;
 
+import pointingApplication.Pointing;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,7 +11,10 @@ public class TimeManagement {
     private static LocalDate date;
 
     //Constructors
-
+    public TimeManagement(){
+        hour= round(LocalTime.now());
+        date = LocalDate.now();
+    }
 
     //Methods
 
@@ -21,6 +25,11 @@ public class TimeManagement {
     public static LocalTime getHour(){ return hour; }
 
     public static LocalDate getDate(){ return date; }
+
+    public static LocalTime getHourNow(){ return LocalTime.now(); }
+
+    public static LocalDate getDateNow(){ return LocalDate.now(); }
+
 
     public static LocalTime round(LocalTime time){
         int m= time.getMinute();
