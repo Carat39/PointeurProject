@@ -1,5 +1,6 @@
 package controller;
 
+import mainApplication.management.Departement;
 import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
 import Time.TimeManagement;
@@ -19,12 +20,17 @@ public class IhmInterface {
     public IhmInterface() {
         mainView = new MainView();
 
-        // Remplir la combobox avec les employés en dur
-        // a changer plus tard quand les personnes seront integrees
-        mainView.getComboEmployees().addItem("Arthur Brajot");
-        mainView.getComboEmployees().addItem("Clément Sauger");
-        mainView.getComboEmployees().addItem("Nino Maigret");
-        mainView.getComboEmployees().addItem("Romain Blaquart");
+        // Creation de la liste on verra plus tard pour deserialiser
+        StaffList staffList = new StaffList();
+        staffList.add(new Staff("Blaquart", "Romain", Departement.WORKERS, null));
+        staffList.add(new Staff("Brajot", "Arthur", Departement.ADMINISTRATION, null));
+        staffList.add(new Staff("Sauger", "Clement", Departement.COMMUNICATION, null));
+        staffList.add(new Staff("Maigret", "Nino", Departement.MANAGEMENT, null));
+
+        // Afficher la liste
+        for (Staff s : staffList.getStaffList()) {
+            mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
+        }
 
         // Timer 1 seconde
         Timer timer = new Timer(1000, e -> {

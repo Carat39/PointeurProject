@@ -57,7 +57,7 @@ public class StaffList {
         return The_Staff;
     }
 
-    public static ArrayList<Staff> getStaffList() {
+    public ArrayList<Staff> getStaffList() {
         return theStafflist;
     }
 
