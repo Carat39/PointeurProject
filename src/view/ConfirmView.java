@@ -45,8 +45,7 @@ public class ConfirmView {
         labelDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Heure
-        JLabel labelHour = new JLabel("à " + currentTime
-                .format(DateTimeFormatter.ofPattern("HH:mm")));
+        JLabel labelHour = new JLabel("à " + currentTime.format(DateTimeFormatter.ofPattern("HH:mm")));
         labelHour.setFont(new Font("Serif", Font.BOLD, 30));
         labelHour.setAlignmentX(Component.CENTER_ALIGNMENT);
 

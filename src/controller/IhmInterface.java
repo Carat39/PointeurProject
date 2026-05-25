@@ -3,6 +3,7 @@ package controller;
 import Time.TimeManagement;
 import view.MainView;
 import view.ConfirmView;
+import view.ExceptView;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -44,7 +45,7 @@ public class IhmInterface {
             // Ouvrir la fenêtre de confirmation
             ConfirmView confirmView = new ConfirmView(currentDate, currentRoundHour, selectedEmployee);
 
-            // Bouton retour au menu
+            // Bouton retour au menu pour ConfirmView
             confirmView.getButtonMenu().addActionListener(back -> {
                 confirmView.close();
             });
@@ -52,9 +53,11 @@ public class IhmInterface {
             System.out.println(currentDate.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")));
             System.out.println(currentRoundHour.format(DateTimeFormatter.ofPattern("HH:mm")));
         });
+
+
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new IhmInterface());
+        SwingUtilities.invokeLater(IhmInterface::new);
     }
 }
