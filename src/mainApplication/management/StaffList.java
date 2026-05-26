@@ -1,14 +1,10 @@
 package mainApplication.management;
 
-import pointingApplication.Pointing;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class StaffList {
-    private static ArrayList<Staff> theStafflist = new ArrayList<Staff>();
+    private ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors
     public StaffList(){}
@@ -22,11 +18,14 @@ public class StaffList {
     public void add(Staff Le_Staff){
         theStafflist.add(Le_Staff);
     }
+
     public void remove(UUID L_UUID){
         theStafflist.remove(find(L_UUID));
     }
 
-    public static Staff find(UUID L_UUID){
+    public int getsize() {return theStafflist.size();}
+
+    public Staff find(UUID L_UUID){
         boolean find = false;
         Staff The_Staff = null;
         int index = 0;
@@ -43,7 +42,7 @@ public class StaffList {
     /*
      * I'll be necesary find so no need to worry about the null
      * */
-    public static Staff find(String The_Name, String The_Surname){
+    public  Staff find(String The_Name, String The_Surname){
         boolean find = false;
         Staff The_Staff = null;
         int index = 0;
@@ -57,6 +56,30 @@ public class StaffList {
         return The_Staff;
     }
 
+    public void showAllWorkers(){
+        System.out.println(" ");
+        for (Staff worker : theStafflist){
+            System.out.println(worker.getname() + " " + worker.getsurname());
+        }
+        System.out.println(" ");
+    }
+
+    /*
+     * Fonction pour ARTHUR!!!
+     * Renvoie la liste des Employés qui ont pointé cond et cond seulement fois
+     * */
+    public StaffList saveworkersfilter(int cond){
+        StaffList workingworker = new StaffList();
+        for (Staff worker : theStafflist){
+            //A t-il pointé <cond> et <cond> seulement fois?
+            if (worker.condPointingADay(cond,0)){
+                // Comme je sais pas exactement ce que tu veux soit tu garde le retour de la StaffList,
+                // soit tu modifie la ligne suivante pour l'ajouter dans ta liste déroulante
+                workingworker.add(worker);
+            }
+        }
+        return workingworker;
+    }
     public ArrayList<Staff> getStaffList() {
         return theStafflist;
     }
