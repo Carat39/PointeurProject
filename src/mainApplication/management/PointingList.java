@@ -65,7 +65,6 @@ public class PointingList {
         return comptage == cond;
     }
 
-
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
         thelist.add(pointing);
