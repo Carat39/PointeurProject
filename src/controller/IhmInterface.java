@@ -23,22 +23,16 @@ public class IhmInterface {
     public IhmInterface() {
         mainView = new MainView();
 
-
-        // je recupere la liste de pointage depuis pointing.ser
-        // Creation de la liste on verra plus tard pour deserialiser
-        StaffList staffList;
-
+        // On recupere la liste des staff depuis stafflist.ser
+        StaffList staffList = new StaffList();
         try {
-
+            // On deserialise la liste
             staffList = StaffList.deserialisationStaffList("stafflist.ser");
-
         } catch (Exception e) {
-
-            staffList = new StaffList();
-
+            // on affiche si il y a un probleme
             System.out.println("Erreur de chargement.");
         }
-        // Afficher la liste
+        // On rajoute à l'écran la liste de staff
         for (Staff s : staffList.getStaffList()) {
             mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
         }
@@ -60,6 +54,9 @@ public class IhmInterface {
             LocalDate currentDate = TimeManagement.getDate();
             LocalTime currentRoundHour = TimeManagement.round(TimeManagement.getHour());
             String selectedEmployee = (String) mainView.getComboEmployees().getSelectedItem();
+            // recuperation du port et de l'ip
+            String ip = mainView.getTextFieldIp();;
+            String port = mainView.getTextFieldPort();
 
             // Ouvrir la fenêtre de confirmation
             ConfirmView confirmView = new ConfirmView(currentDate, currentRoundHour, selectedEmployee);
@@ -78,8 +75,8 @@ public class IhmInterface {
             System.out.println(currentDate.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")));
             System.out.println(currentRoundHour.format(DateTimeFormatter.ofPattern("HH:mm")));
             System.out.println(selectedEmployee);
-            System.out.println(surname);
-            System.out.println(firstname);
+            System.out.println(ip);
+            System.out.println(port);
         });
     }
     public static void main(String[] args) {

@@ -12,6 +12,8 @@ public class MainView {
     private JLabel labelRounded;
     private JComboBox<String> comboEmployees;
     private JButton checkButton;
+    private JTextField textFieldIp;
+    private JTextField textFieldPort;
 
     public MainView() {
         buildUI();
@@ -52,6 +54,26 @@ public class MainView {
         labelRounded.setFont(new Font("Serif", Font.ITALIC, 25));
         labelRounded.setForeground(new Color(130, 100, 160));
         labelRounded.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // IP et port
+        JPanel ipPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ipPanel.setBackground(Style.pastelPeach);
+
+        JLabel labelIp = new JLabel("IP :");
+        labelIp.setFont(new Font("Serif", Font.BOLD, 20));
+        JLabel labelPort = new JLabel("Port :");
+        labelPort.setFont(new Font("Serif", Font.BOLD, 20));
+
+        textFieldIp = new JTextField(15);
+        textFieldIp.setFont(new Font("Serif", Font.PLAIN, 20));
+        textFieldPort = new JTextField(15);
+        textFieldPort.setFont(new Font("Serif", Font.PLAIN, 20));
+
+        ipPanel.add(labelIp);
+        ipPanel.add(textFieldIp);
+        ipPanel.add(labelPort);
+        ipPanel.add(textFieldPort);
+
         // rajout dans le panel
         centerPanel.add(Box.createVerticalStrut(40));
         centerPanel.add(labelDate);
@@ -59,6 +81,8 @@ public class MainView {
         centerPanel.add(labelHour);
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(labelRounded);
+        centerPanel.add(Box.createVerticalStrut(100));
+        centerPanel.add(ipPanel);
 
         // BOTTOM : combobox + bouton
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -92,4 +116,6 @@ public class MainView {
     public void setDate(String date) { labelDate.setText(date); }
     public void setHour(String hour) { labelHour.setText(hour); }
     public void setRounded(String rounded) { labelRounded.setText(rounded); }
+    public String getTextFieldIp(){return textFieldIp.getText();}
+    public String getTextFieldPort(){return textFieldPort.getText();}
 }
