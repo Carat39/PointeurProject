@@ -94,13 +94,14 @@ public class Pointing implements Serializable{
     }
 
     //Sera dans l'API de Romain
-    public static void Jepointe(String The_Name, String The_Surname) throws Exception{
-        Staff theStaff = StaffList.find(The_Name,The_Surname);
+    public static void Jepointe(String The_Name, String The_Surname,StaffList theStaffList) throws Exception{
+        Staff theStaff = theStaffList.find(The_Name,The_Surname);
         //Est-ce que le staff existe? Forcément mais renvoie la référence
         if (theStaff != null){
             //Est-ce qu-il a pointé 2 fois aujourd'hui
-            if (theStaff.existencePointingToday(2)) {
-                //Il a déjà pointé  fois
+            if (theStaff.condPointingADay(2,0)) {
+                //Il a déjà pointé 2 fois
+                throw new Exception("You haven allready point 2 times today!!!");
             }
             else{
                 Pointing thePointing = new Pointing(theStaff.getuuidStaff());
@@ -108,8 +109,12 @@ public class Pointing implements Serializable{
                 thePointing.serialisation("pointing.ser");
                 Pointing Pointingdeserialise = new Pointing();
                 Pointingdeserialise = Pointing.deserialisation("pointing.ser");
+                //Ajout du pointage dans la liste du staff
                 theStaff.addPointing("pointing.ser");
-                theStaff.affichepointage();
+            }
+            //A t-il pointé 2 fois hier (en supposant qu'il a au moins 2 pointages dans son palmarès)
+            if (!theStaff.condPointingADay(1,1) && theStaff.getnbpointage() >= 3 ) {
+                throw new Exception("You haven't pointed 2 times yesterday!!!");
             }
         }
     }

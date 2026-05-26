@@ -20,7 +20,7 @@ void main() throws Exception{
     WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
     Staff Romain = new Staff("Blaquart","Romain", Departement.WORKERS,workSchedule1);
     Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule1);
-    Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION,workSchedule1);
+    Staff Clement = new Staff("Sauger","Clément",Departement.COMMUNICATION,workSchedule1);
     Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
 
     StaffList theStaffList = new StaffList();
@@ -30,12 +30,38 @@ void main() throws Exception{
     theStaffList.add(Nino);
 
     PointingList thePointingList = new PointingList();
-    Pointing.Jepointe("Blaquart","Romain");
-    Pointing.Jepointe("Blaquart","Romain");
-    Pointing.Jepointe("Blaquart","Romain");
-    Romain.affichepointage();
-    //Pour la séance d'ajourd'hui, continuer le main faut encore:
-    //teste des jepointe avec des membres du Staff
+    //Petit test pour Romain
+    Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    try {
+        //Oh non, Romain t'as déjà pointé 2 fois à l'école primaire ce matin t'as épuisé ton quota, faut aller voir le staff
+        Pointing.Jepointe("Blaquart","Romain",theStaffList);
+
+    }
+    catch (Exception e){
+        System.out.println("no problem");
+    }
+    System.out.println("Romain a pointé " + Romain.getnbpointage() + " fois depuis qu'il travaille ici");
+    Pointing.Jepointe("Maigret","Nino",theStaffList);
+    Pointing.Jepointe("Sauger","Clément",theStaffList);
+
+    //Gerer les pairs de tableau dans pointingList
+    StaffList theStaffWorkingList = new StaffList();
+
+    //Petits tests pour Arthur
+    //Enregistre puis affiche les travailleurs qui n'ont pas pointé aujourd'hui
+    System.out.println("qui n'a pas embauché:");
+    theStaffWorkingList = theStaffList.saveworkersfilter(0);
+    theStaffWorkingList.showAllWorkers();
+
+    //Enregistre puis affiche les travailleurs qui sont en train de travailler
+    System.out.println("qui bosse encore:");
+    theStaffWorkingList = theStaffList.saveworkersfilter(1);
+    theStaffWorkingList.showAllWorkers();
+    //Enregistre puis affiche les travailleurs qui ont finit de travailler
+    System.out.println("qui a finit:");
+    theStaffWorkingList = theStaffList.saveworkersfilter(2);
+    theStaffWorkingList.showAllWorkers();
 
 
 
