@@ -1,10 +1,11 @@
 package mainApplication.management;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
 
-public class WorkSchedule {
+public class WorkSchedule implements Serializable {
     //Attributes
     /*
     private LocalTime MondayStart;

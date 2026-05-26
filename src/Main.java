@@ -1,13 +1,72 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import mainApplication.management.*;
+import pointingApplication.Pointing;
+import Time.TimeManagement;
+void main() throws Exception{
+    //TimeManagement.roundtest();
+    //Pointing.serialisationtest();
+    //PointingList.testArrayPointing();
+    //StaffList.testStaffList();
+    //Staff.testStaffPointing();
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("on m'appelle l'ovni = " + i);
+    //Test Globale
+
+    LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(1),LocalTime.MIN.plusHours(8),LocalTime.MIN.plusHours(2),
+            LocalTime.MIN.plusHours(9),LocalTime.MIN.plusHours(3), LocalTime.MIN.plusHours(10),
+            LocalTime.MIN.plusHours(4),LocalTime.MIN.plusHours(11),LocalTime.MIN.plusHours(5),
+            LocalTime.MIN.plusHours(12),LocalTime.MIN.plusHours(6),LocalTime.MIN.plusHours(13),
+            LocalTime.MIN.plusHours(7),LocalTime.MIN.plusHours(14)};
+
+    WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
+    Staff Romain = new Staff("Blaquart","Romain", Departement.WORKERS,workSchedule1);
+    Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule1);
+    Staff Clement = new Staff("Sauger","Clément",Departement.COMMUNICATION,workSchedule1);
+    Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
+    Staff Jean = new Staff("Michel","Jean",Departement.MANAGEMENT,workSchedule1);
+
+    StaffList theStaffList = new StaffList();
+    theStaffList.add(Romain);
+    theStaffList.add(Arthur);
+    theStaffList.add(Clement);
+    theStaffList.add(Nino);
+    theStaffList.add(Jean);
+
+    // serialise list du staff
+    theStaffList.serialisationStaffList("stafflist.ser");
+
+    PointingList thePointingList = new PointingList();
+    //Petit test pour Romain
+    Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    try {
+        //Oh non, Romain t'as déjà pointé 2 fois à l'école primaire ce matin t'as épuisé ton quota, faut aller voir le staff
+        Pointing.Jepointe("Blaquart","Romain",theStaffList);
+
     }
+    catch (Exception e){
+        System.out.println("no problem");
+    }
+    System.out.println("Romain a pointé " + Romain.getnbpointage() + " fois depuis qu'il travaille ici");
+    Pointing.Jepointe("Maigret","Nino",theStaffList);
+    Pointing.Jepointe("Sauger","Clément",theStaffList);
+
+    //Gerer les pairs de tableau dans pointingList
+    StaffList theStaffWorkingList = new StaffList();
+
+    //Petits tests pour Arthur
+    //Enregistre puis affiche les travailleurs qui n'ont pas pointé aujourd'hui
+    System.out.println("qui n'a pas embauché:");
+    theStaffWorkingList = theStaffList.saveworkersfilter(0);
+    theStaffWorkingList.showAllWorkers();
+
+    //Enregistre puis affiche les travailleurs qui sont en train de travailler
+    System.out.println("qui bosse encore:");
+    theStaffWorkingList = theStaffList.saveworkersfilter(1);
+    theStaffWorkingList.showAllWorkers();
+    //Enregistre puis affiche les travailleurs qui ont finit de travailler
+    System.out.println("qui a finit:");
+    theStaffWorkingList = theStaffList.saveworkersfilter(2);
+    theStaffWorkingList.showAllWorkers();
+
+
+
 }

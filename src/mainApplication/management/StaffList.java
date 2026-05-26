@@ -1,9 +1,16 @@
 package mainApplication.management;
 
+import pointingApplication.Pointing;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.Serializable;
 
-public class StaffList {
+public class StaffList implements Serializable{
     private ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors
@@ -54,6 +61,23 @@ public class StaffList {
             index ++;
         }
         return The_Staff;
+    }
+    public void serialisationStaffList(String filename) throws Exception{
+        try(FileOutputStream fos = new FileOutputStream(filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)
+        ){
+            oos.writeObject(this);
+        }
+    }
+
+    public static StaffList deserialisationStaffList(String filename) throws Exception{
+        StaffList les_donnees = null;
+        try(FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file)
+        ) {
+            les_donnees = (StaffList) in.readObject();
+        }
+        return les_donnees;
     }
 
     public void showAllWorkers(){

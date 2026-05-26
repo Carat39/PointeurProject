@@ -7,11 +7,14 @@ import Time.TimeManagement;
 import view.MainView;
 import view.ConfirmView;
 import view.ExceptView;
+import pointingApplication.Pointing;
 
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import static pointingApplication.Pointing.deserialisation;
 
 public class IhmInterface {
 
@@ -20,13 +23,21 @@ public class IhmInterface {
     public IhmInterface() {
         mainView = new MainView();
 
-        // Creation de la liste on verra plus tard pour deserialiser
-        StaffList staffList = new StaffList();
-        staffList.add(new Staff("Blaquart", "Romain", Departement.WORKERS, null));
-        staffList.add(new Staff("Brajot", "Arthur", Departement.ADMINISTRATION, null));
-        staffList.add(new Staff("Sauger", "Clement", Departement.COMMUNICATION, null));
-        staffList.add(new Staff("Maigret", "Nino", Departement.MANAGEMENT, null));
 
+        // je recupere la liste de pointage depuis pointing.ser
+        // Creation de la liste on verra plus tard pour deserialiser
+        StaffList staffList;
+
+        try {
+
+            staffList = StaffList.deserialisationStaffList("stafflist.ser");
+
+        } catch (Exception e) {
+
+            staffList = new StaffList();
+
+            System.out.println("Erreur de chargement.");
+        }
         // Afficher la liste
         for (Staff s : staffList.getStaffList()) {
             mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
@@ -57,14 +68,20 @@ public class IhmInterface {
             confirmView.getButtonMenu().addActionListener(back -> {
                 confirmView.close();
             });
+
+            // Gestion du pointage
+            String[] tabString = selectedEmployee.split(" ");
+            String surname = tabString[0];
+            String firstname = tabString[1];
+
             // sert pendant le dev pour voir l'heure et la personne select
             System.out.println(currentDate.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")));
             System.out.println(currentRoundHour.format(DateTimeFormatter.ofPattern("HH:mm")));
+            System.out.println(selectedEmployee);
+            System.out.println(surname);
+            System.out.println(firstname);
         });
-
-
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(IhmInterface::new);
     }
