@@ -2,6 +2,7 @@ package mainApplication.management;
 
 import Time.TimeManagement;
 import pointingApplication.Pointing;
+import java.io.Serializable;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalTime;
 import java.util.UUID;
 
-public class Staff {
+public class Staff implements Serializable {
     //Attributes
     private UUID uuidStaff;
     private String name;

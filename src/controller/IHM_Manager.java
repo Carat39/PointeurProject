@@ -2,7 +2,12 @@ package controller;
 
 import views.Assembleur_pages;
 import utils.temp_serialisation;
+import mainApplication.management.Staff;
+import mainApplication.management.StaffList;
+import mainApplication.management.PointingList;
+import pointingApplication.Pointing;
 
+import java.util.ArrayList;
 
 /**
  * CONTROLLER – Point d'entrée de l'application.
@@ -13,38 +18,52 @@ public class IHM_Manager {
 
     private final temp_serialisation model;
     private final Assembleur_pages view;
+    private java.util.ArrayList<String> allEmployees;
+    private java.util.ArrayList<String> workingEmployees;
+    private StaffList allStaff; // gardé en mémoire pour les recherches
 
     public IHM_Manager() {
         model = new temp_serialisation();
         view  = new Assembleur_pages();
 
-        loadData();   // <-- remplacer par la désérialisation réelle
-        view.build(model.getEmployees(), model.getAvailableYears());
+        loadData();
+        view.build(allEmployees, workingEmployees, model.getAvailableYears());
         bindActions();
     }
 
     /**
-     * Chargement des données (provisoire – à remplacer par la désérialisation).
-     * Les setters du Model sont déjà prêts pour recevoir les listes.
+     * Chargement des données depuis la désérialisation.
+     * Page 2 : tous les employés.
+     * Page 3 : employés actuellement au travail = ceux qui ont pointé 1 fois aujourd'hui.
      */
     private void loadData() {
-        java.util.ArrayList<String> employees = new java.util.ArrayList<String>();
-        employees.add("Nino Maigret");
-        employees.add("Romain Blaquart");
-        employees.add("Clément Sauger");
-        employees.add("Carl Esswein");
-        employees.add("Arthur Brajot");
-        model.setEmployees(employees);
+        try {
+            allStaff = StaffList.deserialisationStaffList("donnees.ser");
+            StaffList workingNow = allStaff.saveworkersfilter(1);
 
-        java.util.ArrayList<String> years = new java.util.ArrayList<>();
-        for (int y = 2026; y >= 2016; y--) years.add(String.valueOf(y));
+            allEmployees     = allStaff.getStafflist();
+            workingEmployees = workingNow.getStafflist();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            allStaff = new StaffList();
+
+            allEmployees = new ArrayList<>();
+            allEmployees.add("Erreur chargement employés");
+
+            workingEmployees = new ArrayList<>();
+            workingEmployees.add("Erreur chargement employés");
+        }
+
+        ArrayList<String> years = new ArrayList<>();
+        for (int y = 2026; y >= 2016; y--) {
+            years.add(String.valueOf(y));
+        }
         model.setAvailableYears(years);
     }
 
     /**
-     * Attache tous les listeners de navigation et de fermeture.
-     * Le Controller dialogue avec chaque Page via les getters de views.View_pages,
-     * puis via les getters de chaque Page.
+     * Attache tous les listeners de navigation, fermeture, et affichage des shifts.
      */
     private void bindActions() {
         // Fermeture
@@ -59,6 +78,89 @@ public class IHM_Manager {
         // Retour pages 2 et 3 → 1
         view.getPage2().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
+
+        // Listener ComboBox Page 2 : mise à jour des shifts à chaque changement
+        view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
+        view.getPage2().getYearList()    .addActionListener(e -> refreshShifts());
+    }
+
+    /**
+     * Récupère l'employé et l'année sélectionnés dans Page2,
+     * filtre ses pointages, formate et envoie à la vue.
+     */
+    private void refreshShifts() {
+        String selectedEmployee = (String) view.getPage2().getEmployeeList().getSelectedItem();
+        String selectedYear     = (String) view.getPage2().getYearList().getSelectedItem();
+
+        if (selectedEmployee == null || selectedYear == null) return;
+        if (selectedEmployee.equals("Erreur chargement employés")) return;
+
+        // Séparation nom / prénom (format stocké : "Nom Prénom")
+        String[] parts = selectedEmployee.split(" ", 2);
+        if (parts.length < 2) return;
+        String name    = parts[0];
+        String surname = parts[1];
+
+        Staff staff;
+        try {
+            staff = allStaff.find(name, surname);
+        } catch (Exception e) {
+            view.getPage2().updateShiftDisplay("Employé introuvable.");
+            return;
+        }
+
+        int year = Integer.parseInt(selectedYear);
+        PointingList pl = staff.getPointingList();
+        ArrayList<Pointing> pointings = pl.getthelist();
+
+        // Filtrage sur l'année et regroupement par paires (arrivée + départ)
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%-14s %-12s %-12s%n",
+                "Date", "Arrivée", "Départ"));
+        sb.append("-".repeat(40)).append("\n");
+
+        int i = 0;
+        int shiftsCount = 0;
+
+        while (i < pointings.size()) {
+            Pointing p1 = pointings.get(i);
+
+            // On ne garde que les pointages de l'année sélectionnée
+            if (p1.getDate().getYear() != year) {
+                i++;
+                continue;
+            }
+
+            // Paire arrivée + départ : les deux pointages doivent être le même jour
+            if (i + 1 < pointings.size() && pointings.get(i + 1).getDate().equals(p1.getDate())) {
+                Pointing p2 = pointings.get(i + 1);
+                sb.append(String.format("%-14s %-12s %-12s%n",
+                        p1.getDate().toString(),
+                        p1.getHour().toString(),
+                        p2.getHour().toString()));
+                shiftsCount++;
+                i += 2;
+            } else {
+                // Pointage seul (départ manquant)
+                sb.append(String.format("%-14s %-12s %-12s%n",
+                        p1.getDate().toString(),
+                        p1.getHour().toString(),
+                        "(manquant)"));
+                shiftsCount++;
+                i++;
+            }
+        }
+
+        if (shiftsCount == 0) {
+            sb = new StringBuilder("Aucun shift trouvé pour " + selectedEmployee + " en " + selectedYear + ".");
+        } else {
+            sb.append("-".repeat(40)).append("\n");
+            sb.append("Total heures supplémentaires cumulées : ")
+                    .append(staff.getextratime())
+                    .append(" min");
+        }
+
+        view.getPage2().updateShiftDisplay(sb.toString());
     }
 
     public static void main(String[] args) {

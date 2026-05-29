@@ -118,4 +118,3 @@ public class Pointing implements Serializable{
         }
     }
 }
-

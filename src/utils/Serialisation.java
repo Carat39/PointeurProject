@@ -1,6 +1,7 @@
 import mainApplication.management.*;
 import pointingApplication.Pointing;
-import Time.TimeManagement;
+import java.time.LocalTime;
+
 
 void main() throws Exception{
     //TimeManagement.roundtest();
@@ -12,10 +13,10 @@ void main() throws Exception{
     //Test Globale
 
     LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(1),LocalTime.MIN.plusHours(8),LocalTime.MIN.plusHours(2),
-                                    LocalTime.MIN.plusHours(9),LocalTime.MIN.plusHours(3), LocalTime.MIN.plusHours(10),
-                                    LocalTime.MIN.plusHours(4),LocalTime.MIN.plusHours(11),LocalTime.MIN.plusHours(5),
-                                    LocalTime.MIN.plusHours(12),LocalTime.MIN.plusHours(6),LocalTime.MIN.plusHours(13),
-                                    LocalTime.MIN.plusHours(7),LocalTime.MIN.plusHours(14)};
+            LocalTime.MIN.plusHours(9),LocalTime.MIN.plusHours(3), LocalTime.MIN.plusHours(10),
+            LocalTime.MIN.plusHours(4),LocalTime.MIN.plusHours(11),LocalTime.MIN.plusHours(5),
+            LocalTime.MIN.plusHours(12),LocalTime.MIN.plusHours(6),LocalTime.MIN.plusHours(13),
+            LocalTime.MIN.plusHours(7),LocalTime.MIN.plusHours(14)};
 
     WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
     Staff Romain = new Staff("Blaquart","Romain", Departement.WORKERS,workSchedule1);
@@ -63,6 +64,6 @@ void main() throws Exception{
     theStaffWorkingList = theStaffList.saveworkersfilter(2);
     theStaffWorkingList.showAllWorkers();
 
-
-
+    //Sauvegarde de la liste du personnel pour l'IHM
+    theStaffList.serialisationStaffList("donnees.ser");
 }

@@ -1,78 +1,106 @@
 package mainApplication.management;
 
+import pointingApplication.Pointing;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.io.Serializable;
 
-public class StaffList {
+public class StaffList implements Serializable {
     private ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors
-    public StaffList(){}
+    public StaffList() {
+    }
 
-    public StaffList(ArrayList<Staff> otherStaffList){
-        for (Staff s : otherStaffList){
+    public StaffList(ArrayList<Staff> otherStaffList) {
+        for (Staff s : otherStaffList) {
             theStafflist.add(s);
         }
     }
 
-    public void add(Staff Le_Staff){
+    public void add(Staff Le_Staff) {
         theStafflist.add(Le_Staff);
     }
 
-    public void remove(UUID L_UUID){
+    public void remove(UUID L_UUID) {
         theStafflist.remove(find(L_UUID));
     }
 
-    public int getsize() {return theStafflist.size();}
+    public int getsize() {
+        return theStafflist.size();
+    }
 
-    public Staff find(UUID L_UUID){
+    public Staff find(UUID L_UUID) {
         boolean find = false;
         Staff The_Staff = null;
         int index = 0;
-        while (!find){
+        while (!find) {
             The_Staff = theStafflist.get(index);
             if (The_Staff.getuuidStaff().equals(L_UUID)) {
                 find = true;
             }
-            index ++;
+            index++;
         }
         return The_Staff;
     }
 
     /*
-    * I'll be necesary find so no need to worry about the null
-    * */
-    public  Staff find(String The_Name, String The_Surname){
+     * I'll be necesary find so no need to worry about the null
+     * */
+    public Staff find(String The_Name, String The_Surname) {
         boolean find = false;
         Staff The_Staff = null;
         int index = 0;
-        while (!find){
+        while (!find) {
             The_Staff = theStafflist.get(index);
             if (The_Staff.getname().equals(The_Name) && The_Staff.getsurname().equals(The_Surname)) {
                 find = true;
             }
-            index ++;
+            index++;
         }
         return The_Staff;
     }
 
-    public void showAllWorkers(){
+    public void serialisationStaffList(String filename) throws Exception {
+        try (FileOutputStream fos = new FileOutputStream(filename);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)
+        ) {
+            oos.writeObject(this);
+        }
+    }
+
+    public static StaffList deserialisationStaffList(String filename) throws Exception {
+        StaffList les_donnees = null;
+        try (FileInputStream file = new FileInputStream(filename);
+             ObjectInputStream in = new ObjectInputStream(file)
+        ) {
+            les_donnees = (StaffList) in.readObject();
+        }
+        return les_donnees;
+    }
+
+    public void showAllWorkers() {
         System.out.println(" ");
-        for (Staff worker : theStafflist){
+        for (Staff worker : theStafflist) {
             System.out.println(worker.getname() + " " + worker.getsurname());
         }
         System.out.println(" ");
     }
 
     /*
-    * Fonction pour ARTHUR!!!
-    * Renvoie la liste des Employés qui ont pointé cond et cond seulement fois
-    * */
-    public StaffList saveworkersfilter(int cond){
+     * Fonction pour ARTHUR!!!
+     * Renvoie la liste des Employés qui ont pointé cond et cond seulement fois
+     * */
+    public StaffList saveworkersfilter(int cond) {
         StaffList workingworker = new StaffList();
-        for (Staff worker : theStafflist){
+        for (Staff worker : theStafflist) {
             //A t-il pointé <cond> et <cond> seulement fois?
-            if (worker.condPointingADay(cond,0)){
+            if (worker.condPointingADay(cond, 0)) {
                 // Comme je sais pas exactement ce que tu veux soit tu garde le retour de la StaffList,
                 // soit tu modifie la ligne suivante pour l'ajouter dans ta liste déroulante
                 workingworker.add(worker);
@@ -81,7 +109,11 @@ public class StaffList {
         return workingworker;
     }
 
-    public static void testStaffList(){
+    public ArrayList<Staff> getStaffList() {
+        return theStafflist;
+    }
+
+    public static void testStaffList() {
         StaffList ma_List = new StaffList();
         Staff staff1 = new Staff();
         Staff staff2 = new Staff();
@@ -90,7 +122,15 @@ public class StaffList {
         staff1.setextratime(15);
         staff2.setname("Matudis");
         ma_List.add(staff1);
-        System.out.println(ma_List.find("JenMichel","Port").getextratime());
+        System.out.println(ma_List.find("JenMichel", "Port").getextratime());
 
+    }
+
+    public ArrayList<String> getStafflist() {
+        ArrayList<String> res = new ArrayList<>();
+        for (Staff s : theStafflist) {
+            res.add(s.getname() + " " + s.getsurname());
+        }
+        return res;
     }
 }

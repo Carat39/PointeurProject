@@ -5,6 +5,7 @@ import pointingApplication.Pointing;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Iterator;
 import java.util.UUID;
 
 
-public class PointingList {
+public class PointingList implements Serializable {
     //Attributes
     //Ne pas les mettre EN STATIC QUEL ERREUR! sinon tout le monde partage les pointages. On ne veut qu'un pointingList général
     private ArrayList<Pointing> thelist = new ArrayList<Pointing>();
