@@ -27,7 +27,7 @@ public class IhmInterface {
         StaffList staffList = new StaffList();
         try {
             // On deserialise la liste
-            staffList = StaffList.deserialisationStaffList("stafflist.ser");
+            staffList = StaffList.deserialisationStaffList("staffList.ser");
         } catch (Exception e) {
             // on affiche si il y a un probleme
             System.out.println("Erreur de chargement.");

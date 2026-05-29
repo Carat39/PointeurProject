@@ -2,16 +2,14 @@ package mainApplication.management;
 
 import Time.TimeManagement;
 import pointingApplication.Pointing;
-import java.io.Serializable;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.time.LocalTime;
 import java.util.UUID;
 
 public class Staff implements Serializable {
+    private static final long serialVersionUID = 123456789L;
+
     //Attributes
     private UUID uuidStaff;
     private String name;
@@ -64,7 +62,12 @@ public class Staff implements Serializable {
     }
 
     public void serialisation(String filename) throws Exception{
-        try(FileOutputStream fos = new FileOutputStream(filename);
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "";
+        }
+        try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos)
         ){
             oos.writeObject(this);
@@ -72,8 +75,13 @@ public class Staff implements Serializable {
     }
 
     public Staff deserialisation(String filename) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "";
+        }
         Staff les_donnees = null;
-        try(FileInputStream file = new FileInputStream(filename);
+        try(FileInputStream file = new FileInputStream(arborescence+filename);
             ObjectInputStream in = new ObjectInputStream(file)
         ) {
             les_donnees = (Staff) in.readObject();
@@ -82,8 +90,10 @@ public class Staff implements Serializable {
     }
 
     //Ajoute à partir d'un flux de donnée ou lève une exception
-    public void addPointing(String filename) throws Exception{
-        pointingList.addElem(filename);
+
+
+    public void addPointing(Pointing thePointing) throws Exception{
+        pointingList.addElem(thePointing);
     }
 
     public int getnbpointage(){
