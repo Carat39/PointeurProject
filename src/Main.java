@@ -22,21 +22,31 @@ void main() throws Exception{
     Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule1);
     Staff Clement = new Staff("Sauger","Clément",Departement.COMMUNICATION,workSchedule1);
     Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
+    Staff[] theStaff = {Romain, Arthur,Clement,Nino};
 
-    StaffList theStaffList = new StaffList();
-    theStaffList.add(Romain);
-    theStaffList.add(Arthur);
-    theStaffList.add(Clement);
-    theStaffList.add(Nino);
+    StaffList theStaffList = new StaffList(theStaff);
+    theStaffList.serialisationStaffList("staffList.ser");
+
+    //StaffList theStaffList = new StaffList();
+
+
+    //PointingList thePointingList = PointingList.deserialisation("pointingList.ser"); // Sera dans la version final de l'API de Romain!!!
+    /*
+    * Choses à faire:
+    * Je dois a tout pris acceder aux 2 API (surtout celle de Romain pour tester les envoient avec sérialisation et tout entre les applis)
+    * Ensuite, voir pour les doublons possible
+    *
+    * //theStaffList = StaffList.deserialisationStaffList("staffList.ser"); // Au début de l'API de Romain
+    * thePointingList.serialisation("pointingList.ser"); //Quand on quitte la pointeuse avec la croix
+    * */
+
 
     PointingList thePointingList = new PointingList();
-    //Petit test pour Romain
-    Pointing.Jepointe("Blaquart","Romain",theStaffList);
-    Pointing.Jepointe("Blaquart","Romain",theStaffList);
-    try {
-        //Oh non, Romain t'as déjà pointé 2 fois à l'école primaire ce matin t'as épuisé ton quota, faut aller voir le staff
-        Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    Pointing.Jepointe("Blaquart","Romain",theStaffList,thePointingList,"192.168.1.19",1234);
 
+    /*Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    try {
+        Pointing.Jepointe("Blaquart","Romain",theStaffList);
     }
     catch (Exception e){
         System.out.println("no problem");
@@ -62,7 +72,7 @@ void main() throws Exception{
     System.out.println("qui a finit:");
     theStaffWorkingList = theStaffList.saveworkersfilter(2);
     theStaffWorkingList.showAllWorkers();
-
+    */
 
 
 }
