@@ -222,6 +222,8 @@ public class Pointing implements Serializable{
     //Sera dans l'API de Romain
     public static void Jepointe(String The_Name, String The_Surname, StaffList theStaffList,PointingList thePointingList, String ip, int port) throws Exception{
         Staff theStaff = theStaffList.find(The_Name,The_Surname);
+        System.out.println("NB POINTAGES: " + theStaff.getnbpointage());
+        System.out.println("COND TODAY: " + theStaff.condPointingADay(2, 0));
         //Est-ce que le staff existe? Forcément mais renvoie la référence
         if (theStaff != null){
             //Est-ce qu-il a pointé 2 fois aujourd'hui

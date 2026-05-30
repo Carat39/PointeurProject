@@ -1,6 +1,7 @@
 package controller;
 
 import mainApplication.management.Departement;
+import mainApplication.management.PointingList;
 import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
 import Time.TimeManagement;
@@ -14,17 +15,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import static pointingApplication.Pointing.Jepointe;
 import static pointingApplication.Pointing.deserialisation;
 
 public class IhmInterface {
 
     private MainView mainView;
-
+    private StaffList staffList;
+    private PointingList pointingList;
     public IhmInterface() {
         mainView = new MainView();
 
         // On recupere la liste des staff depuis stafflist.ser
-        StaffList staffList = new StaffList();
+        staffList = new StaffList();
         try {
             // On deserialise la liste
             staffList = StaffList.deserialisationStaffList("staffList.ser");
@@ -32,9 +35,16 @@ public class IhmInterface {
             // on affiche si il y a un probleme
             System.out.println("Erreur de chargement.");
         }
+        // on recuperre la liste des pointings effectués
+        try {
+            pointingList = PointingList.deserialisation("pointingList.ser");
+        } catch (Exception e) {
+            System.out.println("Erreur chargement pointings.");
+        }
+
         // On rajoute à l'écran la liste de staff
         for (Staff s : staffList.getStaffList()) {
-            mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
+            mainView.getComboEmployees().addItem(s.getsurname() + " " + s.getname());
         }
 
         // Timer 1 seconde
@@ -54,27 +64,45 @@ public class IhmInterface {
             LocalDate currentDate = TimeManagement.getDate();
             LocalTime currentRoundHour = TimeManagement.round(TimeManagement.getHour());
             String selectedEmployee = (String) mainView.getComboEmployees().getSelectedItem();
-            // recuperation du port et de l'ip
-            String ip = mainView.getTextFieldIp();;
-            String port = mainView.getTextFieldPort();
-
-            // Ouvrir la fenêtre de confirmation
-            ConfirmView confirmView = new ConfirmView(currentDate, currentRoundHour, selectedEmployee);
-
-            // Bouton retour au menu pour ConfirmView
-            confirmView.getButtonMenu().addActionListener(back -> {
-                confirmView.close();
-            });
-
-            // Gestion du pointage
+            // Extraction du nom de l'utilisateur et l'adresse de destination
             String[] tabString = selectedEmployee.split(" ");
             String surname = tabString[0];
             String firstname = tabString[1];
+            System.out.println(surname);
+            System.out.println(selectedEmployee);
+            String ip = mainView.getTextFieldIp();;
+            int port = Integer.parseInt(mainView.getTextFieldPort());
+
+            // Gestion du pointage
+            try{
+                Pointing.Jepointe(firstname, surname, staffList, pointingList, ip, port);
+                ConfirmView confirmView = new ConfirmView(currentDate, currentRoundHour, selectedEmployee);
+                // Bouton retour au menu pour ConfirmView
+                confirmView.getButtonMenu().addActionListener(back -> {
+                    confirmView.close();
+                });
+            } catch (Exception ex) {
+                // on recupere le message de l'exxception et on y applique la decision
+                String msg = ex.getMessage();
+                System.out.println(msg);
+                if ("You have already pointed 2 times today!!!".equals(msg)) {
+                    // on lance la fenetre correspondante
+                    ExceptView exceptView = new ExceptView(selectedEmployee);
+                    System.out.println("Vous avez déjà pointé 2 fois aujourd'hui");
+                    exceptView.getButtonMenu().addActionListener(close -> {
+                        mainView.close();;
+                    });
+                } else if ("You haven't pointed 2 times yesterday!!!".equals(msg)) {
+                    // on rajoutera une fenetre utilistauer par la suite
+                    System.out.println("Vous n'avez pas pointé correctement hier");
+                }
+            }
 
             // sert pendant le dev pour voir l'heure et la personne select
             System.out.println(currentDate.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")));
             System.out.println(currentRoundHour.format(DateTimeFormatter.ofPattern("HH:mm")));
-            System.out.println(selectedEmployee);
+            System.out.println(surname);
+            System.out.println(firstname);
             System.out.println(ip);
             System.out.println(port);
         });

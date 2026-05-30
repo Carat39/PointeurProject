@@ -118,4 +118,5 @@ public class MainView {
     public void setRounded(String rounded) { labelRounded.setText(rounded); }
     public String getTextFieldIp(){return textFieldIp.getText();}
     public String getTextFieldPort(){return textFieldPort.getText();}
+    public void close() {frame.dispose();}
 }

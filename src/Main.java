@@ -2,6 +2,8 @@ import mainApplication.management.*;
 import pointingApplication.Pointing;
 import Time.TimeManagement;
 
+import java.awt.*;
+
 void main() throws Exception{
     //TimeManagement.roundtest();
     //Pointing.serialisationtest();
@@ -18,17 +20,23 @@ void main() throws Exception{
             LocalTime.MIN.plusHours(7),LocalTime.MIN.plusHours(14)};
 
     WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
-    Staff Romain = new Staff("Blaquart","Romain", Departement.WORKERS,workSchedule1);
-    Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule1);
-    Staff Clement = new Staff("Sauger","Clément",Departement.COMMUNICATION,workSchedule1);
-    Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
-    Staff[] theStaff = {Romain, Arthur,Clement,Nino};
+    Staff Romain = new Staff("Romain","Blaquart", Departement.WORKERS,workSchedule1);
+    Staff Arthur = new Staff("Arthur","Brajot",Departement.ADMINISTRATION,workSchedule1);
+    Staff Clement = new Staff("Clément","Sauger",Departement.COMMUNICATION,workSchedule1);
+    Staff Nino = new Staff("Nino","Maigret",Departement.MANAGEMENT,workSchedule1);
+    Staff Michel = new Staff("Michel", "Jean", Departement.MANAGEMENT,workSchedule1);
+    Staff[] theStaff = {Romain, Arthur,Clement,Nino,Michel};
 
     StaffList theStaffList = new StaffList(theStaff);
     theStaffList.serialisationStaffList("staffList.ser");
 
     //StaffList theStaffList = new StaffList();
-
+    Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
+    Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
+    PointingList pointingList = new PointingList();
+    pointingList.addElem(pointing1);
+    pointingList.addElem(pointing2);
+    pointingList.serialisation("pointingList.ser");
 
     //PointingList thePointingList = PointingList.deserialisation("pointingList.ser"); // Sera dans la version final de l'API de Romain!!!
     /*
@@ -41,8 +49,8 @@ void main() throws Exception{
      * */
 
 
-    PointingList thePointingList = new PointingList();
-    Pointing.Jepointe("Blaquart","Romain",theStaffList,thePointingList,"192.168.1.19",1234);
+    //PointingList thePointingList = new PointingList();
+    // Pointing.Jepointe("Blaquart","Romain",theStaffList,thePointingList,"192.168.1.19",1234);
 
     /*Pointing.Jepointe("Blaquart","Romain",theStaffList);
     try {

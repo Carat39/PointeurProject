@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ExceptView {
-    private JFrame frame;
+    private static JFrame frame;
     private JButton buttonMenu;
 
     public ExceptView(String employeeName) {
