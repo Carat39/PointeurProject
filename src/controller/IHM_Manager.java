@@ -32,6 +32,9 @@ public class IHM_Manager {
         view  = new Assembleur_pages();
 
         loadData();
+        System.out.println("Working employees: " + allEmployees);
+        System.out.println("Working employees: " + workingEmployees);
+
         view.build(allEmployees, workingEmployees, allStaff.getAvailableYears());
         bindActions();
     }
@@ -126,6 +129,7 @@ public class IHM_Manager {
         }
 
         ArrayList<Pointing> pointings = staff.getPointingList().getthelist();
+        System.out.println("pointings");
         String arrivalHour = "";
         for (Pointing p : pointings) {
             if (p.getDate().equals(Time.TimeManagement.getDateNow())) {

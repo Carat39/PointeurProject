@@ -34,6 +34,7 @@ public class StaffList implements Serializable {
         theStafflist.add(Le_Staff);
     }
 
+
     public void add(PointingList thePointingList) throws Exception {
         for (Pointing thePointing: thePointingList.getthelist()){
             Staff theStaff = find(thePointing.getUuidStaff());
@@ -126,6 +127,7 @@ public class StaffList implements Serializable {
     public ArrayList<Staff> getStaffList() {
         return theStafflist;
     }
+
 
     public static void testStaffList() {
         StaffList ma_List = new StaffList();
