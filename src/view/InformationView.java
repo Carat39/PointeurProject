@@ -4,19 +4,36 @@ import Utils.Style;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * @author Romain
+ * Permet de gerer l'interface d'information
+ * lors du pointage si l'utilisateur
+ * n'a pas pointe la veille
+ */
 public class InformationView {
     private static JFrame frame;
     private JButton buttonMenu;
 
+    /**
+     * fonction principale permettant
+     * d'appeler la methode buildant la page d'information
+     * @param employeeName
+     */
     public InformationView(String employeeName) {
         buildUI(employeeName);
     }
 
+    /**
+     * Fonction initalisant tous les aspects
+     * graphiques
+     * @param employeeName
+     */
     private void buildUI(String employeeName) {
         //Frame
         frame = new JFrame("Pointeuse");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 300);
+        frame.setSize(500, 425);
         frame.setLocationRelativeTo(null);
 
         //Panel principal

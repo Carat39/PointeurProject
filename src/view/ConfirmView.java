@@ -7,15 +7,33 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author Romain
+ * Permet de gerer l'interface de confirmation
+ * lors du pointage
+ */
 public class ConfirmView {
-
     private JFrame frame;
     private JButton buttonMenu;
 
+    /**
+     * Fonction principale permettant
+     * d'appeler la methode buildant la page de confirmation
+     * @param currentDate
+     * @param currentTime
+     * @param employeeName
+     */
     public ConfirmView(LocalDate currentDate, LocalTime currentTime, String employeeName) {
         buildUI(currentDate, currentTime, employeeName);
     }
 
+    /**
+     *Fonction initalisant tous les aspects
+     * graphique
+     * @param currentDate
+     * @param currentTime
+     * @param employeeName
+     */
     private void buildUI(LocalDate currentDate, LocalTime currentTime, String employeeName) {
         //Frame
         frame = new JFrame("Pointeuse");

@@ -4,8 +4,12 @@ import Utils.Style;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @autor Romain
+ * Permet de gerer l'interface du menu principale
+ * de la pointeuse.
+ */
 public class MainView {
-
     private JFrame frame;
     private JLabel labelDate;
     private JLabel labelHour;
@@ -15,10 +19,18 @@ public class MainView {
     private JTextField textFieldIp;
     private JTextField textFieldPort;
 
+    /**
+     * Fonction principale permettant
+     * d'appeler la methode buildant la page
+     */
     public MainView() {
         buildUI();
     }
 
+    /**
+     *  Fonction initalisant tous les aspects
+     *  graphique
+     */
     private void buildUI() {
         // JFrame
         frame = new JFrame("Pointeuse");
@@ -31,14 +43,14 @@ public class MainView {
         panel.setBackground(Style.pastelPeach);
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
-        // TOP : titre
+        // Top : titre
         JLabel titre = new JLabel("Pointeuse - Time Tracker", SwingConstants.CENTER);
         titre.setFont(new Font("Serif", Font.BOLD, 22));
         titre.setForeground(new Color(100, 80, 120));
         titre.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(titre, BorderLayout.NORTH);
 
-        // CENTER : date + heure + arrondi
+        // Centre : date + heure + arrondi
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(Style.pastelPeach);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -84,7 +96,7 @@ public class MainView {
         centerPanel.add(Box.createVerticalStrut(100));
         centerPanel.add(ipPanel);
 
-        // BOTTOM : combobox + bouton
+        // Bottom : combobox + bouton
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(Style.pastelPeach);
         // creation combobox

@@ -4,14 +4,31 @@ import Utils.Style;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * @author Romain
+ * Permet de gerer l'interface d'exception
+ * lors du pointage si un utilisateur
+ * a deja pointe 2 fois dans une meme journee
+ */
 public class ExceptView {
     private static JFrame frame;
     private JButton buttonMenu;
 
+    /**
+     * Fonction principale permettant
+     * d'appeler la methode buildant la page d'exception
+     * @param employeeName
+     */
     public ExceptView(String employeeName) {
         buildUI(employeeName);
     }
 
+    /**
+     * Fonction initalisant tous les aspects
+     * graphiques
+     * @param employeeName
+     */
     private void buildUI(String employeeName) {
         //Frame
         frame = new JFrame("Pointeuse");
