@@ -1,5 +1,6 @@
 package views;
 
+import pointingApplication.Pointing;
 import views.utils.Variables;
 
 import javax.swing.*;
@@ -52,6 +53,37 @@ public class Page2 {
     public void updateShiftDisplay(String content) {
         shiftArea.setText(content);
         shiftArea.setCaretPosition(0);
+    }
+
+    public void displayPointings(ArrayList<Pointing> pointings, int year, String employeeName, int extratime) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%-14s %-12s %-12s%n", "Date", "Arrivée", "Départ"));
+        sb.append("-".repeat(40)).append("\n");
+
+        int i = 0;
+        int shiftsCount = 0;
+
+        while (i < pointings.size()) {
+            Pointing p1 = pointings.get(i);
+            if (i + 1 < pointings.size() && pointings.get(i + 1).getDate().equals(p1.getDate())) {
+                Pointing p2 = pointings.get(i + 1);
+                sb.append(String.format("%-14s %-12s %-12s%n", p1.getDate().toString(), p1.getHour().toString(), p2.getHour().toString()));
+                shiftsCount++;
+                i += 2;
+            } else {
+                sb.append(String.format("%-14s %-12s %-12s%n", p1.getDate().toString(), p1.getHour().toString(), "(manquant)"));
+                shiftsCount++;
+                i++;
+            }
+        }
+
+        if (shiftsCount == 0) {
+            updateShiftDisplay("Aucun shift trouvé pour " + employeeName + " en " + year + ".");
+        } else {
+            sb.append("-".repeat(40)).append("\n");
+            sb.append("Total heures supplémentaires cumulées : ").append(extratime).append(" min");
+            updateShiftDisplay(sb.toString());
+        }
     }
 
     public JPanel getPanel(){return panel;}
