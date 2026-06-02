@@ -6,9 +6,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * VIEW – Page « Clocked in Now » (page 3).
- * Construit son propre panneau et expose ses composants interactifs
- * via des getters. Aucune logique métier, aucun listener.
+ * VIEW – Page « Clocked in Now »
+ * On utilise cette page pour afficher les employés qui sont
+ * actuellement entrain de travailler. On sélectionnera l'employé
+ * grâce au jcombobox "employeeList"
  */
 public class Page3 {
 
@@ -21,8 +22,8 @@ public class Page3 {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);
 
-        closeBtn     = Variables.createCloseBtn();
-        backBtn      = Variables.createBackBtn();
+        closeBtn = Variables.createCloseBtn();
+        backBtn = Variables.createBackBtn();
         employeeList = Variables.createEmployeeList(employees);
 
         panel.add(Variables.createTitle("Clocked in Now"));
@@ -31,8 +32,8 @@ public class Page3 {
         panel.add(employeeList);
     }
 
-    public JPanel            getPanel()        { return panel; }
-    public JButton           getCloseBtn()     { return closeBtn; }
-    public JButton           getBackBtn()      { return backBtn; }
-    public JComboBox<String> getEmployeeList() { return employeeList; }
+    public JPanel getPanel(){return panel;}
+    public JButton getCloseBtn(){return closeBtn;}
+    public JButton getBackBtn(){return backBtn;}
+    public JComboBox<String> getEmployeeList(){return employeeList;}
 }

@@ -5,8 +5,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * VIEW (composants partagés) – Fabrique les éléments Swing réutilisables.
- * Aucune logique métier, aucun listener : tout ça appartient au Controller.
+ * VIEW - utilitaires.
+ *
+ * L'objectif ici est la factorisation du code.
+ * On veut que les trucs comme les titres, les
+ * boutons de close, de back, soient réutilisables,
+ * et n'est pas besoin d'être instanciés à chaque fois.
+ *
  */
 public class Variables {
 

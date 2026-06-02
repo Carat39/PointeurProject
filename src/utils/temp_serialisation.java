@@ -16,8 +16,6 @@ public class temp_serialisation {
         this.availableYears = new ArrayList<>();
     }
 
-    // --- Employés ---
-
     public ArrayList<String> getEmployees() {
         return employees;
     }
@@ -26,13 +24,11 @@ public class temp_serialisation {
         this.employees = employees;
     }
 
-    // --- Années ---
-
     public ArrayList<String> getAvailableYears() {
         return availableYears;
     }
 
-    public void setAvailableYears(ArrayList<String> availableYears) {
+    public void setAvailableYears(ArrayList<String> availableYears){
         this.availableYears = availableYears;
     }
 }

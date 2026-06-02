@@ -71,17 +71,14 @@ public class IHM_Manager {
         view.getPage2().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
         view.getPage3().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
 
-        // Navigation page 1 → 2 / 3
-        view.getPage1().getCheckBtn() .addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
+        view.getPage1().getCheckBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
         view.getPage1().getClockedBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page3"));
 
-        // Retour pages 2 et 3 → 1
         view.getPage2().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
 
-        // Listener ComboBox Page 2 : mise à jour des shifts à chaque changement
         view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
-        view.getPage2().getYearList()    .addActionListener(e -> refreshShifts());
+        view.getPage2().getYearList().addActionListener(e -> refreshShifts());
     }
 
     /**
@@ -90,15 +87,14 @@ public class IHM_Manager {
      */
     private void refreshShifts() {
         String selectedEmployee = (String) view.getPage2().getEmployeeList().getSelectedItem();
-        String selectedYear     = (String) view.getPage2().getYearList().getSelectedItem();
+        String selectedYear = (String) view.getPage2().getYearList().getSelectedItem();
 
         if (selectedEmployee == null || selectedYear == null) return;
         if (selectedEmployee.equals("Erreur chargement employés")) return;
 
-        // Séparation nom / prénom (format stocké : "Nom Prénom")
         String[] parts = selectedEmployee.split(" ", 2);
         if (parts.length < 2) return;
-        String name    = parts[0];
+        String name = parts[0];
         String surname = parts[1];
 
         Staff staff;
@@ -113,7 +109,6 @@ public class IHM_Manager {
         PointingList pl = staff.getPointingList();
         ArrayList<Pointing> pointings = pl.getthelist();
 
-        // Filtrage sur l'année et regroupement par paires (arrivée + départ)
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%-14s %-12s %-12s%n",
                 "Date", "Arrivée", "Départ"));
@@ -125,13 +120,11 @@ public class IHM_Manager {
         while (i < pointings.size()) {
             Pointing p1 = pointings.get(i);
 
-            // On ne garde que les pointages de l'année sélectionnée
             if (p1.getDate().getYear() != year) {
                 i++;
                 continue;
             }
 
-            // Paire arrivée + départ : les deux pointages doivent être le même jour
             if (i + 1 < pointings.size() && pointings.get(i + 1).getDate().equals(p1.getDate())) {
                 Pointing p2 = pointings.get(i + 1);
                 sb.append(String.format("%-14s %-12s %-12s%n",
