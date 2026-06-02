@@ -33,6 +33,13 @@ public class StaffList implements Serializable {
         theStafflist.add(Le_Staff);
     }
 
+    public void add(PointingList thePointingList) throws Exception {
+        for (Pointing thePointing: thePointingList.getthelist()){
+            Staff theStaff = find(thePointing.getUuidStaff());
+            theStaff.addPointing(thePointing);
+        }
+    }
+
     public void remove(UUID L_UUID) {
         theStafflist.remove(find(L_UUID));
     }
