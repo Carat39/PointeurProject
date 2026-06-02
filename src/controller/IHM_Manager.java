@@ -14,8 +14,9 @@ import java.util.ArrayList;
  *
  * Fait a peu près tout ce qui est important,
  * recupere les listeners et affiche ce qu'il faut.
- * Gestion d'erreur prise en compte.
+ * Gestion d'erreur prise en compte (normalement hein)
  */
+
 public class IHM_Manager {
 
     private final temp_serialisation model;
@@ -24,12 +25,14 @@ public class IHM_Manager {
     private java.util.ArrayList<String> workingEmployees;
     private StaffList allStaff; //pour les recherches sur les données des 'listeners'
 
+
+    //constructeuur
     public IHM_Manager() {
         model = new temp_serialisation();
         view  = new Assembleur_pages();
 
         loadData();
-        view.build(allEmployees, workingEmployees, model.getAvailableYears());
+        view.build(allEmployees, workingEmployees, allStaff.getAvailableYears());
         bindActions();
     }
 
@@ -42,30 +45,22 @@ public class IHM_Manager {
         try {
             allStaff = StaffList.deserialisationStaffList("donnees.ser");
             StaffList workingNow = allStaff.saveworkersfilter(1);
-
             allEmployees     = allStaff.getStafflist();
             workingEmployees = workingNow.getStafflist();
-
         } catch (Exception e) {
             e.printStackTrace();
             allStaff = new StaffList();
-
             allEmployees = new ArrayList<>();
             allEmployees.add("Erreur chargement employés");
-
             workingEmployees = new ArrayList<>();
             workingEmployees.add("Erreur chargement employés");
         }
-
-        ArrayList<String> years = new ArrayList<>();
-        for (int y = 2026; y >= 2016; y--) {
-            years.add(String.valueOf(y));
-        }
-        model.setAvailableYears(years);
     }
 
     /**
-     * Nettoyage des "listeners"
+     * "Branchement" Des listeners sur leurs actions,
+     * grossièrement on a ici le lien entre l'action
+     * et la méthode, c'est la partie principale du controller
      */
     private void bindActions() {
         // Fermeture
@@ -81,6 +76,7 @@ public class IHM_Manager {
 
         view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
         view.getPage2().getYearList().addActionListener(e -> refreshShifts());
+        view.getPage3().getEmployeeList().addActionListener(e -> refreshEmployee());
     }
 
     /**
@@ -91,74 +87,60 @@ public class IHM_Manager {
         String selectedEmployee = (String) view.getPage2().getEmployeeList().getSelectedItem();
         String selectedYear = (String) view.getPage2().getYearList().getSelectedItem();
 
-        if (selectedEmployee == null || selectedYear == null) {
-            return;
-        }
-        if (selectedEmployee.equals("Erreur chargement employés")) {
-            return;
-        }
+        if (selectedEmployee == null || selectedYear == null) return;
+        if (selectedEmployee.equals("Erreur chargement employés")) return;
 
         String[] parts = selectedEmployee.split(" ", 2);
-
-        if (parts.length < 2) {
-            return;
-        }
-
-        String name = parts[0];
-        String surname = parts[1];
+        if (parts.length < 2) return;
 
         Staff staff;
         try {
-            staff = allStaff.find(name, surname);
+            staff = allStaff.find(parts[0], parts[1]);
         } catch (Exception e) {
             view.getPage2().updateShiftDisplay("Employé introuvable.");
             return;
         }
 
         int year = Integer.parseInt(selectedYear);
-        PointingList pl = staff.getPointingList();
-        ArrayList<Pointing> pointings = pl.getthelist();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-14s %-12s %-12s%n", "Date", "Arrivée", "Départ"));
-        sb.append("-".repeat(40)).append("\n");
-
-        int i = 0;
-        int shiftsCount = 0;
-
-        while (i < pointings.size()) {
-            Pointing p1 = pointings.get(i);
-
-            if (p1.getDate().getYear() != year) {
-                i++;
-                //continue permet de continuer après ce if, on ne s'arrete pas ici
-                continue;
-            }
-
-            if (i + 1 < pointings.size() && pointings.get(i + 1).getDate().equals(p1.getDate())) {
-                Pointing p2 = pointings.get(i + 1);
-                sb.append(String.format("%-14s %-12s %-12s%n",p1.getDate().toString(),p1.getHour().toString(),p2.getHour().toString()));
-                shiftsCount++;
-                i += 2;
-
-            } else {
-                //pointage seul, la personne est actuellement au travail.
-                sb.append(String.format("%-14s %-12s %-12s%n",p1.getDate().toString(), p1.getHour().toString(), "(manquant)"));
-                shiftsCount++;
-                i++;
-            }
-        }
-
-        if (shiftsCount == 0) {
-            sb = new StringBuilder("Aucun shift trouvé pour " + selectedEmployee + " en " + selectedYear + ".");
-        } else {
-            sb.append("-".repeat(40)).append("\n");
-            sb.append("Total heures supplémentaires cumulées : ").append(staff.getextratime()).append(" min");
-        }
-
-        view.getPage2().updateShiftDisplay(sb.toString());
+        view.getPage2().displayPointings(staff.getPointingsByYear(year), year, selectedEmployee, staff.getextratime());
     }
 
+    /**
+     * Cette méthode permet d'afficher correctement
+     * les heures selon l'employé sélectionné
+     */
+    private void refreshEmployee() {
+        String selectedEmployee = (String) view.getPage3().getEmployeeList().getSelectedItem();
+
+        if (selectedEmployee == null) {return;}
+        if (selectedEmployee.equals("Erreur chargement employés")){return;}
+
+        String[] parts = selectedEmployee.split(" ", 2);
+        if (parts.length < 2){return;}
+
+        Staff staff;
+        try {
+            staff = allStaff.find(parts[0], parts[1]);
+        } catch (Exception e) {
+            return;
+        }
+
+        ArrayList<Pointing> pointings = staff.getPointingList().getthelist();
+        String arrivalHour = "";
+        for (Pointing p : pointings) {
+            if (p.getDate().equals(Time.TimeManagement.getDateNow())) {
+                arrivalHour = p.getHour().toString();
+                break;
+            }
+        }
+
+        view.getPage3().displayEmployee(staff.getname(), staff.getsurname(), arrivalHour);
+    }
+
+    /**
+     * Lance le code
+     * @param args
+     */
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(IHM_Manager::new);
     }

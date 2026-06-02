@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Staff implements Serializable {
@@ -117,5 +118,14 @@ public class Staff implements Serializable {
         //Adding/Deleting overtime hours if working hours have not been respected
         extratime += startDif;
         //extratime += endDif;
+    }
+    public ArrayList<Pointing> getPointingsByYear(int year) {
+        ArrayList<Pointing> result = new ArrayList<>();
+        for (Pointing p : pointingList.getthelist()) {
+            if (p.getDate().getYear() == year) {
+                result.add(p);
+            }
+        }
+        return result;
     }
 }

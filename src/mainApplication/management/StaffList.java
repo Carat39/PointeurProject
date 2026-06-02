@@ -133,4 +133,12 @@ public class StaffList implements Serializable {
         }
         return res;
     }
+
+    public ArrayList<String> getAvailableYears() {
+        ArrayList<String> years = new ArrayList<>();
+        for (int y = 2026; y >= 2016; y--) {
+            years.add(String.valueOf(y));
+        }
+        return years;
+    }
 }
