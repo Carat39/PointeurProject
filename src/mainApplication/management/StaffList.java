@@ -17,6 +17,12 @@ public class StaffList implements Serializable {
     public StaffList() {
     }
 
+    public StaffList(Staff[] theStaff) {
+        for (Staff staff: theStaff){
+            theStafflist.add(staff);
+        }
+    }
+
     public StaffList(ArrayList<Staff> otherStaffList) {
         for (Staff s : otherStaffList) {
             theStafflist.add(s);
