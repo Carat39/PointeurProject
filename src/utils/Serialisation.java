@@ -1,7 +1,8 @@
 import mainApplication.management.*;
 import pointingApplication.Pointing;
-import java.time.LocalTime;
+import Time.TimeManagement;
 
+import java.awt.*;
 
 void main() throws Exception{
     //TimeManagement.roundtest();
@@ -19,39 +20,61 @@ void main() throws Exception{
             LocalTime.MIN.plusHours(7),LocalTime.MIN.plusHours(14)};
 
     WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
-    Staff Romain = new Staff("Blaquart","Romain", Departement.WORKERS,workSchedule1);
-    Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule1);
-    Staff Clement = new Staff("Sauger","Clément",Departement.COMMUNICATION,workSchedule1);
-    Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
+    Staff Romain = new Staff("Romain","Blaquart", Departement.WORKERS,workSchedule1);
+    Staff Arthur = new Staff("Arthur","Brajot",Departement.ADMINISTRATION,workSchedule1);
+    Staff Clement = new Staff("Cl�ment","Sauger",Departement.COMMUNICATION,workSchedule1);
+    Staff Nino = new Staff("Nino","Maigret",Departement.MANAGEMENT,workSchedule1);
+    Staff Michel = new Staff("Michel", "Jean", Departement.MANAGEMENT,workSchedule1);
+    Staff[] theStaff = {Romain, Arthur,Clement,Nino,Michel};
 
-    StaffList theStaffList = new StaffList();
-    theStaffList.add(Romain);
-    theStaffList.add(Arthur);
-    theStaffList.add(Clement);
-    theStaffList.add(Nino);
+    StaffList theStaffList = new StaffList(theStaff);
 
-    PointingList thePointingList = new PointingList();
-    //Petit test pour Romain
-    Pointing.Jepointe("Blaquart","Romain",theStaffList);
-    Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    //StaffList theStaffList = new StaffList();
+
+    PointingList pointingList = new PointingList();
+
+    Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
+    Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
+    Arthur.addPointing(pointing1);
+    Arthur.addPointing(pointing2);
+
+
+    pointingList.addElem(pointing1);
+    pointingList.addElem(pointing2);
+    pointingList.serialisation("pointingList.ser");
+    theStaffList.serialisationStaffList("staffList.ser");
+
+    //PointingList thePointingList = PointingList.deserialisation("pointingList.ser"); // Sera dans la version final de l'API de Romain!!!
+    /*
+     * Choses � faire:
+     * Je dois a tout pris acceder aux 2 API (surtout celle de Romain pour tester les envoient avec s�rialisation et tout entre les applis)
+     * Ensuite, voir pour les doublons possible
+     *
+     * //theStaffList = StaffList.deserialisationStaffList("staffList.ser"); // Au d�but de l'API de Romain
+     * thePointingList.serialisation("pointingList.ser"); //Quand on quitte la pointeuse avec la croix
+     * */
+
+
+    //PointingList thePointingList = new PointingList();
+    // Pointing.Jepointe("Blaquart","Romain",theStaffList,thePointingList,"192.168.1.19",1234);
+
+    /*Pointing.Jepointe("Blaquart","Romain",theStaffList);
     try {
-        //Oh non, Romain t'as déjà pointé 2 fois à l'école primaire ce matin t'as épuisé ton quota, faut aller voir le staff
         Pointing.Jepointe("Blaquart","Romain",theStaffList);
-
     }
     catch (Exception e){
         System.out.println("no problem");
     }
-    System.out.println("Romain a pointé " + Romain.getnbpointage() + " fois depuis qu'il travaille ici");
+    System.out.println("Romain a point� " + Romain.getnbpointage() + " fois depuis qu'il travaille ici");
     Pointing.Jepointe("Maigret","Nino",theStaffList);
-    Pointing.Jepointe("Sauger","Clément",theStaffList);
+    Pointing.Jepointe("Sauger","Cl�ment",theStaffList);
 
     //Gerer les pairs de tableau dans pointingList
     StaffList theStaffWorkingList = new StaffList();
 
     //Petits tests pour Arthur
-    //Enregistre puis affiche les travailleurs qui n'ont pas pointé aujourd'hui
-    System.out.println("qui n'a pas embauché:");
+    //Enregistre puis affiche les travailleurs qui n'ont pas point� aujourd'hui
+    System.out.println("qui n'a pas embauch�:");
     theStaffWorkingList = theStaffList.saveworkersfilter(0);
     theStaffWorkingList.showAllWorkers();
 
@@ -63,7 +86,7 @@ void main() throws Exception{
     System.out.println("qui a finit:");
     theStaffWorkingList = theStaffList.saveworkersfilter(2);
     theStaffWorkingList.showAllWorkers();
+    */
 
-    //Sauvegarde de la liste du personnel pour l'IHM
-    theStaffList.serialisationStaffList("donnees.ser");
+
 }

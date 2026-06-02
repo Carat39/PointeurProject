@@ -11,10 +11,17 @@ import java.util.UUID;
 import java.io.Serializable;
 
 public class StaffList implements Serializable {
+    private static final long serialVersionUID = 123456789L;
     private ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors
     public StaffList() {
+    }
+
+    public StaffList(Staff[] theStaff) {
+        for (Staff staff: theStaff){
+            theStafflist.add(staff);
+        }
     }
 
     public StaffList(ArrayList<Staff> otherStaffList) {
@@ -25,6 +32,13 @@ public class StaffList implements Serializable {
 
     public void add(Staff Le_Staff) {
         theStafflist.add(Le_Staff);
+    }
+
+    public void add(PointingList thePointingList) throws Exception {
+        for (Pointing thePointing: thePointingList.getthelist()){
+            Staff theStaff = find(thePointing.getUuidStaff());
+            theStaff.addPointing(thePointing);
+        }
     }
 
     public void remove(UUID L_UUID) {

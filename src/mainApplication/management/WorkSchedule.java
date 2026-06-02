@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.Arrays;
 
 public class WorkSchedule implements Serializable {
+    private static final long serialVersionUID = 123456789L;
+
     //Attributes
     /*
     private LocalTime MondayStart;

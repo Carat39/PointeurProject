@@ -3,9 +3,7 @@ package mainApplication.management;
 import pointingApplication.Pointing;
 
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,8 +13,9 @@ import java.util.UUID;
 
 
 public class PointingList implements Serializable {
+    private static final long serialVersionUID = 123456789L;
+
     //Attributes
-    //Ne pas les mettre EN STATIC QUEL ERREUR! sinon tout le monde partage les pointages. On ne veut qu'un pointingList général
     private ArrayList<Pointing> thelist = new ArrayList<Pointing>();
 
 
@@ -66,26 +65,36 @@ public class PointingList implements Serializable {
         return comptage == cond;
     }
 
-
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
         thelist.add(pointing);
     }
 
-    //Ajoute à partir d'un flux de donnée ou lève une exception après deserialisation
-    public void addElem(String filename) throws Exception{
-        Pointing pointing = new Pointing();
-        pointing = deserialisation(filename);
-        thelist.add(pointing);
+    public void serialisation(String filename) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "";
+        }
+        try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
+        ){
+            oos.writeObject(this);
+        }
     }
 
     //déserialise à partir d'un flux de données
-    public Pointing deserialisation(String filename) throws Exception{
-        Pointing les_donnees = null;
-        try(FileInputStream file = new FileInputStream(filename);
+    public static PointingList deserialisation(String filename) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "";
+        }
+        PointingList les_donnees = null;
+        try(FileInputStream file = new FileInputStream(arborescence+filename);
             ObjectInputStream in = new ObjectInputStream(file)
         ) {
-            les_donnees = (Pointing) in.readObject();
+            les_donnees = (PointingList) in.readObject();
         }
         return les_donnees;
     }
