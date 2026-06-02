@@ -10,9 +10,11 @@ import pointingApplication.Pointing;
 import java.util.ArrayList;
 
 /**
- * CONTROLLER – Point d'entrée de l'application.
- * Instancie le Model, injecte les données, construit la View,
- * puis connecte tous les "listeners" de navigation.
+ * CONTROLLER
+ *
+ * Fait a peu près tout ce qui est important,
+ * recupere les listeners et affiche ce qu'il faut.
+ * Gestion d'erreur prise en compte.
  */
 public class IHM_Manager {
 
@@ -20,7 +22,7 @@ public class IHM_Manager {
     private final Assembleur_pages view;
     private java.util.ArrayList<String> allEmployees;
     private java.util.ArrayList<String> workingEmployees;
-    private StaffList allStaff; // gardé en mémoire pour les recherches
+    private StaffList allStaff; //pour les recherches sur les données des 'listeners'
 
     public IHM_Manager() {
         model = new temp_serialisation();
@@ -34,7 +36,7 @@ public class IHM_Manager {
     /**
      * Chargement des données depuis la désérialisation.
      * Page 2 : tous les employés.
-     * Page 3 : employés actuellement au travail = ceux qui ont pointé 1 fois aujourd'hui.
+     * Page 3 : employés actuellement au travail c'est à dire ceux qui ont pointé 1 fois aujourd'hui.
      */
     private void loadData() {
         try {
@@ -63,7 +65,7 @@ public class IHM_Manager {
     }
 
     /**
-     * Attache tous les listeners de navigation, fermeture, et affichage des shifts.
+     * Nettoyage des "listeners"
      */
     private void bindActions() {
         // Fermeture
@@ -82,18 +84,26 @@ public class IHM_Manager {
     }
 
     /**
-     * Récupère l'employé et l'année sélectionnés dans Page2,
-     * filtre ses pointages, formate et envoie à la vue.
+     * On recupere ici l'employé et l'année puis
+     * on regarde ses pointages avant d'envoyer à l'affichage
      */
     private void refreshShifts() {
         String selectedEmployee = (String) view.getPage2().getEmployeeList().getSelectedItem();
         String selectedYear = (String) view.getPage2().getYearList().getSelectedItem();
 
-        if (selectedEmployee == null || selectedYear == null) return;
-        if (selectedEmployee.equals("Erreur chargement employés")) return;
+        if (selectedEmployee == null || selectedYear == null) {
+            return;
+        }
+        if (selectedEmployee.equals("Erreur chargement employés")) {
+            return;
+        }
 
         String[] parts = selectedEmployee.split(" ", 2);
-        if (parts.length < 2) return;
+
+        if (parts.length < 2) {
+            return;
+        }
+
         String name = parts[0];
         String surname = parts[1];
 
@@ -110,8 +120,7 @@ public class IHM_Manager {
         ArrayList<Pointing> pointings = pl.getthelist();
 
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-14s %-12s %-12s%n",
-                "Date", "Arrivée", "Départ"));
+        sb.append(String.format("%-14s %-12s %-12s%n", "Date", "Arrivée", "Départ"));
         sb.append("-".repeat(40)).append("\n");
 
         int i = 0;
@@ -122,23 +131,19 @@ public class IHM_Manager {
 
             if (p1.getDate().getYear() != year) {
                 i++;
+                //continue permet de continuer après ce if, on ne s'arrete pas ici
                 continue;
             }
 
             if (i + 1 < pointings.size() && pointings.get(i + 1).getDate().equals(p1.getDate())) {
                 Pointing p2 = pointings.get(i + 1);
-                sb.append(String.format("%-14s %-12s %-12s%n",
-                        p1.getDate().toString(),
-                        p1.getHour().toString(),
-                        p2.getHour().toString()));
+                sb.append(String.format("%-14s %-12s %-12s%n",p1.getDate().toString(),p1.getHour().toString(),p2.getHour().toString()));
                 shiftsCount++;
                 i += 2;
+
             } else {
-                // Pointage seul (départ manquant)
-                sb.append(String.format("%-14s %-12s %-12s%n",
-                        p1.getDate().toString(),
-                        p1.getHour().toString(),
-                        "(manquant)"));
+                //pointage seul, la personne est actuellement au travail.
+                sb.append(String.format("%-14s %-12s %-12s%n",p1.getDate().toString(), p1.getHour().toString(), "(manquant)"));
                 shiftsCount++;
                 i++;
             }
@@ -148,9 +153,7 @@ public class IHM_Manager {
             sb = new StringBuilder("Aucun shift trouvé pour " + selectedEmployee + " en " + selectedYear + ".");
         } else {
             sb.append("-".repeat(40)).append("\n");
-            sb.append("Total heures supplémentaires cumulées : ")
-                    .append(staff.getextratime())
-                    .append(" min");
+            sb.append("Total heures supplémentaires cumulées : ").append(staff.getextratime()).append(" min");
         }
 
         view.getPage2().updateShiftDisplay(sb.toString());
