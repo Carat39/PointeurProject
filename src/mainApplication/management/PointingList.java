@@ -23,14 +23,18 @@ public class PointingList implements Serializable {
     private static final long serialVersionUID = 123456789L;
     private ArrayList<Pointing> thelist = new ArrayList<Pointing>();
 
-
     //Constructors
 
     //Methods
+    /**
+     * Retourne la valeur du
+     *
+     * @param denominator La nouvelle valeur, non nulle, pour le dénominateur.
+     */
     public ArrayList<Pointing> getthelist(){return thelist;}
 
     //Utilité du paramètre sur l'identifiant de staff ??
-    public ArrayList<Pointing> getElemList(UUID l_id, LocalDate The_date){
+    public ArrayList<Pointing> getElemList(LocalDate The_date){
         Pointing a_pointing = null;
         ArrayList<Pointing> the_pointings = new ArrayList<>();
         boolean find = false;

@@ -118,7 +118,7 @@ public class Staff implements Serializable {
         PointingList the_list = null;
         TimeManagement theDate= new TimeManagement();
         //Retrieves the user's pointings as of today's date.
-        ArrayList<Pointing> the_day_pointings = pointingList.getElemList(uuidStaff, theDate.getDate());
+        ArrayList<Pointing> the_day_pointings = pointingList.getElemList(theDate.getDate());
         //Gets today's date in an integer number (from 0 to 6 starting from Monday).
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
