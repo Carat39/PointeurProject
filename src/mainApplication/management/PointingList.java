@@ -11,11 +11,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
-
+/**
+ * Cette classe permet de gérer et stocker, à terme, tous les pointages réalisés par les employés.
+ * Elle stocke ces informations dans un attribut de type ArrayList et permet de récupérer, ajouter,
+ * ou sérialiser les données à l'aide de ses méthodes.
+ *
+ * @author Les Scribes de Broadway
+ */
 public class PointingList implements Serializable {
-    private static final long serialVersionUID = 123456789L;
-
     //Attributes
+    private static final long serialVersionUID = 123456789L;
     private ArrayList<Pointing> thelist = new ArrayList<Pointing>();
 
 
