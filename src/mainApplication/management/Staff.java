@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Staff implements Serializable {
+    private static final long serialVersionUID = 123456789L;
     //Attributes
     private UUID uuidStaff;
     private String name;

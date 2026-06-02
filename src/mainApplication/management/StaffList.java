@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.io.Serializable;
 
 public class StaffList implements Serializable {
+    private static final long serialVersionUID = 123456789L;
     private ArrayList<Staff> theStafflist = new ArrayList<Staff>();
 
     //Constructors

@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 public class TestSerialisation implements Serializable{
+    private static final long serialVersionUID = 123456789L;
     public static void Ex1() throws Exception{
         int heure = java.time.LocalTime.now().getHour();
         System.out.println(heure);

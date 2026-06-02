@@ -43,9 +43,9 @@ public class IHM_Manager {
      */
     private void loadData() {
         try {
-            allStaff = StaffList.deserialisationStaffList("donnees.ser");
+            allStaff = StaffList.deserialisationStaffList("staffList.ser");
             StaffList workingNow = allStaff.saveworkersfilter(1);
-            allEmployees     = allStaff.getStafflist();
+            allEmployees = allStaff.getStafflist();
             workingEmployees = workingNow.getStafflist();
         } catch (Exception e) {
             e.printStackTrace();
