@@ -26,12 +26,13 @@ public class IHM_Manager {
     private StaffList allStaff; //pour les recherches sur les données des 'listeners'
 
 
-    //constructeuur
+    //constructeur
     public IHM_Manager() {
         model = new temp_serialisation();
         view  = new Assembleur_pages();
 
         loadData();
+        System.out.println("Working employees: " + workingEmployees);
         view.build(allEmployees, workingEmployees, allStaff.getAvailableYears());
         bindActions();
     }
