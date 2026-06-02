@@ -28,15 +28,21 @@ void main() throws Exception{
     Staff[] theStaff = {Romain, Arthur,Clement,Nino,Michel};
 
     StaffList theStaffList = new StaffList(theStaff);
-    theStaffList.serialisationStaffList("staffList.ser");
 
     //StaffList theStaffList = new StaffList();
+
+    PointingList pointingList = new PointingList();
+
     Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
     Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
-    PointingList pointingList = new PointingList();
+    Arthur.addPointing(pointing1);
+    Arthur.addPointing(pointing2);
+
+
     pointingList.addElem(pointing1);
     pointingList.addElem(pointing2);
     pointingList.serialisation("pointingList.ser");
+    theStaffList.serialisationStaffList("staffList.ser");
 
     //PointingList thePointingList = PointingList.deserialisation("pointingList.ser"); // Sera dans la version final de l'API de Romain!!!
     /*

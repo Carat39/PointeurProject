@@ -8,6 +8,7 @@ import Time.TimeManagement;
 import view.MainView;
 import view.ConfirmView;
 import view.ExceptView;
+import view.InformationView;
 import pointingApplication.Pointing;
 
 import javax.swing.*;
@@ -90,10 +91,14 @@ public class IhmInterface {
                     ExceptView exceptView = new ExceptView(selectedEmployee);
                     System.out.println("Vous avez déjà pointé 2 fois aujourd'hui");
                     exceptView.getButtonMenu().addActionListener(close -> {
-                        mainView.close();;
+                        exceptView.close();;
                     });
                 } else if ("You haven't pointed 2 times yesterday!!!".equals(msg)) {
-                    // on rajoutera une fenetre utilistauer par la suite
+                    // on lance la fenetre correspondante
+                    InformationView informationView = new InformationView(selectedEmployee);
+                    informationView.getButtonMenu().addActionListener(close ->{
+                        InformationView.close();
+                    });
                     System.out.println("Vous n'avez pas pointé correctement hier");
                 }
             }
@@ -106,6 +111,8 @@ public class IhmInterface {
             System.out.println(ip);
             System.out.println(port);
         });
+
+
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(IhmInterface::new);

@@ -16,7 +16,7 @@ public class ExceptView {
         //Frame
         frame = new JFrame("Pointeuse");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(500, 400);
+        frame.setSize(500, 425);
         frame.setLocationRelativeTo(null);
 
         //Panel principal
