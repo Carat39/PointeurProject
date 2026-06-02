@@ -83,8 +83,8 @@ public class Staff implements Serializable {
     }
 
     //Ajoute à partir d'un flux de donnée ou lève une exception
-    public void addPointing(String filename) throws Exception{
-        pointingList.addElem(filename);
+    public void addPointing(Pointing thePointing) throws Exception{
+        pointingList.addElem(thePointing);
     }
 
     public int getnbpointage(){
