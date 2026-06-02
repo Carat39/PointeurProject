@@ -32,7 +32,17 @@ void main() throws Exception{
     PointingList thePointingList = new PointingList();
     //Petit test pour Romain
     Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    Pointing le_pointage = Pointing.deserialisation("pointing.ser");
+    le_pointage.setHour(LocalTime.MIN.plusHours(3));
+    le_pointage.serialisation("pointing.ser");
+    thePointingList.addElem(Pointing.deserialisation("pointing.ser"));
+
     Pointing.Jepointe("Blaquart","Romain",theStaffList);
+    Pointing le_nouv_pointage = Pointing.deserialisation("pointing.ser");
+    le_nouv_pointage.setHour(LocalTime.MIN.plusHours(9));
+    le_nouv_pointage.serialisation("pointing.ser");
+    thePointingList.addElem(Pointing.deserialisation("pointing.ser"));
+    thePointingList.addElem(Pointing.deserialisation("pointing.ser"));
     try {
         //Oh non, Romain t'as déjà pointé 2 fois à l'école primaire ce matin t'as épuisé ton quota, faut aller voir le staff
         Pointing.Jepointe("Blaquart","Romain",theStaffList);
@@ -43,7 +53,9 @@ void main() throws Exception{
     }
     System.out.println("Romain a pointé " + Romain.getnbpointage() + " fois depuis qu'il travaille ici");
     Pointing.Jepointe("Maigret","Nino",theStaffList);
+    thePointingList.addElem(Pointing.deserialisation("pointing.ser"));
     Pointing.Jepointe("Sauger","Clément",theStaffList);
+    thePointingList.addElem(Pointing.deserialisation("pointing.ser"));
 
     //Gerer les pairs de tableau dans pointingList
     StaffList theStaffWorkingList = new StaffList();
@@ -63,6 +75,7 @@ void main() throws Exception{
     theStaffWorkingList = theStaffList.saveworkersfilter(2);
     theStaffWorkingList.showAllWorkers();
 
-
+    Romain.calcExtraTime();
+    System.out.println("extra time de Romain : " + Romain.getextratime());
 
 }

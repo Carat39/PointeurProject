@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Staff {
@@ -105,16 +106,16 @@ public class Staff {
     public void calcExtraTime(){
         PointingList the_list = null;
         TimeManagement theDate= new TimeManagement();
-        //Retrieves the user's pointing as of today's date.
-        Pointing the_pointing = the_list.getElemList(uuidStaff, theDate.getDate());
+        //Retrieves the user's pointings as of today's date.
+        ArrayList<Pointing> the_day_pointings = pointingList.getElemList(uuidStaff, theDate.getDate());
         //Gets today's date in an integer number (from 0 to 6 starting from Monday).
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
         //Calculate the difference between the arrival/departure time and the time scheduled on the timetable.
-        int startDif= workschedule.getSchedule()[the_day*2].compareTo(the_pointing.getHour());
-        //int endDif= workschedule.getSchedule()[the_day*2+1].compareTo(the_pointing.getEndHour());
+        int startDif= workschedule.getSchedule()[the_day*2].compareTo((the_day_pointings.getFirst()).getHour());
+        int endDif= workschedule.getSchedule()[the_day*2+1].compareTo((the_day_pointings.getLast()).getHour());
         //Adding/Deleting overtime hours if working hours have not been respected
         extratime += startDif;
-        //extratime += endDif;
+        extratime += endDif;
     }
 }

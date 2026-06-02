@@ -107,8 +107,6 @@ public class Pointing implements Serializable{
                 Pointing thePointing = new Pointing(theStaff.getuuidStaff());
                 //On sérialise a ce moment la
                 thePointing.serialisation("pointing.ser");
-                Pointing Pointingdeserialise = new Pointing();
-                Pointingdeserialise = Pointing.deserialisation("pointing.ser");
                 //Ajout du pointage dans la liste du staff
                 theStaff.addPointing("pointing.ser");
             }

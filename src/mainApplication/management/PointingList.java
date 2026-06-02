@@ -24,20 +24,23 @@ public class PointingList {
     //Methods
     public ArrayList<Pointing> getthelist(){return thelist;}
 
-    public Pointing getElemList(UUID l_id, LocalDate The_date){
-        Pointing the_pointing = null;
+    //Utilité du paramètre sur l'identifiant de staff ??
+    public ArrayList<Pointing> getElemList(UUID l_id, LocalDate The_date){
+        Pointing a_pointing = null;
+        ArrayList<Pointing> the_pointings = new ArrayList<>();
         boolean find = false;
         int indice = 0;
         while(indice < thelist.size() && !find){
-            the_pointing = thelist.get(indice);
-            if (the_pointing.getDate() == The_date){
+            a_pointing = thelist.get(indice);
+            if ((a_pointing.getDate()).equals(The_date)){
                 find = true;
+                the_pointings.add(a_pointing);
             }
             else{
                 indice ++;
             }
         }
-        return the_pointing;
+        return the_pointings;
     }
 
     //A-t-il pointé cond times à la date donnée ?
