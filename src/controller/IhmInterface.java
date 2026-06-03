@@ -42,7 +42,7 @@ public class IhmInterface {
 
         // On rajoute à l'écran la liste de staff
         for (Staff s : staffList.getStaffList()) {
-            mainView.getComboEmployees().addItem(s.getsurname() + " " + s.getname());
+            mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
         }
 
         // Timer 1 seconde
@@ -64,8 +64,8 @@ public class IhmInterface {
             String selectedEmployee = (String) mainView.getComboEmployees().getSelectedItem();
             // Extraction du nom de l'utilisateur et l'adresse de destination
             String[] tabString = selectedEmployee.split(" ");
-            String surname = tabString[0];
-            String firstname = tabString[1];
+            String surname = tabString[1];
+            String firstname = tabString[0];
             System.out.println(surname);
             System.out.println(selectedEmployee);
             String ip = mainView.getTextFieldIp();;

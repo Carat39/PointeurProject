@@ -20,10 +20,10 @@ void main() throws Exception{
             LocalTime.MIN.plusHours(7),LocalTime.MIN.plusHours(14)};
 
     WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
-    Staff Romain = new Staff("Romain","Blaquart", Departement.WORKERS,workSchedule1);
-    Staff Arthur = new Staff("Arthur","Brajot",Departement.ADMINISTRATION,workSchedule1);
-    Staff Clement = new Staff("Clément","Sauger",Departement.COMMUNICATION,workSchedule1);
-    Staff Nino = new Staff("Nino","Maigret",Departement.MANAGEMENT,workSchedule1);
+    Staff Romain = new Staff("Blaquart","Romain", Departement.WORKERS,workSchedule1);
+    Staff Arthur = new Staff("Brajot","Arthur",Departement.ADMINISTRATION,workSchedule1);
+    Staff Clement = new Staff("Sauger","Clement",Departement.COMMUNICATION,workSchedule1);
+    Staff Nino = new Staff("Maigret","Nino",Departement.MANAGEMENT,workSchedule1);
     Staff Michel = new Staff("Michel", "Jean", Departement.MANAGEMENT,workSchedule1);
     Staff[] theStaff = {Romain, Arthur,Clement,Nino,Michel};
 

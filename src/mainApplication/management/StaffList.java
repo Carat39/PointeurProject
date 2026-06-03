@@ -88,10 +88,11 @@ public class StaffList implements Serializable {
             oos.writeObject(this);
         }
     }
-    public static StaffList deserialisationStaffList(String filename) throws Exception{
+
+    public static StaffList deserialisationStaffList(String filename) throws Exception {
         StaffList les_donnees = null;
-        try(FileInputStream file = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(file)
+        try (FileInputStream file = new FileInputStream(filename);
+             ObjectInputStream in = new ObjectInputStream(file)
         ) {
             les_donnees = (StaffList) in.readObject();
         }
