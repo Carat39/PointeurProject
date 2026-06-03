@@ -120,6 +120,7 @@ public class MainView {
 
         frame.setContentPane(panel);
         frame.setVisible(true);
+        frame.setResizable(true);
     }
 
     // Getters pour le controller

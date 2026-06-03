@@ -16,9 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static pointingApplication.Pointing.Jepointe;
-import static pointingApplication.Pointing.deserialisation;
-
 public class IhmInterface {
 
     private MainView mainView;
@@ -117,4 +114,11 @@ public class IhmInterface {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(IhmInterface::new);
     }
+
+
+    // il faut pour la fin faire en sorte de tester la connection avec l'ihm manager
+    // si la connexion est bonne envoyer les pointings qui sont en attente puis envoyer le pointing
+    // realisé par l'utilisateur
+    // sinon enregistrer le pointing dans un fichier serialiable qui sera essayer à la prochaine
+    // connexion
 }

@@ -89,6 +89,7 @@ public class ConfirmView {
 
         frame.setContentPane(mainPanel);
         frame.setVisible(true);
+        frame.setResizable(true);
     }
 
     // Getter pour le controller
