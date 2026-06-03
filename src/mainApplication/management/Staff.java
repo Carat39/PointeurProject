@@ -88,6 +88,11 @@ public class Staff implements Serializable {
         pointingList.addElem(thePointing);
     }
 
+    public void addPointing(String filename) throws Exception{
+        pointingList.addElem(filename);
+    }
+
+
     public int getnbpointage(){
         return pointingList.getthelist().size();
     }
