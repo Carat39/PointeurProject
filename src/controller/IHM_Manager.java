@@ -32,6 +32,7 @@ public class IHM_Manager {
         view  = new Assembleur_pages();
 
         loadData();
+        System.out.println("Working employees: " + workingEmployees);
         view.build(allEmployees, workingEmployees, allStaff.getAvailableYears());
         bindActions();
     }
