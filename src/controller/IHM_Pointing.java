@@ -1,6 +1,5 @@
 package controller;
 
-import mainApplication.management.Departement;
 import mainApplication.management.PointingList;
 import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
@@ -16,12 +15,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class IhmInterface {
+public class IHM_Pointing {
 
     private MainView mainView;
     private StaffList staffList;
     private PointingList pointingList;
-    public IhmInterface() {
+    public IHM_Pointing() {
         mainView = new MainView();
 
         // On recupere la liste des staff depuis stafflist.ser
@@ -42,7 +41,7 @@ public class IhmInterface {
 
         // On rajoute à l'écran la liste de staff
         for (Staff s : staffList.getStaffList()) {
-            mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
+            mainView.getComboEmployees().addItem(s.getsurname() + " " + s.getname());
         }
 
         // Timer 1 seconde
@@ -55,6 +54,11 @@ public class IhmInterface {
             mainView.setRounded("Arrondi: " + TimeManagement.round(TimeManagement.getHour()).format(DateTimeFormatter.ofPattern("HH:mm")));
         });
         timer.start();
+        // Bouton chekcIp pour se connecter à IHM manager et recuperer els stafflist
+        mainView.getCheckButtonIP().addActionListener(e-> {
+            // on affiche un label si on est bien connnecté
+            mainView.changeVisibilitySuccess();
+        });
 
         // Bouton Check in/out
         mainView.getCheckButton().addActionListener(e -> {
@@ -64,9 +68,9 @@ public class IhmInterface {
             String selectedEmployee = (String) mainView.getComboEmployees().getSelectedItem();
             // Extraction du nom de l'utilisateur et l'adresse de destination
             String[] tabString = selectedEmployee.split(" ");
-            String surname = tabString[1];
-            String firstname = tabString[0];
-            System.out.println(surname);
+            String surname = tabString[0];
+            String firstname = tabString[1];
+            System.out.println("surname"+surname);
             System.out.println(selectedEmployee);
             String ip = mainView.getTextFieldIp();;
             int port = Integer.parseInt(mainView.getTextFieldPort());
@@ -112,7 +116,7 @@ public class IhmInterface {
 
     }
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(IhmInterface::new);
+        SwingUtilities.invokeLater(IHM_Pointing::new);
     }
 
 

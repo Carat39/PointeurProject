@@ -18,6 +18,9 @@ public class MainView {
     private JButton checkButton;
     private JTextField textFieldIp;
     private JTextField textFieldPort;
+    private JButton checkButtonIP;
+    private JLabel LabelSuccess;
+    private JLabel labelError;
 
     /**
      * Fonction principale permettant
@@ -41,7 +44,7 @@ public class MainView {
         // Panneau principal
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Style.pastelPeach);
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 30));
 
         // Top : titre
         JLabel titre = new JLabel("Pointeuse - Time Tracker", SwingConstants.CENTER);
@@ -67,6 +70,12 @@ public class MainView {
         labelRounded.setForeground(new Color(130, 100, 160));
         labelRounded.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Label pour message de connexion reussie
+        LabelSuccess = new JLabel("Connexion réussie");
+        LabelSuccess.setFont(new Font("Serif", Font.BOLD, 15));
+        LabelSuccess.setForeground(Style.pastelPeach);
+        LabelSuccess.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         // IP et port
         JPanel ipPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ipPanel.setBackground(Style.pastelPeach);
@@ -76,15 +85,23 @@ public class MainView {
         JLabel labelPort = new JLabel("Port :");
         labelPort.setFont(new Font("Serif", Font.BOLD, 20));
 
-        textFieldIp = new JTextField(15);
+        textFieldIp = new JTextField(10);
         textFieldIp.setFont(new Font("Serif", Font.PLAIN, 20));
-        textFieldPort = new JTextField(15);
+        textFieldPort = new JTextField(7);
         textFieldPort.setFont(new Font("Serif", Font.PLAIN, 20));
+
+        // bouton checkIp
+        checkButtonIP = new JButton("Connexion");
+        checkButtonIP.setPreferredSize(new Dimension(230, 30));
+        checkButtonIP.setFont(new Font("Serif", Font.BOLD, 20));
+        checkButtonIP.setBackground(Style.pastelPurple);
+        checkButtonIP.setFocusPainted(false);
 
         ipPanel.add(labelIp);
         ipPanel.add(textFieldIp);
         ipPanel.add(labelPort);
         ipPanel.add(textFieldPort);
+        ipPanel.add(checkButtonIP);
 
         // rajout dans le panel
         centerPanel.add(Box.createVerticalStrut(40));
@@ -93,7 +110,9 @@ public class MainView {
         centerPanel.add(labelHour);
         centerPanel.add(Box.createVerticalStrut(8));
         centerPanel.add(labelRounded);
-        centerPanel.add(Box.createVerticalStrut(100));
+        centerPanel.add(Box.createVerticalStrut(80));
+        centerPanel.add(LabelSuccess);
+        centerPanel.add(Box.createVerticalStrut(20));
         centerPanel.add(ipPanel);
 
         // Bottom : combobox + bouton
@@ -132,4 +151,6 @@ public class MainView {
     public String getTextFieldIp(){return textFieldIp.getText();}
     public String getTextFieldPort(){return textFieldPort.getText();}
     public void close() {frame.dispose();}
+    public JButton getCheckButtonIP(){return checkButtonIP;};
+    public void changeVisibilitySuccess(){LabelSuccess.setForeground(new Color(100, 80, 120));}
 }
