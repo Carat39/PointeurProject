@@ -61,7 +61,7 @@ public class Staff implements Serializable {
     public void setPointingList(PointingList The_PointingList){pointingList = The_PointingList;}
 
     public boolean condPointingADay(int cond, long lessDay){
-        return pointingList.pointingCondTimes(uuidStaff,TimeManagement.getDateNow().minusDays(lessDay),cond);
+        return pointingList.pointingCondTimes(TimeManagement.getDateNow().minusDays(lessDay),cond);
     }
 
     public void serialisation(String filename) throws Exception{
@@ -108,16 +108,16 @@ public class Staff implements Serializable {
         PointingList the_list = null;
         TimeManagement theDate= new TimeManagement();
         //Retrieves the user's pointing as of today's date.
-        Pointing the_pointing = the_list.getElemList(uuidStaff, theDate.getDate());
+        ArrayList<Pointing> the_pointing = the_list.getElemList(theDate.getDate());
         //Gets today's date in an integer number (from 0 to 6 starting from Monday).
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
         //Calculate the difference between the arrival/departure time and the time scheduled on the timetable.
-        int startDif= workschedule.getSchedule()[the_day*2].compareTo(the_pointing.getHour());
-        //int endDif= workschedule.getSchedule()[the_day*2+1].compareTo(the_pointing.getEndHour());
+        int startDif= workschedule.getSchedule()[the_day*2].compareTo((the_pointing.getFirst()).getHour());
+        int endDif= workschedule.getSchedule()[the_day*2+1].compareTo((the_pointing.getLast()).getHour());
         //Adding/Deleting overtime hours if working hours have not been respected
         extratime += startDif;
-        //extratime += endDif;
+        extratime += endDif;
     }
     public ArrayList<Pointing> getPointingsByYear(int year) {
         ArrayList<Pointing> result = new ArrayList<>();
