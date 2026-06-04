@@ -54,9 +54,9 @@ public class IHM_Manager {
             e.printStackTrace();
             allStaff = new StaffList();
             allEmployees = new ArrayList<>();
-            allEmployees.add("Erreur chargement employés");
+            allEmployees.add("Error trying to load staff list");
             workingEmployees = new ArrayList<>();
-            workingEmployees.add("Erreur chargement employés");
+            workingEmployees.add("Error trying to load staff list");
         }
     }
 
@@ -78,14 +78,20 @@ public class IHM_Manager {
         view.getPage2().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
         view.getPage3().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
         view.getPage4().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
+        view.getPage5().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
+        view.getPage6().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
+
+        view.getPage2().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
+        view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
+        view.getPage4().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
+        view.getPage5().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
+        view.getPage6().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
 
         view.getPage1().getCheckBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
         view.getPage1().getClockedBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page3"));
         view.getPage1().getEmployeesBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
 
-        view.getPage2().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
-        view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
-        view.getPage4().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
+        view.getPage2().getManageBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page6"));
 
         view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
         view.getPage2().getYearList().addActionListener(e -> refreshShifts());
@@ -96,14 +102,11 @@ public class IHM_Manager {
         //La fonction ici est particulière car on veut garder l'employé sélectionné en page4 pour poovoir le modifier.
         view.getPage4().getManageBtn().addActionListener(e -> goToPage5());
 
-        view.getPage5().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
-        view.getPage5().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
 
         view.getPage5().getSaveBtn().addActionListener(e -> saveEmployee());
-
         view.getPage5().getDeleteBtn().addActionListener(e -> deleteEmployee());
-
         view.getPage5().getCreateBtn().addActionListener(e -> createFromPage5());
+
     }
 
     /**
@@ -115,7 +118,7 @@ public class IHM_Manager {
         String selectedYear = (String) view.getPage2().getYearList().getSelectedItem();
 
         if (selectedEmployee == null || selectedYear == null) return;
-        if (selectedEmployee.equals("Erreur chargement employés")) return;
+        if (selectedEmployee.equals("Error loading staff list")) return;
 
         String[] parts = selectedEmployee.split(" ", 2);
         if (parts.length < 2) return;
@@ -124,7 +127,7 @@ public class IHM_Manager {
         try {
             staff = allStaff.find(parts[0], parts[1]);
         } catch (Exception e) {
-            view.getPage2().updateShiftDisplay("Employé introuvable.");
+            view.getPage2().updateShiftDisplay("Can't find employee");
             return;
         }
 
@@ -140,7 +143,7 @@ public class IHM_Manager {
         String selectedEmployee = (String) view.getPage3().getEmployeeList().getSelectedItem();
 
         if (selectedEmployee == null) {return;}
-        if (selectedEmployee.equals("Erreur chargement employés")){return;}
+        if (selectedEmployee.equals("Error failed to load employee")){return;}
 
         String[] parts = selectedEmployee.split(" ", 2);
         if (parts.length < 2){return;}
@@ -170,7 +173,7 @@ public class IHM_Manager {
      */
     private void refreshPage4Employee() {
         String selected = (String) view.getPage4().getEmployeeList().getSelectedItem();
-        if (selected == null || selected.equals("Erreur chargement employees")){ return;}
+        if (selected == null || selected.equals("Error, failled to load stafflist")){ return;}
 
         String[] parts = selected.split(" ", 2);
         if (parts.length < 2) return;
@@ -188,7 +191,7 @@ public class IHM_Manager {
         String surname = view.getPage5().getSurnameField().getText().trim();
 
         if (name.isEmpty() || surname.isEmpty()) {
-            JOptionPane.showMessageDialog(view.getFrame(), "Nom et prénom vides.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "Name and Surname empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         Staff staff = view.getPage5().getStaffRef();
@@ -225,7 +228,7 @@ public class IHM_Manager {
      */
     private void goToPage5() {
         String selected = (String) view.getPage4().getEmployeeList().getSelectedItem();
-        if (selected == null || selected.equals("Erreur chargement employees")) {
+        if (selected == null || selected.equals("Error, failled to load stafflist") || selected.equals("Error loading staff list")) {
             return;
         }
         String[] parts = selected.split(" ", 2);
@@ -248,7 +251,7 @@ public class IHM_Manager {
         String surname = view.getPage5().getSurnameField().getText().trim();
 
         if (name.isEmpty() || surname.isEmpty()) {
-            JOptionPane.showMessageDialog(view.getFrame(), "nom et prenom vide", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view.getFrame(), "name and surname empty", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         mainApplication.management.Departement dept = (mainApplication.management.Departement)
@@ -260,11 +263,10 @@ public class IHM_Manager {
             allStaff.serialisationStaffList("staffList.ser");
             updateData();
             view.getCardLayout().show(view.getCardPanel(), "page4");
-            JOptionPane.showMessageDialog(view.getFrame(), "Nouvel employé créé avec succès !");
+            JOptionPane.showMessageDialog(view.getFrame(), "Created new employee successfully");
         } catch (Exception ex) {
             ex.getMessage();
         }
-
     }
 
 

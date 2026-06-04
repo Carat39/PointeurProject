@@ -25,6 +25,7 @@ public class Assembleur_pages {
     private Page3 page3;
     private Page4 page4;
     private Page5 page5;
+    private Page6 page6;
 
     public Assembleur_pages() {
         frame = new JFrame("Pointeuse Manager");
@@ -50,12 +51,14 @@ public class Assembleur_pages {
         page3 = new Page3(workingEmployees);         // seulement ceux qui bossent
         page4 = new Page4(allEmployees);
         page5 = new Page5();
+        page6 = new Page6();
 
         cardPanel.add(page1.getPanel(), "page1");
         cardPanel.add(page2.getPanel(), "page2");
         cardPanel.add(page3.getPanel(), "page3");
         cardPanel.add(page4.getPanel(), "page4");
         cardPanel.add(page5.getPanel(), "page5");
+        cardPanel.add(page6.getPanel(), "page6");
 
         frame.setContentPane(cardPanel);
         frame.setLocationRelativeTo(null);
@@ -78,4 +81,6 @@ public class Assembleur_pages {
     public Page4 getPage4() { return page4; }
 
     public Page5 getPage5() { return page5; }
+
+    public Page6 getPage6() { return page6; }
 }

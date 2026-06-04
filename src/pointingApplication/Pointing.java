@@ -213,6 +213,10 @@ public class Pointing implements Serializable{
         hour = newSHour;
     }
 
+    public void setHour(String newSHour) throws Exception{
+        setHour(LocalTime.parse(newSHour));
+    }
+
     public void setDate(LocalDate newDate){ date= newDate; }
 
     public LocalTime getHour(){ return hour; }

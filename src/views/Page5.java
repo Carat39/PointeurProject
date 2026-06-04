@@ -41,15 +41,15 @@ public class Page5 {
         int centerX = Variables.WIDTH / 2;
         int topY = Variables.HEIGHT / 3;
 
-        JLabel nameLabel = new JLabel("Nom :");
+        JLabel nameLabel = new JLabel("Name :");
         nameLabel.setFont(labelFont);
         nameLabel.setForeground(Color.DARK_GRAY);
 
-        JLabel surnameLabel = new JLabel("Prénom :");
+        JLabel surnameLabel = new JLabel("Surname :");
         surnameLabel.setFont(labelFont);
         surnameLabel.setForeground(Color.DARK_GRAY);
 
-        JLabel deptLabel = new JLabel("Département :");
+        JLabel deptLabel = new JLabel("Departement :");
         deptLabel.setFont(labelFont);
         deptLabel.setForeground(Color.DARK_GRAY);
 
@@ -78,7 +78,7 @@ public class Page5 {
         int btnWidth = 135;
         int btnHeight = 40;
 
-        deleteBtn = new JButton("Supprimer");
+        deleteBtn = new JButton("Delete");
         deleteBtn.setFont(customFont);
         deleteBtn.setBackground(Variables.PASTEL_PEACH);
         deleteBtn.setForeground(Color.DARK_GRAY);
@@ -86,7 +86,7 @@ public class Page5 {
         deleteBtn.setBounds(centerX - 215, buttonsY, btnWidth, btnHeight);
 
 
-        saveBtn = new JButton("Sauvegarder");
+        saveBtn = new JButton("Save");
         saveBtn.setFont(customFont);
         saveBtn.setBackground(Variables.PASTEL_PEACH);
         saveBtn.setForeground(Color.DARK_GRAY);
@@ -94,7 +94,7 @@ public class Page5 {
         saveBtn.setBounds(centerX - 67, buttonsY, btnWidth, btnHeight);
 
 
-        createBtn = new JButton("Créer");
+        createBtn = new JButton("Create");
         createBtn.setFont(customFont);
         createBtn.setBackground(Variables.PASTEL_PEACH);
         createBtn.setForeground(Color.DARK_GRAY);

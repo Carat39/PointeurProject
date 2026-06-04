@@ -18,7 +18,6 @@ public class Page3 {
     private final JButton backBtn;
     private final JComboBox<String> employeeList;
     private final JTextArea infoArea;
-    private final JButton manageBtn;
 
     public Page3(ArrayList<String> employees) {
         panel = new JPanel(null);
@@ -27,14 +26,13 @@ public class Page3 {
         closeBtn = Variables.createCloseBtn();
         backBtn = Variables.createBackBtn();
         employeeList = Variables.createEmployeeList(employees);
-        manageBtn = Variables.createNavBtn("Manage Pointing", Variables.HEIGHT - 11 * (Variables.HEIGHT / 20));
 
         infoArea = new JTextArea();
         infoArea.setEditable(false);
         infoArea.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 13));
         infoArea.setBackground(java.awt.Color.WHITE);
         infoArea.setForeground(java.awt.Color.DARK_GRAY);
-        infoArea.setText("Sélectionnez un employé.");
+        infoArea.setText("Select an employee.");
 
         JScrollPane scrollPane = new JScrollPane(infoArea);
         scrollPane.setBounds(Variables.WIDTH / 2 - 300, Variables.HEIGHT / 2 + 50, 600, 200);
@@ -45,7 +43,6 @@ public class Page3 {
         panel.add(backBtn);
         panel.add(employeeList);
         panel.add(scrollPane);
-        panel.add(manageBtn);
     }
 
     public void displayEmployee(String name, String surname, String arrivalHour) {
@@ -56,5 +53,4 @@ public class Page3 {
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getBackBtn(){return backBtn;}
     public JComboBox<String> getEmployeeList(){return employeeList;}
-    public JButton getManageBtn(){return manageBtn;}
 }
