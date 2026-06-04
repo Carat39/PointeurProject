@@ -44,7 +44,6 @@ public class Server {
 
                         //C'est l'API de la pointeuse qui envoie lors d'un pointage
                         //On récupère la list de Staff
-                        System.out.println(thePointing.getDate());
                         StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
                         Staff theStaff = theStaffList.find(thePointing.getUuidStaff());
                         //On y ajoute le pointeur

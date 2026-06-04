@@ -65,9 +65,33 @@ public class PointingList implements Serializable {
         return comptage == cond;
     }
 
+    public boolean uniquePointing(Pointing the_pointing){
+        Pointing pointingInList = null;
+        boolean unique = true;
+        int cond = 0;
+        int indice = thelist.size()-1;
+        if (indice > 100){
+            //La liste est trop grande
+            cond = 100;
+        }
+        while(indice >= 0 && unique){
+            pointingInList = thelist.get(indice);
+            if (the_pointing.getHour().equals(pointingInList.getHour())){
+                unique = false;
+            }
+            indice --;
+        }
+        return unique;
+    }
+
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
-        thelist.add(pointing);
+        if (uniquePointing(pointing)){
+            thelist.add(pointing);
+        }
+        else{
+            System.out.println("This pointing already exists.");
+        }
     }
 
     public void addElem(String filename) throws Exception{

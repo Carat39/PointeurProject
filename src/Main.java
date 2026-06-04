@@ -36,13 +36,13 @@ void main() throws Exception{
     Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
     Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
     Arthur.addPointing(pointing1);
+    pointing2.setHour("20:00");
     Arthur.addPointing(pointing2);
 
 
     pointingList.addElem(pointing1);
     pointingList.addElem(pointing2);
-    pointing1.setHour("12:00");
-    System.out.println(pointing1.getHour());
+    System.out.println(pointing2.getHour());
 
 
 
