@@ -14,6 +14,7 @@ public class Page1 {
     private final JButton closeBtn;
     private final JButton checkBtn;
     private final JButton clockedBtn;
+    private final JButton employeesBtn;
 
     public Page1() {
         panel = new JPanel(null);
@@ -22,15 +23,18 @@ public class Page1 {
         closeBtn = Variables.createCloseBtn();
         checkBtn = Variables.createNavBtn("Saved Work time", Variables.HEIGHT - 7 * (Variables.HEIGHT / 10));
         clockedBtn = Variables.createNavBtn("Clocked in Now", Variables.HEIGHT - 11 * (Variables.HEIGHT / 20));
+        employeesBtn = Variables.createNavBtn("Employees", Variables.HEIGHT - 4 * (Variables.HEIGHT / 10));
 
-        panel.add(Variables.createTitle("Time Tracker v1.1"));
+        panel.add(Variables.createTitle("Time Tracker v1.7"));
         panel.add(closeBtn);
         panel.add(checkBtn);
         panel.add(clockedBtn);
+        panel.add(employeesBtn);
     }
 
     public JPanel  getPanel(){return panel;}
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getCheckBtn(){return checkBtn;}
     public JButton getClockedBtn(){return clockedBtn;}
+    public JButton getEmployeesBtn(){return employeesBtn;}
 }
