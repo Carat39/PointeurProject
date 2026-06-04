@@ -41,7 +41,7 @@ public class MainView {
         // Panneau principal
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Style.pastelPeach);
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 30));
 
         // Top : titre
         JLabel titre = new JLabel("Pointeuse - Time Tracker", SwingConstants.CENTER);
