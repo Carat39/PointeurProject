@@ -1,11 +1,13 @@
 package views;
 
+import Time.TimeManagement;
 import views.utils.Style;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  * @author Romain
@@ -19,35 +21,28 @@ public class ConfirmView {
     /**
      * Fonction principale permettant
      * d'appeler la methode buildant la page de confirmation
-     * @param currentDate
-     * @param currentTime
-     * @param employeeName
      */
     public ConfirmView(LocalDate currentDate, LocalTime currentTime, String employeeName) {
         buildUI(currentDate, currentTime, employeeName);
     }
 
     /**
-     *Fonction initalisant tous les aspects
-     * graphique
-     * @param currentDate
-     * @param currentTime
-     * @param employeeName
+     * Fonction initialisant tous les aspects graphiques
      */
     private void buildUI(LocalDate currentDate, LocalTime currentTime, String employeeName) {
-        //Frame
+        // Frame
         frame = new JFrame("TimeChecker");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);
 
-        //Panel principal
+        // Panel principal
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Style.pastelPeach);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        // Label "vous avez pointez"
-        JLabel labelEnd = new JLabel("Vous avez pointé");
+        // Label "vous avez pointé"
+        JLabel labelEnd = new JLabel("You have clocked in");
         labelEnd.setFont(new Font("Serif", Font.BOLD, 30));
         labelEnd.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -58,28 +53,30 @@ public class ConfirmView {
         labelEmployee.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Date
-        JLabel labelDate = new JLabel("le " + currentDate.format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")));
+        JLabel labelDate = new JLabel("on " + TimeManagement.getDate().format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.ENGLISH)));
         labelDate.setFont(new Font("Serif", Font.BOLD, 30));
         labelDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Heure
-        JLabel labelHour = new JLabel("à " + currentTime.format(DateTimeFormatter.ofPattern("HH:mm")));
+        JLabel labelHour = new JLabel(
+                "at " + currentTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+        );
         labelHour.setFont(new Font("Serif", Font.BOLD, 30));
         labelHour.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //Bouton retour
-        buttonMenu = new JButton("Retour au menu");
+        // Bouton retour
+        buttonMenu = new JButton("Back to menu");
         buttonMenu.setFont(new Font("Serif", Font.BOLD, 30));
         buttonMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonMenu.setPreferredSize(new Dimension(300, 70));
         buttonMenu.setBackground(Style.pastelPurple);
         buttonMenu.setFocusPainted(false);
 
-        // Tout ajouter au panel au bon endroit
+        // Ajout au panel
         mainPanel.add(Box.createVerticalStrut(20));
-        mainPanel.add(labelEnd);
-        mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(labelEmployee);
+        mainPanel.add(Box.createVerticalStrut(15));
+        mainPanel.add(labelEnd);
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(labelDate);
         mainPanel.add(Box.createVerticalStrut(15));
