@@ -36,7 +36,7 @@ public class ConfirmView {
      */
     private void buildUI(LocalDate currentDate, LocalTime currentTime, String employeeName) {
         //Frame
-        frame = new JFrame("Pointeuse");
+        frame = new JFrame("TimeChecker");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);

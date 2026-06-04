@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class IHM_Pointing {
 
@@ -35,16 +36,16 @@ public class IHM_Pointing {
             staffList = StaffList.deserialisationStaffList("staffList.ser");
         } catch (Exception e) {
             // on affiche si il y a un probleme
-            System.out.println("Erreur de chargement.");
+            System.out.println("Loading error.");
         }
-        // on recuperre la liste des pointings effectués
+        // on recuperre la liste des pointings effectues
         try {
             pointingList = PointingList.deserialisation("pointingList.ser");
         } catch (Exception e) {
-            System.out.println("Erreur chargement pointings.");
+            System.out.println("Pointing list loading error.");
         }
 
-        // On rajoute à l'écran la liste de staff
+        // On rajoute a l'ecran la liste de staff
         for (Staff s : staffList.getStaffList()) {
             mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
         }
@@ -53,9 +54,9 @@ public class IHM_Pointing {
             TimeManagement.setDate();
             TimeManagement.setHour();
             // on applique la date et l'heure calcule et on convertit dans le bon format
-            mainView.setDate(TimeManagement.getDate().format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy")));
+            mainView.setDate(TimeManagement.getDate().format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.ENGLISH)));
             mainView.setHour(TimeManagement.getHour().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-            mainView.setRounded("Arrondi: " + TimeManagement.round(TimeManagement.getHour()).format(DateTimeFormatter.ofPattern("HH:mm")));
+            mainView.setRounded("Rounded to the closest 15m: " + TimeManagement.round(TimeManagement.getHour()).format(DateTimeFormatter.ofPattern("HH:mm")));
         });
         timer.start();
         // Bouton chekcIp pour se connecter à IHM manager et recuperer els stafflist
@@ -65,7 +66,7 @@ public class IHM_Pointing {
             int port = Integer.parseInt(mainView.getTextFieldPort());
             // On test si la connection est possible
             if(Client.testerConnexion(ip, port)) {
-                // on affiche un label si on est bien connnecté
+                // on affiche un label si on est bien connecte
                 mainView.changeVisibilitySuccess(true);
             }
             else{
@@ -97,13 +98,13 @@ public class IHM_Pointing {
                     confirmView.close();
                 });
             } catch (Exception ex) {
-                // on recupere le message de l'exxception et on y applique la decision
+                // on recupere le message de l'exception et on y applique la decision
                 String msg = ex.getMessage();
                 System.out.println(msg);
                 if ("You have already pointed 2 times today!!!".equals(msg)) {
                     // on lance la fenetre correspondante
                     ExceptView exceptView = new ExceptView(selectedEmployee);
-                    System.out.println("Vous avez déjà pointé 2 fois aujourd'hui");
+                    System.out.println("You have already pointed 2 times today.");
                     exceptView.getButtonMenu().addActionListener(close -> {
                         exceptView.close();;
                     });
@@ -113,7 +114,7 @@ public class IHM_Pointing {
                     informationView.getButtonMenu().addActionListener(close ->{
                         InformationView.close();
                     });
-                    System.out.println("Vous n'avez pas pointé correctement hier");
+                    System.out.println("You haven't pointed correctly yesterday.");
                 }
             }
 
@@ -135,7 +136,7 @@ public class IHM_Pointing {
 
     // il faut pour la fin faire en sorte de tester la connection avec l'ihm manager
     // si la connexion est bonne envoyer les pointings qui sont en attente puis envoyer le pointing
-    // realisé par l'utilisateur
-    // sinon enregistrer le pointing dans un fichier serialiable qui sera essayer à la prochaine
+    // realis� par l'utilisateur
+    // sinon enregistrer le pointing dans un fichier serialiable qui sera essayer a la prochaine
     // connexion
 }
