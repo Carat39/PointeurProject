@@ -30,7 +30,7 @@ public class IHM_Manager {
     //constructeuur
     public IHM_Manager() {
         model = new temp_serialisation();
-        view  = new Assembleur_pages();
+        view = new Assembleur_pages();
 
         loadData();
         System.out.println("Working employees: " + workingEmployees);
@@ -176,20 +176,18 @@ public class IHM_Manager {
      * les informations des employes, tel que nom prenom departement heures supps
      */
     private void saveEmployee() {
-        String name    = view.getPage5().getNameField().getText().trim();
+        String name = view.getPage5().getNameField().getText().trim();
         String surname = view.getPage5().getSurnameField().getText().trim();
 
         if (name.isEmpty() || surname.isEmpty()) {
             JOptionPane.showMessageDialog(view.getFrame(), "Nom et prénom vides.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         Staff staff = view.getPage5().getStaffRef();
         staff.setname(name);
         staff.setsurname(surname);
         staff.setdepartement((mainApplication.management.Departement)
                 view.getPage5().getDeptCombo().getSelectedItem());
-
         try {
             allStaff.serialisationStaffList("staffList.ser");
             view.getCardLayout().show(view.getCardPanel(), "page4");

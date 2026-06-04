@@ -120,8 +120,8 @@ public class Page5 {
 
     public void loadStaff(Staff staff) {
         staffRef = staff;
-        nameField.setText(staff.getname());
-        surnameField.setText(staff.getsurname());
+        nameField.setText(staff.getsurname());
+        surnameField.setText(staff.getname());
         deptCombo.setSelectedItem(staff.getdepartement());
 
     }
