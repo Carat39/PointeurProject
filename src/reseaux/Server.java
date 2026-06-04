@@ -32,6 +32,10 @@ public class Server {
                     Socket my_socket = my_server.accept();
                     ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où on reçois du client
                     ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); //La où on reçois du client
+                    System.out.println("local"+my_socket.getLocalAddress());
+                    System.out.println("socket"+my_socket.getLocalSocketAddress());
+                    System.out.println("3eme"+my_socket.getInetAddress());
+                    //Server.serialisationIP(my_socket.getLocalAddress());
                     System.out.println("On lit ce que l'on a reçu pour observer son type d'objet");
                     //On lit ce que l'on a reçu pour observer son type d'objet
                     Object les_donnees = input.readObject();
@@ -85,5 +89,32 @@ public class Server {
         theStaffList.serialisationStaffList("staffList.ser");
         //On renvoie la list de Staff actualisée au client
         output.writeObject(theStaffList);
+    }
+
+    public static void serialisationIP(String filename,String IP) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "";
+        }
+        try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
+        ){
+            oos.writeObject(IP);
+        }
+    }
+    public static String deserialisationIP(String filename) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "";
+        }
+        String les_donnees = " ";
+        try(FileInputStream file = new FileInputStream(arborescence+filename);
+            ObjectInputStream in = new ObjectInputStream(file)
+        ) {
+            les_donnees = (String) in.readObject();
+        }
+        return les_donnees;
     }
 }
