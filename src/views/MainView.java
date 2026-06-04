@@ -152,5 +152,16 @@ public class MainView {
     public String getTextFieldPort(){return textFieldPort.getText();}
     public void close() {frame.dispose();}
     public JButton getCheckButtonIP(){return checkButtonIP;};
-    public void changeVisibilitySuccess(){LabelSuccess.setForeground(new Color(100, 80, 120));}
+
+
+    public void changeVisibilitySuccess(boolean result){
+        if (result){
+            LabelSuccess.setForeground(new Color(100, 80, 120));
+        }
+        else{
+            LabelSuccess.setText("Connexion échoué");
+            LabelSuccess.setForeground(new Color(100, 80, 120));
+        }
+    }
+
 }

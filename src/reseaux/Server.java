@@ -48,6 +48,7 @@ public class Server {
                         Staff theStaff = theStaffList.find(thePointing.getUuidStaff());
                         //On y ajoute le pointeur
                         theStaff.addPointing(thePointing);
+                        theStaffList.serialisationStaffList("staffList");
                         //Actualisation des données
                         sendback(my_socket,theStaffList,output);
                     }

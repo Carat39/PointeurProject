@@ -62,7 +62,7 @@ public class ExceptView {
         topPanel.add(labelEmployee);
 
         // Label error 2*
-        JLabel labelError2 = new JLabel("Vous ne pouvez plus pointé");
+        JLabel labelError2 = new JLabel("Vous ne pouvez plus pointer");
         labelError2.setFont(new Font("Serif", Font.BOLD, 30));
         labelError2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
