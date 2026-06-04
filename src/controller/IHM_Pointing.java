@@ -68,8 +68,8 @@ public class IHM_Pointing {
             String selectedEmployee = (String) mainView.getComboEmployees().getSelectedItem();
             // Extraction du nom de l'utilisateur et l'adresse de destination
             String[] tabString = selectedEmployee.split(" ");
-            String surname = tabString[0];
-            String firstname = tabString[1];
+            String surname = tabString[1];
+            String firstname = tabString[0];
             System.out.println("surname"+surname);
             System.out.println(selectedEmployee);
             String ip = mainView.getTextFieldIp();;
