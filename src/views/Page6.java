@@ -9,8 +9,9 @@ import java.awt.*;
 
 /**
  * VIEW – Page « Edit Employee »
- * C'est la page qui nous permet de modifier les informations d'un employé, d'en creer un nouveau
- * ou d'en supprimer un.
+ * This is the page that allws us to change the pointings
+ * of a selected employee.
+ * We can create/update/delete a pointing using this class.
  */
 public class Page6 {
 
@@ -24,6 +25,15 @@ public class Page6 {
 
     private Staff staffRef;
 
+    /**
+     * This method create page6
+     *
+     * Page 6 is the page that manages poointings, basically it
+     * can create a new pointer or it can modify one.
+     * In a little bit this function will also be able to
+     * delete a pointing, but not for now
+     * Penser a enlever avant rendu pour juste dire que on a fait la partie delete!
+     */
     public Page6() {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);
@@ -82,6 +92,7 @@ public class Page6 {
     }
 
 
+    //getters
     public JPanel getPanel() {
         return panel;
     }
@@ -106,5 +117,8 @@ public class Page6 {
         return staffRef;
     }
 
+    public void loadStaff(Staff s) {
+        this.staffRef = s;
+    }
     public JButton getUpdatePointingBtn(){return UpdatePointingBtn;}
 }

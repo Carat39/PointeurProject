@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 /**
  * VIEW – Page « Saved work time »
- * Affichage des gens et des années via deux jcombobox,
- * qui permettront grâce au IHM_Manager d'afficher les shifts
- * de l'employé séléctionné sur l'année selectionee.
+ * Showing off the people and the years via two jcombobox,
+ * which will allow the IHM_Manager to display the shifts
+ * of the selected employee on the selected year.
  */
 public class Page2 {
 
@@ -23,6 +23,11 @@ public class Page2 {
     private final JTextArea shiftArea;
     private final JButton manageBtn;
 
+    /**
+     * Builder of the page
+     * @param employees
+     * @param years
+     */
     public Page2(ArrayList<String> employees, ArrayList<String> years) {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);
@@ -89,6 +94,7 @@ public class Page2 {
         }
     }
 
+    //getters
     public JPanel getPanel(){return panel;}
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getBackBtn(){return backBtn;}

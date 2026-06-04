@@ -5,8 +5,8 @@ import views.utils.Variables;
 import javax.swing.*;
 
 /**
- * VIEW – Page d'accueil.
- * Première page, permet d'accéder aux deux autres pages que nous avons.
+ * VIEW – Time Tracker Page
+ * This is the first page of the application.
  */
 public class Page1 {
 
@@ -16,6 +16,9 @@ public class Page1 {
     private final JButton clockedBtn;
     private final JButton employeesBtn;
 
+    /**
+     * Builder of the page
+     */
     public Page1() {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_PEACH);
@@ -32,6 +35,7 @@ public class Page1 {
         panel.add(employeesBtn);
     }
 
+    //getters
     public JPanel  getPanel(){return panel;}
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getCheckBtn(){return checkBtn;}

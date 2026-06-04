@@ -1,5 +1,6 @@
 package controller;
 
+import Time.TimeManagement;
 import views.Assembleur_pages;
 import utils.temp_serialisation;
 import mainApplication.management.Staff;
@@ -9,14 +10,15 @@ import pointingApplication.Pointing;
 import views.utils.Variables;
 
 import javax.swing.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
  * CONTROLLER
  *
- * Fait a peu près tout ce qui est important,
- * recupere les listeners et affiche ce qu'il faut.
- * Gestion d'erreur prise en compte (normalement hein)
+ * It does approximatively everything that is
+ * important, it binds the actions to the methods,
+ * and handles errors. (hopefully)
  */
 
 public class IHM_Manager {
@@ -40,9 +42,10 @@ public class IHM_Manager {
     }
 
     /**
-     * Chargement des données depuis la désérialisation.
-     * Page 2 : tous les employés.
-     * Page 3 : employés actuellement au travail c'est à dire ceux qui ont pointé 1 fois aujourd'hui.
+     * Loading Data after deserialisation.
+     * Page 2 ~ all of the employees and their pointings ordered by years
+     * Page 3 ~ employees currently working, that is to say employees that clocked in once
+     * employees can only check in if they are working, so we just need to check that metric.
      */
     private void loadData() {
         try {
@@ -60,6 +63,11 @@ public class IHM_Manager {
         }
     }
 
+    /**This method updates the data in the JComboBox after
+    * we modified the employee list, or their pontings.
+     * This allows us to be able to check on changes without havinig
+     * to reroll the entire IHM application
+    * */
     private void updateData(){
         loadData();
         Variables.updateComboBox(view.getPage2().getEmployeeList(), allEmployees);
@@ -68,9 +76,9 @@ public class IHM_Manager {
     }
 
     /**
-     * "Branchement" Des listeners sur leurs actions,
-     * grossièrement on a ici le lien entre l'action
-     * et la méthode, c'est la partie principale du controller
+     * Linking the "listeners" to the methods
+     * basically this is making the buttons interaction,
+     * e-> what happens when you press the button.
      */
     private void bindActions() {
         // Fermeture
@@ -85,13 +93,15 @@ public class IHM_Manager {
         view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage4().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage5().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
-        view.getPage6().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
+        view.getPage6().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
 
         view.getPage1().getCheckBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
         view.getPage1().getClockedBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page3"));
         view.getPage1().getEmployeesBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
 
-        view.getPage2().getManageBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page6"));
+        view.getPage2().getManageBtn().addActionListener(e -> goToPage6());
+        view.getPage6().getNewPointingBtn().addActionListener(e -> newPointing());
+        view.getPage6().getUpdatePointingBtn().addActionListener(e -> updatePointing());
 
         view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
         view.getPage2().getYearList().addActionListener(e -> refreshShifts());
@@ -110,8 +120,8 @@ public class IHM_Manager {
     }
 
     /**
-     * On recupere ici l'employé et l'année puis
-     * on regarde ses pointages avant d'envoyer à l'affichage
+     * We get back the employee and its year, in order
+     * to display its pointing list (his shifts)
      */
     private void refreshShifts() {
         String selectedEmployee = (String) view.getPage2().getEmployeeList().getSelectedItem();
@@ -136,8 +146,8 @@ public class IHM_Manager {
     }
 
     /**
-     * Cette méthode permet d'afficher correctement
-     * les heures selon l'employé sélectionné
+     * This method is used to display the employee
+     * correctly based on the current date.
      */
     private void refreshEmployee() {
         String selectedEmployee = (String) view.getPage3().getEmployeeList().getSelectedItem();
@@ -168,8 +178,8 @@ public class IHM_Manager {
     }
 
     /**
-     * Cette méthode permet d'afficher correctement
-     * les informations des employes, tel que nom prenom departement heures supps
+     * This method is used to display the employee informations,
+     * that is to say the name, surname, departement, and extra time.
      */
     private void refreshPage4Employee() {
         String selected = (String) view.getPage4().getEmployeeList().getSelectedItem();
@@ -183,8 +193,8 @@ public class IHM_Manager {
     }
 
     /**
-     * Cette méthode permet d'afficher correctement
-     * les informations des employes, tel que nom prenom departement heures supps
+     * this method is used to save the employee new informations
+     * (after being modifed)
      */
     private void saveEmployee() {
         String name = view.getPage5().getNameField().getText().trim();
@@ -210,7 +220,7 @@ public class IHM_Manager {
     }
 
     /**
-     * Cette méthode permet de supprimer un employé
+     * This method can be used to delete the selected employee
      */
     private void deleteEmployee() {
         Staff staff = view.getPage5().getStaffRef();
@@ -223,8 +233,8 @@ public class IHM_Manager {
     }
 
     /**
-     * Cette méthode permet d'aller à la page 5 en conservant
-     * l'employé qui est select dans la JComboBox
+     * This method is used to go to the page 5,
+     * and doing so by keeping the employee selected.
      */
     private void goToPage5() {
         String selected = (String) view.getPage4().getEmployeeList().getSelectedItem();
@@ -241,10 +251,11 @@ public class IHM_Manager {
     }
 
     /**
-     * Cette méthode permet de créer un employé. A noter que
-     * ca peut etre un peu etrange de devoir passer par un employé
-     * pour en creer un, mais la fonction fonctionne sans
-     * avoir selectionner de gens dans la JComboBox
+     * This method allows us to create an employee
+     * We can note that it is strange that we have to go
+     * through an employee to create a new one, but this
+     * was the best way to do it without making a very heavy
+     * and hard to navigate interface
      */
     private void createFromPage5() {
         String name = view.getPage5().getNameField().getText().trim();
@@ -266,6 +277,65 @@ public class IHM_Manager {
             JOptionPane.showMessageDialog(view.getFrame(), "Created new employee successfully");
         } catch (Exception ex) {
             ex.getMessage();
+        }
+    }
+
+    /**
+     * This method is used to go to the page 6,
+     * and doing so by keeping the employee selected.
+     */
+    private void goToPage6() {
+        String selected = (String) view.getPage2().getEmployeeList().getSelectedItem();
+        if (selected == null) return;
+        String[] parts = selected.split(" ", 2);
+        if (parts.length < 2) return;
+        Staff staff = allStaff.find(parts[0], parts[1]);
+        view.getPage6().loadStaff(staff);
+        view.getCardLayout().show(view.getCardPanel(), "page6");
+    }
+
+    /**
+     * This method is used to add a new pointing to the employee
+     */
+    private void newPointing() {
+        Staff staff = view.getPage6().getStaffRef();
+        if (staff.condPointingADay(2, 0)) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Already pointed 2 times today!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String hourText = view.getPage6().getNameField().getText().trim();
+        try {
+            LocalTime rounded = TimeManagement.round(LocalTime.parse(hourText));
+            Pointing p = new Pointing(staff.getuuidStaff(), rounded, TimeManagement.getDateNow());
+            staff.addPointing(p);
+            allStaff.serialisationStaffList("staffList.ser");
+            updateData();
+            JOptionPane.showMessageDialog(view.getFrame(), "Pointing added at " + rounded);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Invalid time format (HH:mm)", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * This method is used to update the last pointing of the employee
+     */
+    private void updatePointing() {
+        Staff staff = view.getPage6().getStaffRef();
+        if (staff.condPointingADay(0, 0)) {
+            JOptionPane.showMessageDialog(view.getFrame(), "No pointing today to update!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String hourText = view.getPage6().getNameField().getText().trim();
+        try {
+            LocalTime rounded = TimeManagement.round(LocalTime.parse(hourText));
+            staff.getPointingList().removeLast();
+            Pointing p = new Pointing(staff.getuuidStaff(), rounded, TimeManagement.getDateNow());
+            staff.addPointing(p);
+            allStaff.serialisationStaffList("staffList.ser");
+            updateData();
+            JOptionPane.showMessageDialog(view.getFrame(), "Pointing updated at " + rounded);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Invalid time format (HH:mm)", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

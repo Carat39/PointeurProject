@@ -6,10 +6,12 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * VIEW – Page « Clocked in Now »
- * On utilise cette page pour afficher les employés qui sont
- * actuellement entrain de travailler. On sélectionnera l'employé
- * grâce au jcombobox "employeeList"
+ * VIEW – Page « Employees »
+ * we use this page to display the employees,
+ * we select one using the jcombobox "employeeList" to
+ * see their informations, as in name, surname, department.
+ *
+ * This page is the "portal" for the "Manage Employees" page.
  */
 public class Page4 {
 
@@ -20,6 +22,10 @@ public class Page4 {
     private final JTextArea infoArea;
     private final JButton manageBtn;
 
+    /**
+     * Builder of the page
+     * @param employees
+     */
     public Page4(ArrayList<String> employees) {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);
@@ -40,7 +46,7 @@ public class Page4 {
         scrollPane.setBounds(Variables.WIDTH / 2 - 300, Variables.HEIGHT / 2 + 50, 600, 200);
         scrollPane.setBorder(BorderFactory.createLineBorder(java.awt.Color.GRAY));
 
-        panel.add(Variables.createTitle("Manage Employee"));
+        panel.add(Variables.createTitle("Employees"));
         panel.add(closeBtn);
         panel.add(backBtn);
         panel.add(employeeList);
@@ -52,6 +58,7 @@ public class Page4 {
         infoArea.setText(name + " " + surname + " - " + departement + " - " + extratime + "m");
     }
 
+    //getters
     public JPanel getPanel(){return panel;}
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getBackBtn(){return backBtn;}
