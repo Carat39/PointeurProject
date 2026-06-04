@@ -59,4 +59,14 @@ public class Client {
         }
     }
 
+    public static boolean testerConnexion(String ip, int port) {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(ip, port), 2000);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
 }

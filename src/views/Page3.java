@@ -32,7 +32,7 @@ public class Page3 {
         infoArea.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 13));
         infoArea.setBackground(java.awt.Color.WHITE);
         infoArea.setForeground(java.awt.Color.DARK_GRAY);
-        infoArea.setText("Sélectionnez un employé.");
+        infoArea.setText("Select an employee.");
 
         JScrollPane scrollPane = new JScrollPane(infoArea);
         scrollPane.setBounds(Variables.WIDTH / 2 - 300, Variables.HEIGHT / 2 + 50, 600, 200);

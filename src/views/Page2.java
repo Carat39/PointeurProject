@@ -21,6 +21,7 @@ public class Page2 {
     private final JComboBox<String> employeeList;
     private final JComboBox<String> yearList;
     private final JTextArea shiftArea;
+    private final JButton manageBtn;
 
     public Page2(ArrayList<String> employees, ArrayList<String> years) {
         panel = new JPanel(null);
@@ -30,13 +31,14 @@ public class Page2 {
         backBtn = Variables.createBackBtn();
         employeeList = Variables.createEmployeeList(employees);
         yearList = Variables.createYearList(years);
+        manageBtn = Variables.createNavBtn("Manage Pointing", Variables.HEIGHT - 10 * (Variables.HEIGHT / 20));
 
         shiftArea = new JTextArea();
         shiftArea.setEditable(false);
         shiftArea.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 13));
         shiftArea.setBackground(Color.WHITE);
         shiftArea.setForeground(Color.DARK_GRAY);
-        shiftArea.setText("Sélectionnez un employé et une année.");
+        shiftArea.setText("Select an employee and a year.");
 
         JScrollPane scrollPane = new JScrollPane(shiftArea);
         scrollPane.setBounds(Variables.WIDTH / 2 - 300,  Variables.HEIGHT / 2 + 50, 600, 200);
@@ -48,6 +50,7 @@ public class Page2 {
         panel.add(employeeList);
         panel.add(yearList);
         panel.add(scrollPane);
+        panel.add(manageBtn);
     }
 
     public void updateShiftDisplay(String content) {
@@ -57,7 +60,7 @@ public class Page2 {
 
     public void displayPointings(ArrayList<Pointing> pointings, int year, String employeeName, int extratime) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-14s %-12s %-12s%n", "Date", "Arrivée", "Départ"));
+        sb.append(String.format("%-14s %-12s %-12s%n", "Date", "Arrival", "Departure"));
         sb.append("-".repeat(40)).append("\n");
 
         int i = 0;
@@ -71,17 +74,17 @@ public class Page2 {
                 shiftsCount++;
                 i += 2;
             } else {
-                sb.append(String.format("%-14s %-12s %-12s%n", p1.getDate().toString(), p1.getHour().toString(), "(manquant)"));
+                sb.append(String.format("%-14s %-12s %-12s%n", p1.getDate().toString(), p1.getHour().toString(), "(missing)"));
                 shiftsCount++;
                 i++;
             }
         }
 
         if (shiftsCount == 0) {
-            updateShiftDisplay("Aucun shift trouvé pour " + employeeName + " en " + year + ".");
+            updateShiftDisplay("No shift found for " + employeeName + " in " + year + ".");
         } else {
             sb.append("-".repeat(40)).append("\n");
-            sb.append("Total heures supplémentaires cumulées : ").append(extratime).append(" min");
+            sb.append("Total cumulated extra-time ").append(extratime).append(" min");
             updateShiftDisplay(sb.toString());
         }
     }
@@ -91,4 +94,5 @@ public class Page2 {
     public JButton getBackBtn(){return backBtn;}
     public JComboBox<String>getEmployeeList(){return employeeList;}
     public JComboBox<String>getYearList(){return yearList;}
+    public JButton getManageBtn(){return manageBtn;}
 }
