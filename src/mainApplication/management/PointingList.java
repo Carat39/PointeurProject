@@ -129,5 +129,10 @@ public class PointingList implements Serializable {
         System.out.println(lemploye.getDate());
         */
     }
+    public void removeLast() {
+        if (!thelist.isEmpty()) {
+            thelist.remove(thelist.size() - 1);
+        }
+    }
 
 }

@@ -106,5 +106,8 @@ public class Page6 {
         return staffRef;
     }
 
+    public void loadStaff(Staff s) {
+        this.staffRef = s;
+    }
     public JButton getUpdatePointingBtn(){return UpdatePointingBtn;}
 }

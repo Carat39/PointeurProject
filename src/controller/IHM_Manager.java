@@ -1,5 +1,6 @@
 package controller;
 
+import Time.TimeManagement;
 import views.Assembleur_pages;
 import utils.temp_serialisation;
 import mainApplication.management.Staff;
@@ -9,6 +10,7 @@ import pointingApplication.Pointing;
 import views.utils.Variables;
 
 import javax.swing.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
@@ -85,13 +87,15 @@ public class IHM_Manager {
         view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage4().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage5().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
-        view.getPage6().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
+        view.getPage6().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
 
         view.getPage1().getCheckBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page2"));
         view.getPage1().getClockedBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page3"));
         view.getPage1().getEmployeesBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
 
-        view.getPage2().getManageBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page6"));
+        view.getPage2().getManageBtn().addActionListener(e -> goToPage6());
+        view.getPage6().getNewPointingBtn().addActionListener(e -> newPointing());
+        view.getPage6().getUpdatePointingBtn().addActionListener(e -> updatePointing());
 
         view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
         view.getPage2().getYearList().addActionListener(e -> refreshShifts());
@@ -266,6 +270,54 @@ public class IHM_Manager {
             JOptionPane.showMessageDialog(view.getFrame(), "Created new employee successfully");
         } catch (Exception ex) {
             ex.getMessage();
+        }
+    }
+    private void goToPage6() {
+        String selected = (String) view.getPage2().getEmployeeList().getSelectedItem();
+        if (selected == null) return;
+        String[] parts = selected.split(" ", 2);
+        if (parts.length < 2) return;
+        Staff staff = allStaff.find(parts[0], parts[1]);
+        view.getPage6().loadStaff(staff);
+        view.getCardLayout().show(view.getCardPanel(), "page6");
+    }
+
+    private void newPointing() {
+        Staff staff = view.getPage6().getStaffRef();
+        if (staff.condPointingADay(2, 0)) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Already pointed 2 times today!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String hourText = view.getPage6().getNameField().getText().trim();
+        try {
+            LocalTime rounded = TimeManagement.round(LocalTime.parse(hourText));
+            Pointing p = new Pointing(staff.getuuidStaff(), rounded, TimeManagement.getDateNow());
+            staff.addPointing(p);
+            allStaff.serialisationStaffList("staffList.ser");
+            updateData();
+            JOptionPane.showMessageDialog(view.getFrame(), "Pointing added at " + rounded);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Invalid time format (HH:mm)", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void updatePointing() {
+        Staff staff = view.getPage6().getStaffRef();
+        if (staff.condPointingADay(0, 0)) {
+            JOptionPane.showMessageDialog(view.getFrame(), "No pointing today to update!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String hourText = view.getPage6().getNameField().getText().trim();
+        try {
+            LocalTime rounded = TimeManagement.round(LocalTime.parse(hourText));
+            staff.getPointingList().removeLast();
+            Pointing p = new Pointing(staff.getuuidStaff(), rounded, TimeManagement.getDateNow());
+            staff.addPointing(p);
+            allStaff.serialisationStaffList("staffList.ser");
+            updateData();
+            JOptionPane.showMessageDialog(view.getFrame(), "Pointing updated at " + rounded);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view.getFrame(), "Invalid time format (HH:mm)", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
