@@ -196,6 +196,7 @@ public class IHM_Manager {
         staff.setsurname(surname);
         staff.setdepartement((mainApplication.management.Departement)
                 view.getPage5().getDeptCombo().getSelectedItem());
+
         try {
             allStaff.serialisationStaffList("staffList.ser");
             updateData();

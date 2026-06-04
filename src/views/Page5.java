@@ -41,11 +41,11 @@ public class Page5 {
         int centerX = Variables.WIDTH / 2;
         int topY = Variables.HEIGHT / 3;
 
-        JLabel nameLabel = new JLabel("Prénom :");
+        JLabel nameLabel = new JLabel("Nom :");
         nameLabel.setFont(labelFont);
         nameLabel.setForeground(Color.DARK_GRAY);
 
-        JLabel surnameLabel = new JLabel("Nom :");
+        JLabel surnameLabel = new JLabel("Prénom :");
         surnameLabel.setFont(labelFont);
         surnameLabel.setForeground(Color.DARK_GRAY);
 
@@ -120,8 +120,8 @@ public class Page5 {
 
     public void loadStaff(Staff staff) {
         staffRef = staff;
-        nameField.setText(staff.getsurname());
-        surnameField.setText(staff.getname());
+        nameField.setText(staff.getname());
+        surnameField.setText(staff.getsurname());
         deptCombo.setSelectedItem(staff.getdepartement());
 
     }
