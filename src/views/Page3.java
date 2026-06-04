@@ -19,6 +19,10 @@ public class Page3 {
     private final JComboBox<String> employeeList;
     private final JTextArea infoArea;
 
+    /**
+     * Builder of the page
+     * @param employees
+     */
     public Page3(ArrayList<String> employees) {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);
@@ -49,6 +53,7 @@ public class Page3 {
         infoArea.setText(name + " " + surname + " - " + arrivalHour);
     }
 
+    //getters
     public JPanel getPanel(){return panel;}
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getBackBtn(){return backBtn;}

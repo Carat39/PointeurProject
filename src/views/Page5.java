@@ -9,8 +9,9 @@ import java.awt.*;
 
 /**
  * VIEW – Page « Edit Employee »
- * C'est la page qui nous permet de modifier les informations d'un employé, d'en creer un nouveau
- * ou d'en supprimer un.
+ * This is the page that allows us
+ * to edit the informations of an employee.
+ * Create/update/delete one.
  */
 public class Page5 {
 
@@ -117,7 +118,11 @@ public class Page5 {
         panel.add(deptCombo);
     }
 
-
+    /**
+     * Load the staff for the controller,
+     * so that it can be used to edit the informations.
+     * @param staff
+     */
     public void loadStaff(Staff staff) {
         staffRef = staff;
         nameField.setText(staff.getname());
@@ -127,6 +132,7 @@ public class Page5 {
     }
 
 
+//getters
     public JPanel getPanel() {
         return panel;
     }

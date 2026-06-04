@@ -7,10 +7,8 @@ import java.util.ArrayList;
 /**
  * VIEW - utilitaires.
  *
- * L'objectif ici est la factorisation du code.
- * On veut que les trucs comme les titres, les
- * boutons de close, de back, soient réutilisables,
- * et n'est pas besoin d'être instanciés à chaque fois.
+ * The objectives here is to factorise the code
+ * with stuff we can re-use for more clarity.
  *
  */
 public class Variables {
@@ -23,6 +21,10 @@ public class Variables {
     public static final int WIDTH  = 800;
     public static final int HEIGHT = 600;
 
+    /**
+     * Create the close button to close the application
+     * @return
+     */
     public static JButton createCloseBtn() {
         JButton btn = new JButton("❌");
         btn.setMargin(new Insets(0, 0, 0, 0));
@@ -31,6 +33,10 @@ public class Variables {
         return btn;
     }
 
+    /**
+     * Create the back button to go back to the previous page
+     * @return
+     */
     public static JButton createBackBtn() {
         JButton btn = new JButton("\uD83D\uDD19");
         btn.setMargin(new Insets(0, 0, 0, 0));
@@ -39,6 +45,11 @@ public class Variables {
         return btn;
     }
 
+    /**
+     * Create the page title
+     * @param text
+     * @return
+     */
     public static JLabel createTitle(String text) {
         JLabel label = new JLabel(text);
         label.setBounds((WIDTH - 300) / 2, 5, 300, 40);
@@ -48,6 +59,11 @@ public class Variables {
         return label;
     }
 
+    /**
+     * Create the JComboBox of the employees
+     * @param employees
+     * @return
+     */
     public static JComboBox<String> createEmployeeList(ArrayList<String> employees) {
         JComboBox<String> box = new JComboBox<>();
         box.setBounds((WIDTH - 300) / 2, HEIGHT - 7 * (HEIGHT / 10), 300, 30);
@@ -57,11 +73,21 @@ public class Variables {
         return box;
     }
 
+    /**
+     * Updater the JComboBox
+     * @param box
+     * @param employees
+     */
     public static void updateComboBox(JComboBox<String> box, ArrayList<String> employees) {
         box.removeAllItems();
         for (String e : employees) box.addItem(e);
     }
 
+    /**
+     * Create the JComboBox of the years
+     * @param years
+     * @return
+     */
     public static JComboBox<String> createYearList(ArrayList<String> years) {
         JComboBox<String> box = new JComboBox<>();
         box.setBounds((WIDTH - 300) / 2, HEIGHT - 12 * (HEIGHT / 20), 300, 30);
@@ -71,6 +97,12 @@ public class Variables {
         return box;
     }
 
+    /**
+     * Create the navigation button
+     * @param label
+     * @param y
+     * @return
+     */
     public static JButton createNavBtn(String label, int y) {
         JButton btn = new JButton(label);
         btn.setBounds((WIDTH - 300) / 2, y, 300, 30);
