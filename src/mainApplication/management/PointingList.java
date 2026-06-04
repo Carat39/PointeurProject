@@ -80,7 +80,7 @@ public class PointingList implements Serializable {
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
@@ -90,6 +90,11 @@ public class PointingList implements Serializable {
     }
 
     public Pointing deserialisationm(String filename) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "../";
+        }
         Pointing les_donnees = null;
         try(FileInputStream file = new FileInputStream(filename);
             ObjectInputStream in = new ObjectInputStream(file)
@@ -104,7 +109,7 @@ public class PointingList implements Serializable {
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         PointingList les_donnees = null;
         try(FileInputStream file = new FileInputStream(arborescence+filename);

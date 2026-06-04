@@ -82,7 +82,12 @@ public class StaffList implements Serializable {
     }
 
     public void serialisationStaffList(String filename) throws Exception {
-        try (FileOutputStream fos = new FileOutputStream(filename);
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "../";
+        }
+        try (FileOutputStream fos = new FileOutputStream(arborescence+filename);
              ObjectOutputStream oos = new ObjectOutputStream(fos)
         ) {
             oos.writeObject(this);
@@ -90,8 +95,13 @@ public class StaffList implements Serializable {
     }
 
     public static StaffList deserialisationStaffList(String filename) throws Exception {
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "../";
+        }
         StaffList les_donnees = null;
-        try (FileInputStream file = new FileInputStream(filename);
+        try (FileInputStream file = new FileInputStream(arborescence+filename);
              ObjectInputStream in = new ObjectInputStream(file)
         ) {
             les_donnees = (StaffList) in.readObject();

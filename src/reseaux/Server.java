@@ -32,10 +32,7 @@ public class Server {
                     Socket my_socket = my_server.accept();
                     ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où on reçois du client
                     ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); //La où on reçois du client
-                    System.out.println("local"+my_socket.getLocalAddress());
-                    System.out.println("socket"+my_socket.getLocalSocketAddress());
-                    System.out.println("3eme"+my_socket.getInetAddress());
-                    //Server.serialisationIP(my_socket.getLocalAddress());
+
                     System.out.println("On lit ce que l'on a reçu pour observer son type d'objet");
                     //On lit ce que l'on a reçu pour observer son type d'objet
                     Object les_donnees = input.readObject();
@@ -52,13 +49,11 @@ public class Server {
                         Staff theStaff = theStaffList.find(thePointing.getUuidStaff());
                         //On y ajoute le pointeur
                         theStaff.addPointing(thePointing);
-                        theStaffList.serialisationStaffList("staffList");
                         //Actualisation des données
                         sendback(my_socket,theStaffList,output);
                     }
                     else if (les_donnees instanceof PointingList) {
                         System.out.println("C'est l'API de la pointeuse qui envoie lors de l'ouverture de l'application");
-
                         //C'est l'API de la pointeuse qui envoie lors de l'ouverture de l'application
                         PointingList thePointingList = (PointingList) input.readObject();
                         StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
@@ -69,10 +64,14 @@ public class Server {
                     }
                     else if (les_donnees instanceof StaffList) {
                         System.out.println("C'est l'API principale qui envoie lors d'une modification d'un Staff ou d'un pointage");
-
                         //C'est l'API principale qui envoie lors d'une modification d'un Staff ou d'un pointage
                         StaffList theStaffList = (StaffList) input.readObject();
                         //Besoin de ne rien envoyer
+                    }
+                    else if (les_donnees instanceof String theIP){
+                        System.out.println("On sérialise l'IP");
+                        StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
+                        sendback(my_socket,theStaffList,output);
                     }
                     my_server.close();
             }
@@ -96,19 +95,21 @@ public class Server {
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
         ){
+            System.out.println(arborescence+filename);
             oos.writeObject(IP);
         }
     }
+
     public static String deserialisationIP(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         String les_donnees = " ";
         try(FileInputStream file = new FileInputStream(arborescence+filename);

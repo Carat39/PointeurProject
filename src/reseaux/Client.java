@@ -37,7 +37,7 @@ public class Client {
                 throw new RuntimeException(e);
             }
         } catch (Exception e) {
-            System.out.println();
+            System.out.println("sad");
         }
     }
 
@@ -60,13 +60,30 @@ public class Client {
     }
 
     public static boolean testerConnexion(String ip, int port) {
-        try (Socket socket = new Socket()) {
+        try{
+            Socket my_socket = new Socket(ip,port);
+            try{
+                ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où j'envoie au serveur
+                ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); // La où on reçoit du serveur
+
+                output.writeObject(ip);
+
+                //On récupère la liste actualisée et on la sérialise
+                StaffList theStaffList = (StaffList) input.readObject();
+                theStaffList.serialisationStaffList("staffList.ser");
+                disconnection(my_socket,output,input);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        /*try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(ip, port), 2000);
             return true;
         } catch (Exception e) {
             return false;
-        }
+        }*/
     }
-
-
 }

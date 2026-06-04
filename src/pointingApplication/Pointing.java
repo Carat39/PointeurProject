@@ -48,7 +48,7 @@ public class Pointing implements Serializable{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
@@ -57,6 +57,7 @@ public class Pointing implements Serializable{
         }
     }
     public void serialisation(String filename,DataOutputStream stream) throws Exception{
+        //HMMM
         try(
             ObjectOutputStream oos = new ObjectOutputStream(stream) // peut être ici le my_socket.getOutputStream()
         ){
@@ -68,7 +69,7 @@ public class Pointing implements Serializable{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         Pointing les_donnees = null;
         try(FileInputStream file = new FileInputStream(arborescence+filename);
