@@ -99,7 +99,6 @@ public class Page5 {
         createBtn.setBackground(Variables.PASTEL_PEACH);
         createBtn.setForeground(Color.DARK_GRAY);
         createBtn.setFocusPainted(false);
-        createBtn.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         createBtn.setBounds(centerX + 80, buttonsY, btnWidth, btnHeight);
 
 
@@ -110,9 +109,12 @@ public class Page5 {
         panel.add(deleteBtn);
         panel.add(createBtn);
 
-        panel.add(nameLabel);    panel.add(nameField);
-        panel.add(surnameLabel); panel.add(surnameField);
-        panel.add(deptLabel);    panel.add(deptCombo);
+        panel.add(nameLabel);
+        panel.add(nameField);
+        panel.add(surnameLabel);
+        panel.add(surnameField);
+        panel.add(deptLabel);
+        panel.add(deptCombo);
     }
 
 
