@@ -41,11 +41,11 @@ public class Page5 {
         int centerX = Variables.WIDTH / 2;
         int topY = Variables.HEIGHT / 3;
 
-        JLabel nameLabel = new JLabel("Nom :");
+        JLabel nameLabel = new JLabel("Prénom :");
         nameLabel.setFont(labelFont);
         nameLabel.setForeground(Color.DARK_GRAY);
 
-        JLabel surnameLabel = new JLabel("Prénom :");
+        JLabel surnameLabel = new JLabel("Nom :");
         surnameLabel.setFont(labelFont);
         surnameLabel.setForeground(Color.DARK_GRAY);
 
