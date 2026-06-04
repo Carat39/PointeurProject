@@ -74,6 +74,8 @@ public class IhmInterface {
             // Gestion du pointage
             try{
                 Pointing.Jepointe(firstname, surname, staffList, pointingList, ip, port);
+                staffList.find("Arthur", "Brajot").calcExtraTime();
+                //System.out.println(staffList.find("Arthur", "Brajot").getextratime());
                 ConfirmView confirmView = new ConfirmView(currentDate, currentRoundHour, selectedEmployee);
                 // Bouton retour au menu pour ConfirmView
                 confirmView.getButtonMenu().addActionListener(back -> {

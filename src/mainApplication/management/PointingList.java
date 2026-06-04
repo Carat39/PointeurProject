@@ -54,6 +54,7 @@ public class PointingList implements Serializable {
             if ((a_pointing.getDate()).equals(The_date)){
                 find = true;
                 the_pointings.add(a_pointing);
+                the_pointings.add(thelist.get(indice+1));
             }
             else{
                 indice ++;

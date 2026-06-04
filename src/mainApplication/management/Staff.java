@@ -110,10 +110,9 @@ public class Staff implements Serializable {
     }
 
     public void calcExtraTime(){
-        PointingList the_list = null;
         TimeManagement theDate= new TimeManagement();
         //Retrieves the user's pointing as of today's date.
-        ArrayList<Pointing> the_pointing = the_list.getElemList(theDate.getDate());
+        ArrayList<Pointing> the_pointing = pointingList.getElemList(theDate.getDate());
         //Gets today's date in an integer number (from 0 to 6 starting from Monday).
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
