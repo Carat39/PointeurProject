@@ -6,6 +6,7 @@ import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
 import mainApplication.management.PointingList;
 import pointingApplication.Pointing;
+import views.utils.Variables;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class IHM_Manager {
     //constructeuur
     public IHM_Manager() {
         model = new temp_serialisation();
-        view  = new Assembleur_pages();
+        view = new Assembleur_pages();
 
         loadData();
         System.out.println("Working employees: " + workingEmployees);
@@ -57,6 +58,13 @@ public class IHM_Manager {
             workingEmployees = new ArrayList<>();
             workingEmployees.add("Erreur chargement employés");
         }
+    }
+
+    private void updateData(){
+        loadData();
+        Variables.updateComboBox(view.getPage2().getEmployeeList(), allEmployees);
+        Variables.updateComboBox(view.getPage3().getEmployeeList(), workingEmployees);
+        Variables.updateComboBox(view.getPage4().getEmployeeList(), allEmployees);
     }
 
     /**
@@ -176,22 +184,21 @@ public class IHM_Manager {
      * les informations des employes, tel que nom prenom departement heures supps
      */
     private void saveEmployee() {
-        String name    = view.getPage5().getNameField().getText().trim();
+        String name = view.getPage5().getNameField().getText().trim();
         String surname = view.getPage5().getSurnameField().getText().trim();
 
         if (name.isEmpty() || surname.isEmpty()) {
             JOptionPane.showMessageDialog(view.getFrame(), "Nom et prénom vides.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         Staff staff = view.getPage5().getStaffRef();
         staff.setname(name);
         staff.setsurname(surname);
         staff.setdepartement((mainApplication.management.Departement)
                 view.getPage5().getDeptCombo().getSelectedItem());
-
         try {
             allStaff.serialisationStaffList("staffList.ser");
+            updateData();
             view.getCardLayout().show(view.getCardPanel(), "page4");
         } catch (Exception ex) {
             ex.getMessage();
@@ -206,6 +213,7 @@ public class IHM_Manager {
         allStaff.remove(staff.getuuidStaff());
         try {
             allStaff.serialisationStaffList("staffList.ser");
+            updateData();
         } catch (Exception ex) { ex.printStackTrace(); }
         view.getCardLayout().show(view.getCardPanel(), "page4");
     }
@@ -242,20 +250,15 @@ public class IHM_Manager {
             JOptionPane.showMessageDialog(view.getFrame(), "nom et prenom vide", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         mainApplication.management.Departement dept = (mainApplication.management.Departement)
                 view.getPage5().getDeptCombo().getSelectedItem();
 
         Staff newStaff = new Staff(name, surname, dept, null);
-
         allStaff.add(newStaff);
-
         try {
             allStaff.serialisationStaffList("staffList.ser");
-            loadData();
-
+            updateData();
             view.getCardLayout().show(view.getCardPanel(), "page4");
-
             JOptionPane.showMessageDialog(view.getFrame(), "Nouvel employé créé avec succès !");
         } catch (Exception ex) {
             ex.getMessage();
