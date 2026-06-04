@@ -57,6 +57,11 @@ public class Variables {
         return box;
     }
 
+    public static void updateComboBox(JComboBox<String> box, ArrayList<String> employees) {
+        box.removeAllItems();
+        for (String e : employees) box.addItem(e);
+    }
+
     public static JComboBox<String> createYearList(ArrayList<String> years) {
         JComboBox<String> box = new JComboBox<>();
         box.setBounds((WIDTH - 300) / 2, HEIGHT - 12 * (HEIGHT / 20), 300, 30);
