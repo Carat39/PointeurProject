@@ -8,8 +8,17 @@ import pointingApplication.Pointing;
 import java.io.*;
 import java.net.*;
 
+/**
+ * Server permet la connection entre un client et un serveur avec TCP/IP
+ *
+ * @author Les Scribes de Broadway
+ *
+ */
 public class Server {
-
+    /**
+     * Main lance le serveur récupère les données si une connection a lieu puis les sérialises
+     * @param args Les arguments (ne sont pas utilisés).
+     */
     public static void main(String[] args){
         int port = 1234;
         if (args.length != 0){

@@ -35,12 +35,15 @@ void main() throws Exception{
 
     Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
     Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
+    Pointing pointing3 = new Pointing(Nino.getuuidStaff());
     Arthur.addPointing(pointing1);
     Arthur.addPointing(pointing2);
+    Nino.addPointing(pointing3);
 
 
     pointingList.addElem(pointing1);
     pointingList.addElem(pointing2);
+    pointingList.addElem(pointing3);
     pointingList.serialisation("pointingList.ser");
     theStaffList.serialisationStaffList("staffList.ser");
 

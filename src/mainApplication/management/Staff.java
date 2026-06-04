@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Staff implements Serializable {
+    private static final long serialVersionUID = 123456789L;
     //Attributes
     private UUID uuidStaff;
     private String name;
@@ -83,6 +84,10 @@ public class Staff implements Serializable {
     }
 
     //Ajoute à partir d'un flux de donnée ou lève une exception
+    public void addPointing(Pointing thePointing) throws Exception{
+        pointingList.addElem(thePointing);
+    }
+
     public void addPointing(String filename) throws Exception{
         pointingList.addElem(filename);
     }

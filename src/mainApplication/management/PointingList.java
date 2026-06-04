@@ -19,9 +19,11 @@ import java.util.UUID;
  * @author Les Scribes de Broadway
  */
 public class PointingList implements Serializable {
-    //Attributes
     private static final long serialVersionUID = 123456789L;
+
+    //Attributes
     private ArrayList<Pointing> thelist = new ArrayList<Pointing>();
+
 
     //Constructors
 
@@ -104,6 +106,12 @@ public class PointingList implements Serializable {
         thelist.add(pointing);
     }
 
+    public void addElem(String filename) throws Exception{
+        Pointing pointing = new Pointing();
+        pointing = deserialisationm(filename);
+        thelist.add(pointing);
+    }
+
     /**
      * Sérialise les données des pointages stockés dans la liste sous forme d'un fichier de flux au format ser.
      *
@@ -133,6 +141,17 @@ public class PointingList implements Serializable {
      *
      * @exception Exception Déclenchée si le fichier n'est pas trouvable à l'arborescence donnée.
      */
+    public Pointing deserialisationm(String filename) throws Exception{
+        Pointing les_donnees = null;
+        try(FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file)
+        ) {
+            les_donnees = (Pointing) in.readObject();
+        }
+        return les_donnees;
+    }
+
+    //déserialise à partir d'un flux de données
     public static PointingList deserialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";

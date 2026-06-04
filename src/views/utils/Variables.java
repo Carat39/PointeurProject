@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Variables {
 
     static final Color PASTEL_PINK   = new Color(255, 182, 193);
-    static final Color PASTEL_PURPLE = new Color(216, 191, 216);
+    public static final Color PASTEL_PURPLE = new Color(216, 191, 216);
     public static final Color PASTEL_YELLOW = new Color(255, 255, 204);
     public static final Color PASTEL_PEACH  = new Color(255, 218, 185);
 
