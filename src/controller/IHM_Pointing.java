@@ -41,9 +41,8 @@ public class IHM_Pointing {
 
         // On rajoute à l'écran la liste de staff
         for (Staff s : staffList.getStaffList()) {
-            mainView.getComboEmployees().addItem(s.getsurname() + " " + s.getname());
+            mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
         }
-
         // Timer 1 seconde
         Timer timer = new Timer(1000, e -> {
             TimeManagement.setDate();
