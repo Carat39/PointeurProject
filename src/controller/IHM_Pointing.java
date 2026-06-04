@@ -9,6 +9,7 @@ import views.ConfirmView;
 import views.ExceptView;
 import views.InformationView;
 import pointingApplication.Pointing;
+import reseaux.Client;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -20,6 +21,10 @@ public class IHM_Pointing {
     private MainView mainView;
     private StaffList staffList;
     private PointingList pointingList;
+
+    // attributs utils pour la connection
+    private String ip;
+    private int port;
     public IHM_Pointing() {
         mainView = new MainView();
 
@@ -55,8 +60,17 @@ public class IHM_Pointing {
         timer.start();
         // Bouton chekcIp pour se connecter à IHM manager et recuperer els stafflist
         mainView.getCheckButtonIP().addActionListener(e-> {
-            // on affiche un label si on est bien connnecté
-            mainView.changeVisibilitySuccess();
+            // recuperation de l'ip
+            String ip = mainView.getTextFieldIp();;
+            int port = Integer.parseInt(mainView.getTextFieldPort());
+            // On test si la connection est possible
+            if(Client.testerConnexion(ip, port)) {
+                // on affiche un label si on est bien connnecté
+                mainView.changeVisibilitySuccess(true);
+            }
+            else{
+                mainView.changeVisibilitySuccess(false);
+            }
         });
 
         // Bouton Check in/out
