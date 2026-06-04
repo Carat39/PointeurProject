@@ -51,26 +51,23 @@ public class Server {
                         //Actualisation des données
                         sendback(my_socket,theStaffList,output);
                     }
-                    else if (les_donnees instanceof PointingList) {
+                    else if (les_donnees instanceof PointingList thePointingList) {
                         System.out.println("C'est l'API de la pointeuse qui envoie lors de l'ouverture de l'application");
                         //C'est l'API de la pointeuse qui envoie lors de l'ouverture de l'application
-                        PointingList thePointingList = (PointingList) input.readObject();
                         StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
                         //ajout de tous les pointages dans pour les membres du Staff
                         theStaffList.add(thePointingList);
+                        //Récupération et sérialisation de l'Ip
+                        String Ip = String.valueOf(my_socket.getInetAddress().getHostAddress());
+                        serialisationIP("Ip.ser",Ip);
                         //Actualisation des données
                         sendback(my_socket,theStaffList,output);
                     }
-                    else if (les_donnees instanceof StaffList) {
+                    else if (les_donnees instanceof StaffList theStaffList) {
                         System.out.println("C'est l'API principale qui envoie lors d'une modification d'un Staff ou d'un pointage");
                         //C'est l'API principale qui envoie lors d'une modification d'un Staff ou d'un pointage
-                        StaffList theStaffList = (StaffList) input.readObject();
+                        theStaffList.serialisationStaffList("staffList.ser");
                         //Besoin de ne rien envoyer
-                    }
-                    else if (les_donnees instanceof String theIP){
-                        System.out.println("On sérialise l'IP");
-                        StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
-                        sendback(my_socket,theStaffList,output);
                     }
                     my_server.close();
             }

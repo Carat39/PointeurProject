@@ -59,14 +59,14 @@ public class Client {
         }
     }
 
-    public static boolean testerConnexion(String ip, int port) {
+    public static boolean testerConnexion(String ip, int port,Object pointingList) {
         try{
             Socket my_socket = new Socket(ip,port);
             try{
                 ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où j'envoie au serveur
                 ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); // La où on reçoit du serveur
 
-                output.writeObject(ip);
+                output.writeObject(pointingList);
 
                 //On récupère la liste actualisée et on la sérialise
                 StaffList theStaffList = (StaffList) input.readObject();

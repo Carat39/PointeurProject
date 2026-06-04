@@ -76,7 +76,7 @@ public class PointingList implements Serializable {
         }
         while(indice >= 0 && unique){
             pointingInList = thelist.get(indice);
-            if (the_pointing.getHour().equals(pointingInList.getHour())){
+            if ((the_pointing.getUuidStaff().equals(pointingInList.getUuidStaff())) && (the_pointing.getHour().equals(pointingInList.getHour()))){
                 unique = false;
             }
             indice --;

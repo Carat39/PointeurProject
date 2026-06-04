@@ -29,11 +29,10 @@ void main() throws Exception {
 
     StaffList theStaffList = new StaffList(theStaff);
 
-    //StaffList theStaffList = new StaffList();
-
     PointingList pointingList = new PointingList();
 
     Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
+    pointing1.setHour("18:00");
     Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
     Pointing pointing3 = new Pointing(Nino.getuuidStaff());
     Arthur.addPointing(pointing1);

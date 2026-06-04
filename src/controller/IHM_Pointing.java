@@ -65,7 +65,7 @@ public class IHM_Pointing {
             String ip = mainView.getTextFieldIp();;
             int port = Integer.parseInt(mainView.getTextFieldPort());
             // On test si la connection est possible
-            if(Client.testerConnexion(ip, port)) {
+            if(Client.testerConnexion(ip, port,pointingList)) {
                 // on affiche un label si on est bien connecte
                 mainView.changeVisibilitySuccess(true);
             }
