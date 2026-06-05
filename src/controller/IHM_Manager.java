@@ -73,6 +73,10 @@ public class IHM_Manager {
         Variables.updateComboBox(view.getPage2().getEmployeeList(), allEmployees);
         Variables.updateComboBox(view.getPage3().getEmployeeList(), workingEmployees);
         Variables.updateComboBox(view.getPage4().getEmployeeList(), allEmployees);
+
+        refreshShifts();
+        refreshEmployee();
+        refreshPage4Employee();
     }
 
     /**
@@ -89,6 +93,13 @@ public class IHM_Manager {
         view.getPage5().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
         view.getPage6().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
 
+        view.getPage1().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage2().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage3().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage4().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage5().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage6().getUpdateDataBtn().addActionListener(e -> updateData());
+
         view.getPage2().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage4().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
@@ -100,8 +111,9 @@ public class IHM_Manager {
         view.getPage1().getEmployeesBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page4"));
 
         view.getPage2().getManageBtn().addActionListener(e -> goToPage6());
-        view.getPage6().getNewPointingBtn().addActionListener(e -> newPointing());
-        view.getPage6().getUpdatePointingBtn().addActionListener(e -> updatePointing());
+        view.getPage6().getCreateBtn().addActionListener(e -> newPointing());
+        view.getPage6().getUpdateBtn().addActionListener(e -> updatePointing());
+        view.getPage6().getDeleteBtn().addActionListener(e -> deletePointing());
 
         view.getPage2().getEmployeeList().addActionListener(e -> refreshShifts());
         view.getPage2().getYearList().addActionListener(e -> refreshShifts());
@@ -142,7 +154,7 @@ public class IHM_Manager {
         }
 
         int year = Integer.parseInt(selectedYear);
-        view.getPage2().displayPointings(staff.getPointingsByYear(year), year, selectedEmployee, staff.getextratime());
+        view.getPage2().displayPointings(staff.getPointingsByYear(year), year, selectedEmployee, staff.getextratime(), staff.getworkschedule());
     }
 
     /**
@@ -311,7 +323,7 @@ public class IHM_Manager {
             allStaff.serialisationStaffList("staffList.ser");
             updateData();
             JOptionPane.showMessageDialog(view.getFrame(), "Pointing added at " + rounded);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(view.getFrame(), "Invalid time format (HH:mm)", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -334,8 +346,27 @@ public class IHM_Manager {
             allStaff.serialisationStaffList("staffList.ser");
             updateData();
             JOptionPane.showMessageDialog(view.getFrame(), "Pointing updated at " + rounded);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(view.getFrame(), "Invalid time format (HH:mm)", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * This method delete the last pointing of the selected employee
+     */
+    private void deletePointing() {
+        Staff staff = view.getPage6().getStaffRef();
+        if (staff.condPointingADay(0, 0)) {
+            JOptionPane.showMessageDialog(view.getFrame(), "No pointing today to delete!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            staff.getPointingList().removeLast();
+            allStaff.serialisationStaffList("staffList.ser");
+            updateData();
+            JOptionPane.showMessageDialog(view.getFrame(), "Last pointing deleted successfully");
+        } catch (Exception ex) {
+            ex.getMessage();
         }
     }
 
