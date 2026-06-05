@@ -73,6 +73,10 @@ public class IHM_Manager {
         Variables.updateComboBox(view.getPage2().getEmployeeList(), allEmployees);
         Variables.updateComboBox(view.getPage3().getEmployeeList(), workingEmployees);
         Variables.updateComboBox(view.getPage4().getEmployeeList(), allEmployees);
+
+        refreshShifts();
+        refreshEmployee();
+        refreshPage4Employee();
     }
 
     /**
@@ -89,12 +93,12 @@ public class IHM_Manager {
         view.getPage5().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
         view.getPage6().getCloseBtn().addActionListener(e -> view.getFrame().dispose());
 
-        view.getPage1().getUpdateDataBtn().addActionListener(e -> loadData());
-        view.getPage2().getUpdateDataBtn().addActionListener(e -> loadData());
-        view.getPage3().getUpdateDataBtn().addActionListener(e -> loadData());
-        view.getPage4().getUpdateDataBtn().addActionListener(e -> loadData());
-        view.getPage5().getUpdateDataBtn().addActionListener(e -> loadData());
-        view.getPage6().getUpdateDataBtn().addActionListener(e -> loadData());
+        view.getPage1().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage2().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage3().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage4().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage5().getUpdateDataBtn().addActionListener(e -> updateData());
+        view.getPage6().getUpdateDataBtn().addActionListener(e -> updateData());
 
         view.getPage2().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
         view.getPage3().getBackBtn().addActionListener(e -> view.getCardLayout().show(view.getCardPanel(), "page1"));
