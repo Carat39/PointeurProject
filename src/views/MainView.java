@@ -1,5 +1,7 @@
 package views;
 
+import mainApplication.management.Staff;
+import mainApplication.management.StaffList;
 import views.utils.Style;
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class MainView {
     private JLabel labelDate;
     private JLabel labelHour;
     private JLabel labelRounded;
-    private JComboBox<String> comboEmployees;
+    private static JComboBox<String> comboEmployees;
     private JButton checkButton;
     private JTextField textFieldIp;
     private JTextField textFieldPort;
@@ -143,7 +145,7 @@ public class MainView {
     }
 
     // Getters pour le controller
-    public JComboBox<String> getComboEmployees() { return comboEmployees; }
+    public static JComboBox<String> getComboEmployees() { return comboEmployees; }
     public JButton getCheckButton() { return checkButton; }
     public void setDate(String date) { labelDate.setText(date); }
     public void setHour(String hour) { labelHour.setText(hour); }
@@ -165,4 +167,15 @@ public class MainView {
         }
     }
 
+    public static void loadComboox(StaffList staffList){
+        for (Staff s : staffList.getStaffList()) {
+            getComboEmployees().addItem(s.getname() + " " + s.getsurname());
+        }
+    }
+    public static void updateCombobox(StaffList staffList){
+        // on detruit les anciens elements
+        getComboEmployees().removeAllItems();
+        // on affiche les nouveaux combobox
+        loadComboox(staffList);
+    }
 }
