@@ -29,26 +29,11 @@ public class IHM_Pointing {
     public IHM_Pointing() {
         mainView = new MainView();
 
-        // On recupere la liste des staff depuis stafflist.ser
-        staffList = new StaffList();
-        try {
-            // On deserialise la liste
-            staffList = StaffList.deserialisationStaffList("staffList.ser");
-        } catch (Exception e) {
-            // on affiche si il y a un probleme
-            System.out.println("Loading error.");
-        }
-        // on recuperre la liste des pointings effectues
-        try {
-            pointingList = PointingList.deserialisation("pointingList.ser");
-        } catch (Exception e) {
-            System.out.println("Pointing list loading error.");
-        }
+        // on recupere les infos de la serialisation
+        loadData();
 
         // On rajoute a l'ecran la liste de staff
-        for (Staff s : staffList.getStaffList()) {
-            mainView.getComboEmployees().addItem(s.getname() + " " + s.getsurname());
-        }
+        MainView.loadComboox(staffList);
         // Timer 1 seconde
         Timer timer = new Timer(1000, e -> {
             TimeManagement.setDate();
@@ -68,6 +53,10 @@ public class IHM_Pointing {
             if(Client.testerConnexion(ip, port,pointingList)) {
                 // on affiche un label si on est bien connecte
                 mainView.changeVisibilitySuccess(true);
+                // on recupere la nouvellle statfflist
+                updateData();
+                // on affiche la nouvelle liste
+                MainView.updateCombobox(staffList);
             }
             else{
                 mainView.changeVisibilitySuccess(false);
@@ -79,7 +68,7 @@ public class IHM_Pointing {
             // calcul de l'heure actuelle et de la date pour fournir a ConfirmView
             LocalDate currentDate = TimeManagement.getDate();
             LocalTime currentRoundHour = TimeManagement.round(TimeManagement.getHour());
-            String selectedEmployee = (String) mainView.getComboEmployees().getSelectedItem();
+            String selectedEmployee = (String) MainView.getComboEmployees().getSelectedItem();
             // Extraction du nom de l'utilisateur et l'adresse de destination
             String[] tabString = selectedEmployee.split(" ");
             String surname = tabString[1];
@@ -132,6 +121,28 @@ public class IHM_Pointing {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(IHM_Pointing::new);
     }
+
+    private void loadData(){
+        // On recupere la liste des staff depuis stafflist.ser
+        try {
+            // On deserialise la liste
+            staffList = StaffList.deserialisationStaffList("staffList.ser");
+        } catch (Exception e) {
+            // on affiche si il y a un probleme
+            System.out.println("Loading error.");
+        }
+        // on recuperre la liste des pointings effectues
+        try {
+            pointingList = PointingList.deserialisation("pointingList.ser");
+        } catch (Exception e) {
+            System.out.println("Pointing list loading error.");
+        }
+    }
+
+    private void updateData(){
+        loadData();
+    }
+
 
 
     // il faut pour la fin faire en sorte de tester la connection avec l'ihm manager
