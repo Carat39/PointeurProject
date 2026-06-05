@@ -27,6 +27,8 @@ public class Page6 {
 
     private Staff staffRef;
 
+    private final JButton updateDataBtn;
+
     /**
      * This method create page6
      *
@@ -42,6 +44,7 @@ public class Page6 {
 
         closeBtn = Variables.createCloseBtn();
         backBtn = Variables.createBackBtn();
+        updateDataBtn = Variables.createUpdateBtn();
 
 
         Font customFont = new Font("Lucida Handwriting", Font.PLAIN, 14);
@@ -113,6 +116,7 @@ public class Page6 {
 
         panel.add(nameLabel);
         panel.add(nameField);
+        panel.add(updateDataBtn);
     }
 
 
@@ -155,4 +159,6 @@ public class Page6 {
     public JTextField getPointingdayField() {
         return pointingdayField;
     }
+
+    public JButton getUpdateDataBtn(){return updateDataBtn;}
 }

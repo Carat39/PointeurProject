@@ -15,6 +15,7 @@ public class Page1 {
     private final JButton checkBtn;
     private final JButton clockedBtn;
     private final JButton employeesBtn;
+    private final JButton updateDataBtn;
 
     /**
      * Builder of the page
@@ -24,6 +25,7 @@ public class Page1 {
         panel.setBackground(Variables.PASTEL_PEACH);
 
         closeBtn = Variables.createCloseBtn();
+        updateDataBtn = Variables.createUpdateBtn();
         checkBtn = Variables.createNavBtn("Saved Work time", Variables.HEIGHT - 7 * (Variables.HEIGHT / 10));
         clockedBtn = Variables.createNavBtn("Clocked in Now", Variables.HEIGHT - 11 * (Variables.HEIGHT / 20));
         employeesBtn = Variables.createNavBtn("Employees", Variables.HEIGHT - 4 * (Variables.HEIGHT / 10));
@@ -33,6 +35,7 @@ public class Page1 {
         panel.add(checkBtn);
         panel.add(clockedBtn);
         panel.add(employeesBtn);
+        panel.add(updateDataBtn);
     }
 
     //getters
@@ -41,4 +44,5 @@ public class Page1 {
     public JButton getCheckBtn(){return checkBtn;}
     public JButton getClockedBtn(){return clockedBtn;}
     public JButton getEmployeesBtn(){return employeesBtn;}
+    public JButton getUpdateDataBtn(){return updateDataBtn;}
 }

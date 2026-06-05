@@ -18,6 +18,7 @@ public class Page3 {
     private final JButton backBtn;
     private final JComboBox<String> employeeList;
     private final JTextArea infoArea;
+    private final JButton updateDataBtn;
 
     /**
      * Builder of the page
@@ -30,6 +31,7 @@ public class Page3 {
         closeBtn = Variables.createCloseBtn();
         backBtn = Variables.createBackBtn();
         employeeList = Variables.createEmployeeList(employees);
+        updateDataBtn = Variables.createUpdateBtn();
 
         infoArea = new JTextArea();
         infoArea.setEditable(false);
@@ -47,6 +49,7 @@ public class Page3 {
         panel.add(backBtn);
         panel.add(employeeList);
         panel.add(scrollPane);
+        panel.add(updateDataBtn);
     }
 
     public void displayEmployee(String name, String surname, String arrivalHour) {
@@ -58,4 +61,5 @@ public class Page3 {
     public JButton getCloseBtn(){return closeBtn;}
     public JButton getBackBtn(){return backBtn;}
     public JComboBox<String> getEmployeeList(){return employeeList;}
+    public JButton getUpdateDataBtn(){return updateDataBtn;}
 }

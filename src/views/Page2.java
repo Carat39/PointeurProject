@@ -24,6 +24,7 @@ public class Page2 {
     private final JComboBox<String> yearList;
     private final JTextArea shiftArea;
     private final JButton manageBtn;
+    private final JButton updateDataBtn;
 
     /**
      * Builder of the page
@@ -36,6 +37,7 @@ public class Page2 {
 
         closeBtn = Variables.createCloseBtn();
         backBtn = Variables.createBackBtn();
+        updateDataBtn = Variables.createUpdateBtn();
         employeeList = Variables.createEmployeeList(employees);
         yearList = Variables.createYearList(years);
         manageBtn = Variables.createNavBtn("Manage Pointing", Variables.HEIGHT - 10 * (Variables.HEIGHT / 20));
@@ -58,6 +60,7 @@ public class Page2 {
         panel.add(yearList);
         panel.add(scrollPane);
         panel.add(manageBtn);
+        panel.add(updateDataBtn);
     }
 
     public void updateShiftDisplay(String content) {
@@ -127,5 +130,6 @@ public class Page2 {
     public JComboBox<String>getEmployeeList(){return employeeList;}
     public JComboBox<String>getYearList(){return yearList;}
     public JButton getManageBtn(){return manageBtn;}
+    public JButton getUpdateDataBtn(){return updateDataBtn;}
 
 }

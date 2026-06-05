@@ -46,6 +46,18 @@ public class Variables {
     }
 
     /**
+     * Create the update button to refresh all the data without closing IHM_Manager
+     * @return
+     */
+    public static JButton createUpdateBtn() {
+        JButton btn = new JButton("\uD83D\uDD04");
+        btn.setMargin(new Insets(0, 0, 0, 0));
+        btn.setBounds( 10, HEIGHT - 40, 30, 30);
+        btn.setBackground(PASTEL_PINK);
+        return btn;
+    }
+
+    /**
      * Create the page title
      * @param text
      * @return

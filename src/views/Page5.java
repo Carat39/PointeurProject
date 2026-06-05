@@ -28,12 +28,15 @@ public class Page5 {
 
     private Staff staffRef;
 
+    private final JButton updateDataBtn;
+
     public Page5() {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);
 
         closeBtn = Variables.createCloseBtn();
         backBtn = Variables.createBackBtn();
+        updateDataBtn = Variables.createUpdateBtn();
 
 
         Font customFont = new Font("Lucida Handwriting", Font.PLAIN, 14);
@@ -116,6 +119,7 @@ public class Page5 {
         panel.add(surnameField);
         panel.add(deptLabel);
         panel.add(deptCombo);
+        panel.add(updateDataBtn);
     }
 
     /**
@@ -170,4 +174,6 @@ public class Page5 {
     }
 
     public JButton getCreateBtn(){return createBtn;}
+
+    public JButton getUpdateDataBtn(){return updateDataBtn;}
 }
