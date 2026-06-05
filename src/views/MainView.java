@@ -93,7 +93,7 @@ public class MainView {
         textFieldPort.setFont(new Font("Serif", Font.PLAIN, 20));
 
         // bouton checkIp
-        checkButtonIP = new JButton("Connect");
+        checkButtonIP = new JButton("Connect/Refresh");
         checkButtonIP.setPreferredSize(new Dimension(230, 30));
         checkButtonIP.setFont(new Font("Serif", Font.BOLD, 20));
         checkButtonIP.setBackground(Style.pastelPurple);
