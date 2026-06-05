@@ -2,6 +2,8 @@ package views;
 
 import pointingApplication.Pointing;
 import views.utils.Variables;
+import mainApplication.management.WorkSchedule;
+import java.time.LocalTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,33 +65,57 @@ public class Page2 {
         shiftArea.setCaretPosition(0);
     }
 
-    public void displayPointings(ArrayList<Pointing> pointings, int year, String employeeName, int extratime) {
+    /**
+     * Display tthe pointings of the selected
+     * employee on the selected year (through JComboBox)
+     * We also display the time and the planned schedule for the employee
+     *
+     * @param pointings
+     * @param year
+     * @param employeeName
+     * @param extratime
+     * @param workSchedule
+     */
+    public void displayPointings(ArrayList<Pointing> pointings, int year, String employeeName, int extratime, WorkSchedule workSchedule) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-14s %-12s %-12s%n", "Date", "Arrival", "Departure"));
-        sb.append("-".repeat(40)).append("\n");
+        sb.append(String.format("%-14s %-12s %-12s %-20s%n", "Date", "Arrival", "Departure", "Schedule"));
+        sb.append("-".repeat(60)).append("\n");
 
         int i = 0;
         int shiftsCount = 0;
 
         while (i < pointings.size()) {
             Pointing p1 = pointings.get(i);
+            String arrival = p1.getHour().toString();
+            String departure = "missing";
+
             if (i + 1 < pointings.size() && pointings.get(i + 1).getDate().equals(p1.getDate())) {
-                Pointing p2 = pointings.get(i + 1);
-                sb.append(String.format("%-14s %-12s %-12s%n", p1.getDate().toString(), p1.getHour().toString(), p2.getHour().toString()));
-                shiftsCount++;
+                departure = pointings.get(i + 1).getHour().toString();
                 i += 2;
             } else {
-                sb.append(String.format("%-14s %-12s %-12s%n", p1.getDate().toString(), p1.getHour().toString(), "(missing)"));
-                shiftsCount++;
                 i++;
             }
+
+            String schedule = "missing";
+            if (workSchedule != null) {
+                int dayIndex = WorkSchedule.convertWeekDay(p1.getDate().getDayOfWeek());
+                LocalTime schedStart = workSchedule.getSchedule()[dayIndex * 2];
+                LocalTime schedEnd   = workSchedule.getSchedule()[dayIndex * 2 + 1];
+                if (schedStart != null && schedEnd != null) {
+                    schedule = schedStart + " - " + schedEnd;
+                }
+            }
+
+            sb.append(String.format("%-14s %-12s %-12s %-20s%n",
+                    p1.getDate().toString(), arrival, departure, schedule));
+            shiftsCount++;
         }
 
         if (shiftsCount == 0) {
             updateShiftDisplay("No shift found for " + employeeName + " in " + year + ".");
         } else {
-            sb.append("-".repeat(40)).append("\n");
-            sb.append("Total cumulated extra-time ").append(extratime).append(" min");
+            sb.append("-".repeat(60)).append("\n");
+            sb.append("Total cumulated extra-time : ").append(extratime).append(" min");
             updateShiftDisplay(sb.toString());
         }
     }
@@ -101,4 +127,5 @@ public class Page2 {
     public JComboBox<String>getEmployeeList(){return employeeList;}
     public JComboBox<String>getYearList(){return yearList;}
     public JButton getManageBtn(){return manageBtn;}
+
 }
