@@ -23,6 +23,11 @@ public class Client {
      * @param point L'objet qui sera envoyé (un pointeur ici)
      */
     public static void connection(String ip, int port, Object point){
+        try(Socket socket =new Socket()){
+            socket.connect(new InetSocketAddress(ip, port), 20);
+        }catch (Exception e){
+            System.out.println("Echec connnection");
+        }
         try{
             Socket my_socket = new Socket(ip,port);
             try{
@@ -38,6 +43,7 @@ public class Client {
             }
         } catch (Exception e) {
             System.out.println("sad");
+            throw new RuntimeException(e);
         }
     }
 
@@ -60,6 +66,11 @@ public class Client {
     }
 
     public static boolean testerConnexion(String ip, int port,Object pointingList) {
+        try(Socket socket =new Socket()){
+            socket.connect(new InetSocketAddress(ip, port), 2000);
+        }catch (Exception e){
+            return false;
+        }
         try{
             Socket my_socket = new Socket(ip,port);
             try{

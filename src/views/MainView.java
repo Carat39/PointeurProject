@@ -154,7 +154,7 @@ public class MainView {
     public String getTextFieldPort(){return textFieldPort.getText();}
     public void close() {frame.dispose();}
     public JButton getCheckButtonIP(){return checkButtonIP;};
-
+    public JFrame getFrame(){return frame;}
 
     public void changeVisibilitySuccess(boolean result){
         if (result){
