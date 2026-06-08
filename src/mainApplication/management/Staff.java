@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalTime;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -117,11 +118,16 @@ public class Staff implements Serializable {
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
         //Calculate the difference between the arrival/departure time and the time scheduled on the timetable.
-        int startDif= workschedule.getSchedule()[the_day*2].compareTo((the_pointing.getFirst()).getHour());
-        int endDif= workschedule.getSchedule()[the_day*2+1].compareTo((the_pointing.getLast()).getHour());
+        LocalTime expectedStart= workschedule.getSchedule()[the_day*2];
+        LocalTime expectedEnd= workschedule.getSchedule()[the_day*2+1];
+        LocalTime actualStart= (the_pointing.getFirst()).getHour();
+        LocalTime actualEnd= (the_pointing.getFirst()).getHour();
+
+        long startDif= Duration.between(actualStart, expectedStart).toMinutes();
+        long endDif= Duration.between(actualEnd, expectedEnd).toMinutes();
         //Adding/Deleting overtime hours if working hours have not been respected
-        extratime += startDif;
-        extratime += endDif;
+        extratime += (int)startDif;
+        extratime += (int)endDif;
     }
     public ArrayList<Pointing> getPointingsByYear(int year) {
         ArrayList<Pointing> result = new ArrayList<>();
