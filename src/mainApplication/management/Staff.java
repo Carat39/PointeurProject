@@ -9,7 +9,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalTime;
+import java.time.LocalDate;
 import java.time.Duration;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -97,6 +99,9 @@ public class Staff implements Serializable {
     //Ajoute à partir d'un flux de donnée ou lève une exception
     public void addPointing(Pointing thePointing) throws Exception{
         pointingList.addElem(thePointing);
+        if (condPointingADay(2, DAYS.between(thePointing.getDate(), LocalDate.now()))){
+            calcExtraTime();
+        }
     }
 
     public void addPointing(String filename) throws Exception{
@@ -131,14 +136,24 @@ public class Staff implements Serializable {
         //Calculate the difference between the arrival/departure time and the time scheduled on the timetable.
         LocalTime expectedStart= workschedule.getSchedule()[the_day*2];
         LocalTime expectedEnd= workschedule.getSchedule()[the_day*2+1];
-        LocalTime actualStart= (the_pointing.getFirst()).getHour();
-        LocalTime actualEnd= (the_pointing.getFirst()).getHour();
+        LocalTime actualStart= (the_pointing.get(0)).getHour();
+        LocalTime actualEnd= (the_pointing.get(1)).getHour();
 
         long startDif= Duration.between(actualStart, expectedStart).toMinutes();
         long endDif= Duration.between(actualEnd, expectedEnd).toMinutes();
         //Adding/Deleting overtime hours if working hours have not been respected
-        extratime += (int)startDif;
-        extratime += (int)endDif;
+        if (actualStart.isBefore(expectedStart)){
+            extratime -= (int)startDif;
+        }
+        else{
+            extratime += (int)startDif;
+        }
+        if (actualEnd.isBefore(expectedEnd)){
+            extratime += (int)endDif;
+        }
+        else{
+            extratime -= (int)endDif;
+        }
     }
     public ArrayList<Pointing> getPointingsByYear(int year) {
         ArrayList<Pointing> result = new ArrayList<>();

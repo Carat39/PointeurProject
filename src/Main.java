@@ -1,8 +1,11 @@
 import mainApplication.management.*;
 import pointingApplication.Pointing;
 import Time.TimeManagement;
+import java.time.temporal.ChronoUnit;
 
 import java.awt.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 void main() throws Exception{
     //TimeManagement.roundtest();
@@ -43,6 +46,11 @@ void main() throws Exception{
     pointingList.addElem(pointing1);
     pointingList.addElem(pointing2);
     System.out.println(pointing2.getHour());
+
+    LocalDate a = pointing1.getDate();
+    LocalDate b = LocalDate.now();
+    long days = ChronoUnit.DAYS.between(a,b);
+    System.out.println("Time"+days);
 
 
 

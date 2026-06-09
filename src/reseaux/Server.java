@@ -9,15 +9,17 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Server permet la connection entre un client et un serveur avec TCP/IP
+ * Server allows the TCP/IP connection between a client and the server
+ * Furthermore, depending on the object it receives, he will do different
+ * manipulations to save and sendback data.
  *
  * @author Les Scribes de Broadway
  *
  */
 public class Server {
     /**
-     * Main lance le serveur récupère les données si une connection a lieu puis les sérialises
-     * @param args Les arguments (ne sont pas utilisés).
+     * Main start the server, which can detect connections, as a result unserialisations and serialisations
+     * @param args Arguments (not used).
      */
     public static void main(String[] args){
         int port = 1234;
@@ -26,52 +28,43 @@ public class Server {
             port = Integer.parseInt(sport);
         }
         try{
-            ServerSocket my_server = new ServerSocket(port);
+            ServerSocket myServer = new ServerSocket(port);
             while (true){
                 try{
-                    System.out.println("Lancement du serveur sur le port " + port);
-                    Socket my_socket = my_server.accept();
+                    System.out.println("Start server in port " + port);
+                    Socket mySocket = myServer.accept();
 
-                    ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où on reçois du client
-                    ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); //La où on reçois du client
-
-                    System.out.println("On lit ce que l'on a reçu pour observer son type d'objet");
+                    ObjectOutputStream output = new ObjectOutputStream(mySocket.getOutputStream()); //La où on reçois du client
+                    ObjectInputStream input = new ObjectInputStream(mySocket.getInputStream()); //La où on reçois du client
                     //On lit ce que l'on a reçu pour observer son type d'objet
                     Object les_donnees = input.readObject();
-                    System.out.println("On a lu");
-
 
                     if (les_donnees instanceof Pointing thePointing){
-                        System.out.println("C'est l'API de la pointeuse qui envoie lors d'un pointage");
-
-                        //C'est l'API de la pointeuse qui envoie lors d'un pointage
-                        //On récupère la list de Staff
+                        System.out.println("It's pointing's API which send a pointing");
+                        //We're taking the StaffList
                         StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
                         Staff theStaff = theStaffList.find(thePointing.getUuidStaff());
-                        //On y ajoute le pointeur
+                        //add pointing
                         theStaff.addPointing(thePointing);
-                        //Actualisation des données
-                        sendback(my_socket,theStaffList,output);
+                        //data Actualisation
+                        sendback(mySocket,theStaffList,output);
                     }
                     else if (les_donnees instanceof PointingList thePointingList) {
-                        System.out.println("C'est l'API de la pointeuse qui envoie lors de l'ouverture de l'application");
-                        //C'est l'API de la pointeuse qui envoie lors de l'ouverture de l'application
+                        System.out.println("It's pointing's API which send pointingList when Connect/Refresh button is pressed");
                         StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
-                        //ajout de tous les pointages dans pour les membres du Staff
+                        //add all pointing to staff members
                         theStaffList.add(thePointingList);
                         //Récupération et sérialisation de l'Ip
-                        String Ip = String.valueOf(my_socket.getInetAddress().getHostAddress());
+                        String Ip = String.valueOf(mySocket.getInetAddress().getHostAddress());
                         serialisationIP("Ip.ser",Ip);
                         //Actualisation des données
-                        sendback(my_socket,theStaffList,output);
+                        sendback(mySocket,theStaffList,output);
                     }
                     else if (les_donnees instanceof StaffList theStaffList) {
-                        System.out.println("C'est l'API principale qui envoie lors d'une modification d'un Staff ou d'un pointage");
-                        //C'est l'API principale qui envoie lors d'une modification d'un Staff ou d'un pointage
+                        System.out.println("It's main's API which send the new StaffList after a modification of a Staff member or a pointing");
                         theStaffList.serialisationStaffList("staffList.ser");
-                        //Besoin de ne rien envoyer
+                        //We have nothing to sendback
                     }
-                    System.out.println("Fini");
                 }
                 catch (Exception e) {
                     throw new RuntimeException(e);
@@ -83,16 +76,23 @@ public class Server {
         }
     }
 
-    /*
-    * Sérialise les données et les renvoient de l'autre côté
-    * */
-    public static void sendback(Socket my_socket, StaffList theStaffList,ObjectOutputStream output) throws Exception{
+
+    /**
+     * sendback serialise theStaffList and send it in the current socket.
+     * @param mySocket Les arguments (ne sont pas utilisés).
+     * @param theStaffList A StaffList we want to send to client.
+     * @param output The output Stream of the socket .
+     */
+    public static void sendback(Socket mySocket, StaffList theStaffList, ObjectOutputStream output) throws Exception{
         //Actualisation staffList coté serveur
         theStaffList.serialisationStaffList("staffList.ser");
         //On renvoie la list de Staff actualisée au client
         output.writeObject(theStaffList);
     }
+    /**
+     * sendback serialise theStaffList and send it in the current socket.
 
+     */
     public static void serialisationIP(String filename,String IP) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
@@ -107,6 +107,10 @@ public class Server {
         }
     }
 
+    /**
+     * deserialisationIP unserialise the IP in the file filename (if it exists)
+     * @param filename The filename in which the last IP client is stocked
+     */
     public static String deserialisationIP(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";

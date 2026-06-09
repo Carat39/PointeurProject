@@ -95,7 +95,9 @@ public class PointingList implements Serializable {
         }
         while(indice >= 0 && unique){
             pointingInList = thelist.get(indice);
-            if ((the_pointing.getUuidStaff().equals(pointingInList.getUuidStaff())) && (the_pointing.getHour().equals(pointingInList.getHour()))){
+            if ((the_pointing.getUuidStaff().equals(pointingInList.getUuidStaff()))
+                    && (the_pointing.getHour().equals(pointingInList.getHour()))
+                    && (the_pointing.getDate().equals(pointingInList.getDate()))){
                 unique = false;
             }
             indice --;
@@ -107,6 +109,11 @@ public class PointingList implements Serializable {
         // Tester exception on sait jamais
         if (uniquePointing(pointing)){
             thelist.add(pointing);
+            //I Have an idea
+            /*
+            * on appelle calcExtraTime
+            * qui test de calculer le extra time, si c'est nullptr, ne fait rien, sinon tente de calculer
+            * */
         }
         else{
             System.out.println("This pointing already exists.");

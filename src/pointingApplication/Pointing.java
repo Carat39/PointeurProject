@@ -13,8 +13,14 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.UUID;
 
-
+/**
+ * Client allows a TCP/IP request with a server.
+ * Client may send pointing,pointingList or StaffList
+ * @author Les Scribes de Broadway
+ *
+ */
 public class Pointing implements Serializable{
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     //Attributes
@@ -23,27 +29,45 @@ public class Pointing implements Serializable{
     private LocalDate date;
 
     //Constructors
-
+    /**
+     * Pointing Default Constructor
+     * Create a random pointing
+     */
     public Pointing(){
         uuidStaff = UUID.randomUUID();
         hour = LocalTime.MIN;
         date = LocalDate.MIN;
     }
 
-    //Creation du premier pointage d'un membre du Staff. C'est lui que Romain appellera
-    public Pointing(UUID L_idStaff) throws Exception{
-        uuidStaff = L_idStaff;
+    /**
+     * Pointing Personnal Constructor
+     * @param LidStaff
+     * Create a pointing with L_idStaff as uuidStaff
+     */
+    public Pointing(UUID LidStaff) throws Exception{
+        uuidStaff = LidStaff;
         hour = TimeManagement.getHourNow();
         date = TimeManagement.getDateNow();
     }
 
-    public Pointing(UUID L_idStaff, LocalTime hour, LocalDate d) throws Exception{
-        uuidStaff = L_idStaff;
+    /**
+     * Pointing Personnal Constructor
+     * @param LidStaff UuidStaff
+     * @param hour hour of the pointing
+     * @param d the date of the pointing
+     * Create a pointing with given params.
+     */
+    public Pointing(UUID LidStaff, LocalTime hour, LocalDate d) throws Exception{
+        uuidStaff = LidStaff;
         setHour(hour);
         setDate(d);
     }
 
-    //Methods
+    /**
+     * serialisation
+     * @param filename the output filename
+     * serialisation of a pointing into ser file.
+     */
     public void serialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
@@ -56,15 +80,12 @@ public class Pointing implements Serializable{
             oos.writeObject(this);
         }
     }
-    public void serialisation(String filename,DataOutputStream stream) throws Exception{
-        //HMMM
-        try(
-            ObjectOutputStream oos = new ObjectOutputStream(stream) // peut être ici le my_socket.getOutputStream()
-        ){
-            oos.writeObject(this);
-        }
-    }
 
+    /**
+     * deserialisation
+     * @param filename the output filename
+     * unserialisation of a pointing from a ser file.
+     */
     public static Pointing deserialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
@@ -80,12 +101,26 @@ public class Pointing implements Serializable{
         return les_donnees;
     }
 
+    /**
+     * getUuidStaff
+     * return uuidStaff
+     */
     public UUID getUuidStaff() {
         return uuidStaff;
     }
 
+    /**
+     * setUuidStaff
+     * @param newId The new uuid
+     * set uuidStaff to newId
+     */
     public void setIdStaff(UUID newId){ uuidStaff=newId; }
 
+    /**
+     * setHour
+     * @param newSHour LocalTime the Newhour
+     * try to set hour to NewHour
+     */
     public void setHour(LocalTime newSHour) throws Exception{
         if ((newSHour.toString()).equals("23:45")){
             throw new Exception("Error: cannot point at 23:45 (day schedule terminated)");
@@ -93,38 +128,59 @@ public class Pointing implements Serializable{
         hour = newSHour;
     }
 
+    /**
+     * setHour
+     * @param newSHour String the Newhour
+     * try to set hour to NewHour with a String this time
+     */
     public void setHour(String newSHour) throws Exception{
         setHour(LocalTime.parse(newSHour));
     }
 
+    /**
+     * setdate
+     * @param newDate the NewDate
+     * set hour to newDate
+     */
     public void setDate(LocalDate newDate){ date= newDate; }
 
+    /**
+     * getHour
+     * return hour
+     */
     public LocalTime getHour(){ return hour; }
 
+    /**
+     * getdate
+     * return date
+     */
     public LocalDate getDate(){ return date; }
 
-    //Sera dans l'API de Romain
-    public static void Jepointe(String The_Name, String The_Surname, StaffList theStaffList,PointingList thePointingList, String ip, int port) throws Exception{
-        Staff theStaff = theStaffList.find(The_Name,The_Surname);
-        //Est-ce que le staff existe? Forcément mais renvoie la référence
+    /**
+     * Jepointe
+     * @param TheName The name of the employee who is trying to check in/out
+     * @param TheSurname The surname of the employee who is trying to check in/out
+     * @param theStaffList theStaffList
+     * @param thePointingList pointingList
+     * @param ip destination ip
+     * @param port destination port
+     */
+    public static void Jepointe(String TheName, String TheSurname, StaffList theStaffList,PointingList thePointingList, String ip, int port) throws Exception{
+        Staff theStaff = theStaffList.find(TheName,TheSurname);
+        //Find the Staff employee
         if (theStaff != null){
-            //Est-ce qu-il a pointé 2 fois aujourd'hui
+            //Does he have ever pointed 2 times today?
             if (theStaff.condPointingADay(2,0)) {
-                //Il a déjà pointé 2 fois
                 throw new Exception("You have already pointed 2 times today!!!");
             }
             else{
                 Pointing thePointing = new Pointing(theStaff.getuuidStaff());
-                //On sérialise a ce moment la
                try{
-                    //"10.231.44.109" //si 4g
-                    //192.168.1.19 //si maison maman
-                    //192.168.1.18 //si maison papa
-                    // 172.25.15.109 //si polytech
+                    //Try sending data
                     Client.connection(ip,port,(Object)thePointing);
                }
                catch (Exception e) {
-                   //Si echec de la connexion on serialise en local
+                   //if it fails, we will make a local serialization
                    System.out.println("Connection failed, saving locally.");
                    try {
                        thePointingList.addElem(thePointing);
@@ -133,12 +189,12 @@ public class Pointing implements Serializable{
                        throw new Exception("Saving error : " + ex.getMessage());
                    }
                }
-               //Ajout du pointage dans la liste du staff
+               //add pointing into staff
                theStaff.addPointing(thePointing);
-               //Ajout du pointage dans la liste des pointages de la journée
+               //add pointing into local pointingList
                thePointingList.addElem(thePointing);
             }
-            //A t-il pointé 2 fois hier (en supposant qu'il a au moins 2 pointages dans son palmarès)
+            //Does he have pointed 2 times yesterday?
             if (!theStaff.condPointingADay(1,1) && theStaff.getnbpointage() >= 3 ) {
                 throw new Exception("You haven't pointed 2 times yesterday!!!");
             }
