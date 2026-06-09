@@ -1,6 +1,7 @@
 package controller;
 
 import Time.TimeManagement;
+import mainApplication.management.WorkSchedule;
 import views.Assembleur_pages;
 import utils.temp_serialisation;
 import mainApplication.management.Staff;
@@ -280,7 +281,22 @@ public class IHM_Manager {
         mainApplication.management.Departement dept = (mainApplication.management.Departement)
                 view.getPage5().getDeptCombo().getSelectedItem();
 
-        Staff newStaff = new Staff(name, surname, dept, null);
+        LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(6), LocalTime.MIN.plusHours(14),
+                                        LocalTime.MIN.plusHours(7), LocalTime.MIN.plusHours(15),
+                                        LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
+                                        LocalTime.MIN.plusHours(9), LocalTime.MIN.plusHours(17),
+                                        LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18),
+                                        LocalTime.MIN.plusHours(11), LocalTime.MIN.plusHours(19),
+                                        LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(20)};
+
+        WorkSchedule theworkschedule = null;
+        try{
+            theworkschedule = new WorkSchedule(tab_worSchedule1);
+
+        } catch (Exception e) {
+
+        }
+        Staff newStaff = new Staff(name, surname, dept, theworkschedule);
         allStaff.add(newStaff);
         try {
             allStaff.serialisationStaffList("staffList.ser");

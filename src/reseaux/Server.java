@@ -25,11 +25,13 @@ public class Server {
             String sport = args[0];
             port = Integer.parseInt(sport);
         }
-        while (true){
-            try{
-                ServerSocket my_server = new ServerSocket(port);
-                System.out.println("Lancement du serveur sur le port " + port);
+        try{
+            ServerSocket my_server = new ServerSocket(port);
+            while (true){
+                try{
+                    System.out.println("Lancement du serveur sur le port " + port);
                     Socket my_socket = my_server.accept();
+
                     ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où on reçois du client
                     ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); //La où on reçois du client
 
@@ -69,11 +71,15 @@ public class Server {
                         theStaffList.serialisationStaffList("staffList.ser");
                         //Besoin de ne rien envoyer
                     }
-                    my_server.close();
+                    System.out.println("Fini");
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
-            catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

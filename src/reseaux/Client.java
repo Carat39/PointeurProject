@@ -23,14 +23,9 @@ public class Client {
      * @param point L'objet qui sera envoyé (un pointeur ici)
      */
     public static void connection(String ip, int port, Object point){
-        try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress(ip, port), 20);
-        } catch (Exception e) {
-            System.out.println("Échec Connection");
-        }
         try{
-            Socket my_socket = new Socket(ip,port);
-            my_socket.setSoTimeout(10);
+            Socket my_socket = new Socket();
+            my_socket.connect(new InetSocketAddress(ip, port), 5000);
             try{
                 ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où j'envoie au serveur
                 ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); // La où on reçoit du serveur
@@ -39,12 +34,8 @@ public class Client {
                 StaffList theStaffList = (StaffList) input.readObject();
                 theStaffList.serialisationStaffList("staffList.ser");
                 disconnection(my_socket,output,input);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } catch (Exception e) {
-            System.out.println("sad");
-        }
+            } catch (Exception _) {}
+        } catch (Exception _) {}
     }
 
     /**
@@ -66,24 +57,19 @@ public class Client {
     }
 
     public static boolean testerConnexion(String ip, int port,Object pointingList) {
-        try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress(ip, port), 20);
-        } catch (Exception e) {
-            return false;
-        }
         try{
-            Socket my_socket = new Socket(ip,port);
-            my_socket.setSoTimeout(10);
             try{
-                ObjectOutputStream output = new ObjectOutputStream(my_socket.getOutputStream()); //La où j'envoie au serveur
-                ObjectInputStream input = new ObjectInputStream(my_socket.getInputStream()); // La où on reçoit du serveur
+                Socket mySocket = new Socket();
+                mySocket.connect(new InetSocketAddress(ip, port), 5000);
+                ObjectOutputStream output = new ObjectOutputStream(mySocket.getOutputStream()); //La où j'envoie au serveur
+                ObjectInputStream input = new ObjectInputStream(mySocket.getInputStream()); // La où on reçoit du serveur
 
                 output.writeObject(pointingList);
 
                 //On récupère la liste actualisée et on la sérialise
                 StaffList theStaffList = (StaffList) input.readObject();
                 theStaffList.serialisationStaffList("staffList.ser");
-                disconnection(my_socket,output,input);
+                disconnection(mySocket,output,input);
                 return true;
             } catch (Exception e) {
                 return false;
