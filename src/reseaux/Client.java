@@ -34,8 +34,12 @@ public class Client {
                 StaffList theStaffList = (StaffList) input.readObject();
                 theStaffList.serialisationStaffList("staffList.ser");
                 disconnection(my_socket,output,input);
-            } catch (Exception e) {throw new RuntimeException(e);}
-        } catch (Exception e) {throw new RuntimeException(e);}
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     /**

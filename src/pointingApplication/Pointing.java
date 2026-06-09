@@ -127,8 +127,8 @@ public class Pointing implements Serializable{
                    //Si echec de la connexion on serialise en local
                    System.out.println("Connection failed, saving locally.");
                    try {
-                       theStaff.addPointing(thePointing);
-                       theStaffList.serialisationStaffList("staffList.ser");
+                       thePointingList.addElem(thePointing);
+                       thePointingList.serialisation("pointingList.ser");
                    } catch (Exception ex) {
                        throw new Exception("Saving error : " + ex.getMessage());
                    }

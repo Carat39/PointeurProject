@@ -33,4 +33,4 @@ bin/
 .DS_Store
 
 ### .ser chiant ###
-.ser
+*.ser
