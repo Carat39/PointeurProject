@@ -122,19 +122,23 @@ public class Staff implements Serializable {
     }
 
     public void calcExtraTime(){
-        PointingList the_list = null;
         TimeManagement theDate= new TimeManagement();
         //Retrieves the user's pointing as of today's date.
-        Pointing the_pointing = the_list.getElemList(uuidStaff, theDate.getDate());
+        ArrayList<Pointing> the_pointing = pointingList.getElemList(theDate.getDate());
         //Gets today's date in an integer number (from 0 to 6 starting from Monday).
         int the_day= WorkSchedule.convertWeekDay(theDate.getDate().getDayOfWeek());
 
         //Calculate the difference between the arrival/departure time and the time scheduled on the timetable.
-        int startDif= workschedule.getSchedule()[the_day*2].compareTo(the_pointing.getHour());
-        //int endDif= workschedule.getSchedule()[the_day*2+1].compareTo(the_pointing.getEndHour());
+        LocalTime expectedStart= workschedule.getSchedule()[the_day*2];
+        LocalTime expectedEnd= workschedule.getSchedule()[the_day*2+1];
+        LocalTime actualStart= (the_pointing.getFirst()).getHour();
+        LocalTime actualEnd= (the_pointing.getFirst()).getHour();
+
+        long startDif= Duration.between(actualStart, expectedStart).toMinutes();
+        long endDif= Duration.between(actualEnd, expectedEnd).toMinutes();
         //Adding/Deleting overtime hours if working hours have not been respected
-        extratime += startDif;
-        //extratime += endDif;
+        extratime += (int)startDif;
+        extratime += (int)endDif;
     }
     public ArrayList<Pointing> getPointingsByYear(int year) {
         ArrayList<Pointing> result = new ArrayList<>();

@@ -24,7 +24,26 @@ public class PointingList implements Serializable {
     //Methods
     public ArrayList<Pointing> getthelist(){return thelist;}
 
-    public Pointing getElemList(UUID l_id, LocalDate The_date){
+    public ArrayList<Pointing> getElemList(LocalDate The_date){
+        Pointing a_pointing = null;
+        ArrayList<Pointing> the_pointings = new ArrayList<>();
+        boolean find = false;
+        int indice = 0;
+        while(indice < thelist.size() && !find){
+            a_pointing = thelist.get(indice);
+            if ((a_pointing.getDate()).equals(The_date)){
+                find = true;
+                the_pointings.add(a_pointing);
+                the_pointings.add(thelist.get(indice+1));
+            }
+            else{
+                indice ++;
+            }
+        }
+        return the_pointings;
+    }
+
+    public Pointing getElemList(UUID uui, LocalDate The_date){
         Pointing the_pointing = null;
         boolean find = false;
         int indice = 0;
