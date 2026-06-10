@@ -3,26 +3,25 @@ import views.utils.Style;
 import javax.swing.*;
 import java.awt.*;
 /**
- * @author Romain
- * Permet de gerer l'interface d'exception
- * lors du pointage si un utilisateur
- * a deja pointe 2 fois dans une meme journee
+ *  Allow to manage exception handling
+ *  during clock-in if a user
+ *  has already clocked in twice on the same day
  */
 public class ExceptView {
+    /*** main frame used to display things on it*/
     private static JFrame frame;
+    /** Button allowing the user to return to the main menu */
     private JButton buttonMenu;
-    /**
-     * Fonction principale permettant
-     * d'appeler la methode buildant la page d'exception
-     * @param employeeName
+    /**Constructs the ExceptView and builds the interface
+     * @param employeeName  the name of the employee
      */
     public ExceptView(String employeeName) {
         buildUI(employeeName);
     }
     /**
-     * Fonction initalisant tous les aspects
-     * graphiques
-     * @param employeeName
+     * Main method to build the
+     * graphical interface of the ExceptView
+     * @param employeeName the full name of the employee who pointed
      */
     private void buildUI(String employeeName) {
         //Frame
@@ -30,24 +29,24 @@ public class ExceptView {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(500, 425);
         frame.setLocationRelativeTo(null);
-        //Panel principal
+        // Main Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Style.pastelPeach);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        // Panel pour le haut
+        // Top Pannel
         JPanel topPanel = new JPanel();
         topPanel.setBackground(Style.pastelPeach);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-        // Label text
+        // Text Label
         JLabel labelError = new JLabel("Warning ");
         labelError.setFont(new Font("Serif", Font.BOLD, 30));
         labelError.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // Nom employe
+        // Employee names
         JLabel labelEmployee = new JLabel(employeeName);
         labelEmployee.setFont(new Font("Serif", Font.BOLD, 30));
         labelEmployee.setForeground(new Color(100, 80, 120));
         labelEmployee.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // on les rajoute dans le meme panel
+        // Add in the same panel
         topPanel.add(labelError);
         topPanel.add(labelEmployee);
 
@@ -59,12 +58,12 @@ public class ExceptView {
         JLabel labelReason = new JLabel("You have already checked in");
         labelReason.setFont(new Font("Serif", Font.BOLD, 30));
         labelReason.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // Label suite cause
+        // Label cause 2nd
         JLabel labelReason2 = new JLabel("2 times today");
         labelReason2.setFont(new Font("Serif", Font.BOLD, 30));
         labelReason2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //Bouton retour
+        // Backbutton
         buttonMenu = new JButton("Back to menu");
         buttonMenu.setFont(new Font("Serif", Font.BOLD, 30));
         buttonMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -72,7 +71,7 @@ public class ExceptView {
         buttonMenu.setBackground(Style.pastelPurple);
         buttonMenu.setFocusPainted(false);
 
-        // Tout ajouter au panel au bon endroit
+        // Add in the panel at the same place
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(topPanel);
         mainPanel.add(Box.createVerticalStrut(15));
@@ -89,7 +88,9 @@ public class ExceptView {
         frame.setVisible(true);
         frame.setResizable(true);
     }
-    // Getter pour le controller
+    // Getter for le controller
+    /**@return the menu button*/
     public JButton getButtonMenu() { return buttonMenu; }
+    /** close the frame of ExeceptView*/
     public void close() { frame.dispose(); }
 }

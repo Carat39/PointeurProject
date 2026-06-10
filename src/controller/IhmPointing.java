@@ -1,7 +1,6 @@
 package controller;
 
 import mainApplication.management.PointingList;
-import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
 import Time.TimeManagement;
 import views.MainView;
@@ -17,45 +16,70 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class IHM_Pointing {
+/**
+ * Main controller of the pointing application
+ * Manages the graphical interface, the connection to the
+ * IHM_Manager and the pointing logic for the employees
+ */
+public class IhmPointing {
 
+    /**
+     * MainView of the application
+     */
     private MainView mainView;
+    /**
+     * StaffList containing all the employees data
+     * including name, surname... cf StaffList.java
+     */
     private StaffList staffList;
+    /**
+     * List of all pointings recorded
+     */
     private PointingList pointingList;
-
-    // attributs utils pour la connection
+    /**
+     * IP address of the manager application
+     */
     private String ip;
+    /**
+     * port number of the manager application
+     */
     private int port;
-    public IHM_Pointing() {
+
+    /**
+     * The constructor of the IHM
+     * Initializes the main view, loads serialized data,
+     * connect ot the IHM manager
+     */
+    public IhmPointing() {
         mainView = new MainView();
 
-        // on recupere les infos de la serialisation
+        // Retrieve the serialization data
         loadData();
 
-        // On rajoute a l'ecran la liste de staff
+        // Display the staff list on the screen
         MainView.loadComboox(staffList);
-        // Timer 1 seconde
+        // Timer 1 second
         Timer timer = new Timer(1000, e -> {
             TimeManagement.setDate();
             TimeManagement.setHour();
-            // on applique la date et l'heure calcule et on convertit dans le bon format
+            // Apply the calculated date and time and convert them to the correct format
             mainView.setDate(TimeManagement.getDate().format(DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.ENGLISH)));
             mainView.setHour(TimeManagement.getHour().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             mainView.setRounded("Rounded to the closest 15m: " + TimeManagement.round(TimeManagement.getHour()).format(DateTimeFormatter.ofPattern("HH:mm")));
         });
         timer.start();
-        // Bouton chekcIp pour se connecter à IHM manager et recuperer els stafflist
+        // “Check-in” button to log in to IHM Manager and retrieve staff lists
         mainView.getCheckButtonIP().addActionListener(e-> {
-            // recuperation de l'ip
+            // retrieve the ip
             String ip = mainView.getTextFieldIp();;
             int port = Integer.parseInt(mainView.getTextFieldPort());
-            // On test si la connection est possible
+            // Checking if a connection is possible
             if(Client.testerConnexion(ip, port,pointingList)) {
-                // on affiche un label si on est bien connecte
+                // Display a label if the connexion is successful
                 mainView.changeVisibilitySuccess(true);
-                // on recupere la nouvellle statfflist
+                // retrieve the new stafflist
                 updateData();
-                // on affiche la nouvelle liste
+                // Display the new stafflist contains employes
                 MainView.updateCombobox(staffList);
             }
             else{
@@ -65,40 +89,38 @@ public class IHM_Pointing {
 
         // Bouton Check in/out
         mainView.getCheckButton().addActionListener(e -> {
-            // calcul de l'heure actuelle et de la date pour fournir a ConfirmView
+            // Calculate the current time and date to pass to ConfirmView
             LocalDate currentDate = TimeManagement.getDate();
             LocalTime currentRoundHour = TimeManagement.round(TimeManagement.getHour());
             String selectedEmployee = (String) MainView.getComboEmployees().getSelectedItem();
-            // Extraction du nom de l'utilisateur et l'adresse de destination
+            // Retrieve the user's name and destination address
             String[] tabString = selectedEmployee.split(" ");
             String surname = tabString[1];
             String firstname = tabString[0];
-            System.out.println("surname"+surname);
-            System.out.println(selectedEmployee);
             String ip = mainView.getTextFieldIp();;
             int port = Integer.parseInt(mainView.getTextFieldPort());
 
-            // Gestion du pointage
+            // Check in Management
             try{
                 Pointing.Jepointe(firstname, surname, staffList, pointingList, ip, port);
                 ConfirmView confirmView = new ConfirmView(currentDate, currentRoundHour, selectedEmployee);
-                // Bouton retour au menu pour ConfirmView
+                // Back to menu button for Confirmview
                 confirmView.getButtonMenu().addActionListener(back -> {
                     confirmView.close();
                 });
             } catch (Exception ex) {
-                // on recupere le message de l'exception et on y applique la decision
+                // retrieve the exception message and apply the decision to it
                 String msg = ex.getMessage();
                 System.out.println(msg);
                 if ("You have already pointed 2 times today!!!".equals(msg)) {
-                    // on lance la fenetre correspondante
+                    // Open the corresponding view
                     ExceptView exceptView = new ExceptView(selectedEmployee);
                     System.out.println("You have already pointed 2 times today.");
                     exceptView.getButtonMenu().addActionListener(close -> {
                         exceptView.close();;
                     });
                 } else if ("You haven't pointed 2 times yesterday!!!".equals(msg)) {
-                    // on lance la fenetre correspondante
+                    // Open the corresponding view
                     InformationView informationView = new InformationView(selectedEmployee);
                     informationView.getButtonMenu().addActionListener(close ->{
                         InformationView.close();
@@ -115,13 +137,19 @@ public class IHM_Pointing {
             System.out.println(ip);
             System.out.println(port);
         });
-
-
     }
+    /**
+     * Launch the code
+     */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(IHM_Pointing::new);
+        SwingUtilities.invokeLater(IhmPointing::new);
     }
 
+    /**
+     * Loads persistent data from serialized files.
+     * Attempts to deserialize staffList.ser into {@link StaffList}
+     * and pointingList.ser into {@link PointingList}.
+     */
     private void loadData(){
         // On recupere la liste des staff depuis stafflist.ser
         try {
@@ -138,16 +166,8 @@ public class IHM_Pointing {
             System.out.println("Pointing list loading error.");
         }
     }
-
     private void updateData(){
         loadData();
     }
 
-
-
-    // il faut pour la fin faire en sorte de tester la connection avec l'ihm manager
-    // si la connexion est bonne envoyer les pointings qui sont en attente puis envoyer le pointing
-    // realis� par l'utilisateur
-    // sinon enregistrer le pointing dans un fichier serialiable qui sera essayer a la prochaine
-    // connexion
 }
