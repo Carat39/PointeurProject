@@ -65,10 +65,10 @@ public class IHM_Manager {
     }
 
     /**This method updates the data in the JComboBox after
-    * we modified the employee list, or their pontings.
+     * we modified the employee list, or their pontings.
      * This allows us to be able to check on changes without havinig
      * to reroll the entire IHM application
-    * */
+     * */
     private void updateData(){
         loadData();
         Variables.updateComboBox(view.getPage2().getEmployeeList(), allEmployees);
@@ -282,12 +282,12 @@ public class IHM_Manager {
                 view.getPage5().getDeptCombo().getSelectedItem();
 
         LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(6), LocalTime.MIN.plusHours(14),
-                                        LocalTime.MIN.plusHours(7), LocalTime.MIN.plusHours(15),
-                                        LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
-                                        LocalTime.MIN.plusHours(9), LocalTime.MIN.plusHours(17),
-                                        LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18),
-                                        LocalTime.MIN.plusHours(11), LocalTime.MIN.plusHours(19),
-                                        LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(20)};
+                LocalTime.MIN.plusHours(7), LocalTime.MIN.plusHours(15),
+                LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
+                LocalTime.MIN.plusHours(9), LocalTime.MIN.plusHours(17),
+                LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18),
+                LocalTime.MIN.plusHours(11), LocalTime.MIN.plusHours(19),
+                LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(20)};
 
         WorkSchedule theworkschedule = null;
         try{
