@@ -24,7 +24,7 @@ void main() throws Exception {
     Staff Michel = new Staff("Michel", "Jean", Departement.MANAGEMENT, workSchedule1);
     Staff Cou = new Staff("Cou", "Verture", Departement.ADMINISTRATION, workSchedule1);
     Staff Salle = new Staff("Salle", "DeBain", Departement.ADMINISTRATION, workSchedule1);
-    Staff[] theStaff = {Romain, Arthur, Clement, Nino, Michel,Salle};
+    Staff[] theStaff = {Romain, Arthur, Clement, Nino, Michel,Cou,Salle};
 
     StaffList theStaffList = new StaffList(theStaff);
 

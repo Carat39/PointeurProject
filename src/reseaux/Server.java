@@ -54,9 +54,6 @@ public class Server {
                         StaffList theStaffList = StaffList.deserialisationStaffList("staffList.ser");
                         //add all pointing to staff members
                         theStaffList.add(thePointingList);
-                        //Récupération et sérialisation de l'Ip
-                        String Ip = String.valueOf(mySocket.getInetAddress().getHostAddress());
-                        serialisationIP("Ip.ser",Ip);
                         //Actualisation des données
                         sendback(mySocket,theStaffList,output);
                     }
@@ -75,8 +72,6 @@ public class Server {
             throw new RuntimeException(e);
         }
     }
-
-
     /**
      * sendback serialise theStaffList and send it in the current socket.
      * @param mySocket Les arguments (ne sont pas utilisés).
@@ -88,41 +83,5 @@ public class Server {
         theStaffList.serialisationStaffList("staffList.ser");
         //On renvoie la list de Staff actualisée au client
         output.writeObject(theStaffList);
-    }
-    /**
-     * sendback serialise theStaffList and send it in the current socket.
-
-     */
-    public static void serialisationIP(String filename,String IP) throws Exception{
-        String classPath = System.getProperty("java.class.path");
-        String arborescence = "src/";
-        if (classPath.equals(".")){
-            arborescence = "../";
-        }
-        try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
-            ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
-        ){
-            System.out.println(arborescence+filename);
-            oos.writeObject(IP);
-        }
-    }
-
-    /**
-     * deserialisationIP unserialise the IP in the file filename (if it exists)
-     * @param filename The filename in which the last IP client is stocked
-     */
-    public static String deserialisationIP(String filename) throws Exception{
-        String classPath = System.getProperty("java.class.path");
-        String arborescence = "src/";
-        if (classPath.equals(".")){
-            arborescence = "../";
-        }
-        String les_donnees = " ";
-        try(FileInputStream file = new FileInputStream(arborescence+filename);
-            ObjectInputStream in = new ObjectInputStream(file)
-        ) {
-            les_donnees = (String) in.readObject();
-        }
-        return les_donnees;
     }
 }
