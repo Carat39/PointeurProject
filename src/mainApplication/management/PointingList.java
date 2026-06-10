@@ -131,9 +131,6 @@ public class PointingList implements Serializable {
         if (uniquePointing(pointing)){
             thelist.add(pointing);
         }
-        else{
-            System.out.println("This pointing already exists.");
-        }
     }
 
     /**
