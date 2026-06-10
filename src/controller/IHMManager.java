@@ -2,11 +2,10 @@ package controller;
 
 import Time.TimeManagement;
 import mainApplication.management.WorkSchedule;
-import views.Assembleur_pages;
+import views.AssemblyPage;
 import utils.temp_serialisation;
 import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
-import mainApplication.management.PointingList;
 import pointingApplication.Pointing;
 import views.utils.Variables;
 
@@ -22,19 +21,19 @@ import java.util.ArrayList;
  * and handles errors. (hopefully)
  */
 
-public class IHM_Manager {
+public class IHMManager {
 
     private final temp_serialisation model;
-    private final Assembleur_pages view;
+    private final AssemblyPage view;
     private java.util.ArrayList<String> allEmployees;
     private java.util.ArrayList<String> workingEmployees;
     private StaffList allStaff; //pour les recherches sur les données des 'listeners'
 
 
     //constructeuur
-    public IHM_Manager() {
+    public IHMManager() {
         model = new temp_serialisation();
-        view = new Assembleur_pages();
+        view = new AssemblyPage();
 
         loadData();
         System.out.println("Working employees: " + workingEmployees);
@@ -392,6 +391,6 @@ public class IHM_Manager {
      * @param args
      */
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(IHM_Manager::new);
+        javax.swing.SwingUtilities.invokeLater(IHMManager::new);
     }
 }
