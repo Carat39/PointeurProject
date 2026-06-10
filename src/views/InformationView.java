@@ -3,26 +3,25 @@ import views.utils.Style;
 import javax.swing.*;
 import java.awt.*;
 /**
- * @author Romain
- * Permet de gerer l'interface d'information
- * lors du pointage si l'utilisateur
- * n'a pas pointe la veille
+ * Information view displayed when an employee checks in
+ * but did not clock in the previous day
+ * Shows a warning message with the employee's name
  */
 public class InformationView {
+    /*** main frame used to display things on it*/
     private static JFrame frame;
+    /** Button allowing the user to return to the main menu */
     private JButton buttonMenu;
-    /**
-     * fonction principale permettant
-     * d'appeler la methode buildant la page d'information
-     * @param employeeName
+    /**Constructs the InformationView and builds the interface
+     * @param employeeName  the name of the employee
      */
     public InformationView(String employeeName) {
         buildUI(employeeName);
     }
     /**
-     * Fonction initalisant tous les aspects
-     * graphiques
-     * @param employeeName
+     * Main method to build the
+     * graphical interface of the ConfirmView
+     * @param employeeName the full name of the employee who pointed
      */
     private void buildUI(String employeeName) {
         //Frame
@@ -31,11 +30,11 @@ public class InformationView {
         frame.setSize(500, 425);
         frame.setLocationRelativeTo(null);
 
-        //Panel principal
+        // main Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Style.pastelPeach);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        // Panel pour le haut
+        // top Panel
         JPanel topPanel = new JPanel();
         topPanel.setBackground(Style.pastelPeach);
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -51,7 +50,7 @@ public class InformationView {
         labelEmployee.setForeground(new Color(100, 80, 120));
         labelEmployee.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // on les rajoute dans le meme panel
+        // add in the same panel
         topPanel.add(labelError);
         topPanel.add(labelEmployee);
 
@@ -78,7 +77,7 @@ public class InformationView {
         buttonMenu.setBackground(Style.pastelPurple);
         buttonMenu.setFocusPainted(false);
 
-        // Tout ajouter au panel au bon endroit
+        // add in all in the same panel
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(topPanel);
         mainPanel.add(Box.createVerticalStrut(15));
@@ -95,7 +94,9 @@ public class InformationView {
         frame.setVisible(true);
         frame.setResizable(true);
     }
-    // Getter pour le controller
+    // Getter for the controller
+    /**@return the menu button*/
     public JButton getButtonMenu() { return buttonMenu; }
+    /** close the frame of Informationview*/
     public static void close() { frame.dispose(); }
 }

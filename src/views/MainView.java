@@ -7,11 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @autor Romain
- * Permet de gerer l'interface du menu principale
- * de la pointeuse.
+ * Main view of the pointing application.
+ * Builds and manages the mainView interface including
+ * text, button entry text etc
  */
 public class MainView {
+    //  The names of the attributes speak for themselves
+    /*** main frame used to display things on it*/
     private JFrame frame;
     private JLabel labelDate;
     private JLabel labelHour;
@@ -22,19 +24,18 @@ public class MainView {
     private JTextField textFieldPort;
     private JButton checkButtonIP;
     private JLabel LabelSuccess;
-    private JLabel labelError;
 
     /**
-     * Fonction principale permettant
-     * d'appeler la methode buildant la page
+     * Main method to build the
+     * graphical interface of the MainVIew
      */
     public MainView() {
         buildUI();
     }
 
     /**
-     *  Fonction initalisant tous les aspects
-     *  graphique
+     *  Method builds all the graphic aspect of the mainView
+     *  set up the mainFrame, display date, hour, the button to check in/out
      */
     private void buildUI() {
         // JFrame
@@ -43,19 +44,19 @@ public class MainView {
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
 
-        // Panneau principal
+        // Main panel
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Style.pastelPeach);
         panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 30));
 
-        // Top : titre
+        // Top : title
         JLabel titre = new JLabel("TimeChecker", SwingConstants.CENTER);
         titre.setFont(new Font("Serif", Font.BOLD, 22));
         titre.setForeground(new Color(100, 80, 120));
         titre.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(titre, BorderLayout.NORTH);
 
-        // Centre : date + heure + arrondi
+        // Center: date + hour + round hour
         JPanel centerPanel = new JPanel();
         centerPanel.setBackground(Style.pastelPeach);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
@@ -72,13 +73,13 @@ public class MainView {
         labelRounded.setForeground(new Color(130, 100, 160));
         labelRounded.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Label pour message de connexion reussie
+        // Label for successful connection message
         LabelSuccess = new JLabel("Connection successful");
         LabelSuccess.setFont(new Font("Serif", Font.BOLD, 15));
         LabelSuccess.setForeground(Style.pastelPeach);
         LabelSuccess.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // IP et port
+        // IP and port
         JPanel ipPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ipPanel.setBackground(Style.pastelPeach);
 
@@ -92,7 +93,7 @@ public class MainView {
         textFieldPort = new JTextField(7);
         textFieldPort.setFont(new Font("Serif", Font.PLAIN, 20));
 
-        // bouton checkIp
+        // ChecIp button
         checkButtonIP = new JButton("Connect/Refresh");
         checkButtonIP.setPreferredSize(new Dimension(230, 30));
         checkButtonIP.setFont(new Font("Serif", Font.BOLD, 20));
@@ -105,7 +106,7 @@ public class MainView {
         ipPanel.add(textFieldPort);
         ipPanel.add(checkButtonIP);
 
-        // rajout dans le panel
+        // add in the panel
         centerPanel.add(Box.createVerticalStrut(40));
         centerPanel.add(labelDate);
         centerPanel.add(Box.createVerticalStrut(15));
@@ -128,7 +129,7 @@ public class MainView {
         bottomPanel.add(comboEmployees);
 
         bottomPanel.add(Box.createHorizontalStrut(12));
-        // creation bouton check
+        // creation check button
         checkButton = new JButton("Check in/out");
         checkButton.setPreferredSize(new Dimension(250, 70));
         checkButton.setFont(new Font("Serif", Font.BOLD, 30));
@@ -144,18 +145,29 @@ public class MainView {
         frame.setResizable(true);
     }
 
-    // Getters pour le controller
+    // Getters for the controllers
+    /** @return the employee combo box */
     public static JComboBox<String> getComboEmployees() { return comboEmployees; }
+    /** @return the check in /out button*/
     public JButton getCheckButton() { return checkButton; }
+    /** @param date formatted date string to display */
     public void setDate(String date) { labelDate.setText(date); }
+    /** @param hour formatted time string to display */
     public void setHour(String hour) { labelHour.setText(hour); }
+    /** @param rounded formatted rounded time string to display */
     public void setRounded(String rounded) { labelRounded.setText(rounded); }
+    /** @return the raw text from the IP input field */
     public String getTextFieldIp(){return textFieldIp.getText();}
+    /** @return the raw text from the port input field */
     public String getTextFieldPort(){return textFieldPort.getText();}
-    public void close() {frame.dispose();}
+    /** @return the connect/refresh button */
     public JButton getCheckButtonIP(){return checkButtonIP;};
-    public JFrame getFrame(){return frame;}
 
+    /**
+     * Updates the connection status label based on the result of the connection
+     * to the IHM manager
+     * @param result true if the connexion is succeful false otherwise
+     */
     public void changeVisibilitySuccess(boolean result){
         if (result){
             LabelSuccess.setText("Connection successful");
@@ -167,15 +179,23 @@ public class MainView {
         }
     }
 
+    /**
+     * Load the data in the combobox, from
+     * @param staffList
+     */
     public static void loadComboox(StaffList staffList){
         for (Staff s : staffList.getStaffList()) {
             getComboEmployees().addItem(s.getname() + " " + s.getsurname());
         }
     }
+    /**
+     * Updated the data in the combox from
+     * @param staffList
+     */
     public static void updateCombobox(StaffList staffList){
-        // on detruit les anciens elements
+        // Remove the old elements
         getComboEmployees().removeAllItems();
-        // on affiche les nouveaux combobox
+        // Display the new combobox
         loadComboox(staffList);
     }
 }
