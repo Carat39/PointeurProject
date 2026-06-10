@@ -30,6 +30,9 @@ public class Page5 {
 
     private final JButton updateDataBtn;
 
+    /**
+     * Builder of the page
+     */
     public Page5() {
         panel = new JPanel(null);
         panel.setBackground(Variables.PASTEL_YELLOW);

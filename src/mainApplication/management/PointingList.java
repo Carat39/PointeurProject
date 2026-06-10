@@ -2,16 +2,20 @@ package mainApplication.management;
 
 import pointingApplication.Pointing;
 
-import java.awt.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import java.util.Iterator;
 import java.util.UUID;
 
-
+/**
+ * This class manages and eventually stores all employee time entries.
+ * It stores this information in an ArrayList attribute and allows you to retrieve, append,
+ * or serialize the data using its methods.
+ *
+ * @author Les Scribes de Broadway
+ */
 public class PointingList implements Serializable {
     private static final long serialVersionUID = 123456789L;
 
@@ -22,8 +26,23 @@ public class PointingList implements Serializable {
     //Constructors
 
     //Methods
+    /**
+     * Returns the value of the score list.
+     *
+     * @return theList.
+     */
     public ArrayList<Pointing> getthelist(){return thelist;}
 
+
+    /**
+     * Returns the two time entries made during the previous day as a parameter
+     * as an ArrayList of 2 elements (arrival time entry in first position
+     * and departure time entry in second position).
+     *
+     * @param The_date The date on which we wish to retrieve the scores.
+     *
+     * @return the_pointings.
+     */
     public ArrayList<Pointing> getElemList(LocalDate The_date){
         Pointing a_pointing = null;
         ArrayList<Pointing> the_pointings = new ArrayList<>();
@@ -43,24 +62,16 @@ public class PointingList implements Serializable {
         return the_pointings;
     }
 
-    public Pointing getElemList(UUID uui, LocalDate The_date){
-        Pointing the_pointing = null;
-        boolean find = false;
-        int indice = 0;
-        while(indice < thelist.size() && !find){
-            the_pointing = thelist.get(indice);
-            if (the_pointing.getDate() == The_date){
-                find = true;
-            }
-            else{
-                indice ++;
-            }
-        }
-        return the_pointing;
-    }
-
-    //A-t-il pointé cond times à la date donnée ?
-    public boolean pointingCondTimes(UUID l_id, LocalDate The_date, int cond){
+    /**
+     * Checks if the employee has clocked in as many times as specified by the `cond` parameter on the given date.
+     * Returns true if the number of clock-ins matches the condition, and false otherwise.
+     *
+     * @param The_date The date on which we want to check the scores.
+     * @param cond The number of times the employee would have had to clock in for the method to return true.
+     *
+     * @return true or false.
+     */
+    public boolean pointingCondTimes(LocalDate The_date, int cond){
         Pointing the_pointing = null;
         LocalTime Hourprec = LocalTime.MIN;
         boolean condPointing = true;
@@ -74,7 +85,7 @@ public class PointingList implements Serializable {
             if (the_pointing.getDate().equals(The_date)){
                 Hourprec = the_pointing.getHour();
                 comptage++;
-                // Il y a eu 2 pointage ou 1 pointage alors qu'on voulait observer qu'il n'y avait pas de pointage justement
+                // Il y a eu 2 pointages ou 1 pointage alors qu'on voulait observer qu'il n'y avait pas de pointage justement
                 if (comptage == 2 || cond == 0){
                     condPointing = false;
                 }
@@ -84,6 +95,12 @@ public class PointingList implements Serializable {
         return comptage == cond;
     }
 
+    /**
+     * Check if a pointing already exist in the list.
+     *
+     * @param the_pointing to verify existence.
+     * @return true if it is unique, false if not.
+     */
     public boolean uniquePointing(Pointing the_pointing){
         Pointing pointingInList = null;
         boolean unique = true;
@@ -105,27 +122,41 @@ public class PointingList implements Serializable {
         return unique;
     }
 
+    /**
+     * Adds a pointer (of type pointing) to the end of the list of points.
+     *
+     * @param pointing The date on which we want to check the scores.
+     */
     public void addElem(Pointing pointing){
-        // Tester exception on sait jamais
         if (uniquePointing(pointing)){
             thelist.add(pointing);
-            //I Have an idea
-            /*
-            * on appelle calcExtraTime
-            * qui test de calculer le extra time, si c'est nullptr, ne fait rien, sinon tente de calculer
-            * */
         }
         else{
             System.out.println("This pointing already exists.");
         }
     }
 
+    /**
+     * Does the same thing as the addElem method above but extract data from a file.
+     *
+     * @see PointingList#addElem(Pointing)
+     *
+     * @param filename Name of the file to read from.
+     * @throws Exception
+     */
     public void addElem(String filename) throws Exception{
         Pointing pointing = new Pointing();
         pointing = deserialisationm(filename);
         thelist.add(pointing);
     }
 
+    /**
+     * Serializes the data from the score data stored in the list as a stream file in ser format.
+     *
+     * @param filename Exact name of the file to generate (will be created in the src/ folder of the project).
+     *
+     * @exception Exception Triggered if the file cannot be created in the desired directory structure.
+     */
     public void serialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
@@ -139,6 +170,14 @@ public class PointingList implements Serializable {
         }
     }
 
+    /**
+     * Deserializes timekeeping data from a stream.
+     * This requires prior serialization and correctly naming the generated file (using a relative path).
+     *
+     * @param filename Name of the file to deserialize.
+     *
+     * @exception Exception Triggered if the file is not found in the given directory tree.
+     */
     public Pointing deserialisationm(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
@@ -154,6 +193,14 @@ public class PointingList implements Serializable {
         return les_donnees;
     }
 
+    /**
+     * Deserializes timekeeping data from a stream.
+     * This requires prior serialization and correctly naming the generated file (using a relative path).
+     *
+     * @param filename Name of the file to deserialize.
+     *
+     * @exception Exception Triggered if the file is not found in the given directory tree.
+     */
     //déserialise à partir d'un flux de données
     public static PointingList deserialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
@@ -170,20 +217,21 @@ public class PointingList implements Serializable {
         return les_donnees;
     }
 
+    /**
+     * Test method on the instantiation of the PointingList class.
+     */
     public void testArrayPointing(){
         PointingList TheList = new PointingList();
         for(int indice = 0; indice < 10; indice++){
             Pointing Thepoint1 = new Pointing();
             TheList.addElem(Thepoint1);
         }
-        UUID stock = thelist.getFirst().getUuidStaff(); ;
-        /*Pointing lemploye = TheList.getElemList(stock, LocalDate.now());
-        System.out.println(lemploye.getUuidStaff());
-        System.out.println(lemploye.getStartHour());
-        System.out.println(lemploye.getEndHour());
-        System.out.println(lemploye.getDate());
-        */
+        UUID stock = thelist.getFirst().getUuidStaff();
     }
+
+    /**
+     * Remove the last element on the pointing list.
+     */
     public void removeLast() {
         if (!thelist.isEmpty()) {
             thelist.remove(thelist.size() - 1);

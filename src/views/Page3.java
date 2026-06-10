@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 /**
  * VIEW – Page « Clocked in Now »
- * On utilise cette page pour afficher les employés qui sont
- * actuellement entrain de travailler. On sélectionnera l'employé
- * grâce au jcombobox "employeeList"
+ * We use this page to view the employees that
+ * are currently working. We will select said employee
+ * through jcombobox "employeeList", and this will allow
+ * us to see when he started working in comparison to his schedule
  */
 public class Page3 {
 

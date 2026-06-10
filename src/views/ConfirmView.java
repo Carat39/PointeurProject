@@ -10,24 +10,31 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
- * @author Romain
- * Permet de gerer l'interface de confirmation
- * lors du pointage
+ * Confirmation view displayed after a successful check in/out
+ * Shows the employee's name, the current date, and the rounded time
+ * of the pointing
  */
 public class ConfirmView {
+    /*** main frame used to display things on it*/
     private JFrame frame;
+    /** Button allowing the user to return to the main menu */
     private JButton buttonMenu;
 
-    /**
-     * Fonction principale permettant
-     * d'appeler la methode buildant la page de confirmation
+    /**Constructs the ConfirmView and builds the confirmation interface
+     * @param currentDate  the date of the pointing
+     * @param currentTime  the rounded time of the pointing
+     * @param employeeName the full name of the employee who pointed
      */
     public ConfirmView(LocalDate currentDate, LocalTime currentTime, String employeeName) {
         buildUI(currentDate, currentTime, employeeName);
     }
 
     /**
-     * Fonction initialisant tous les aspects graphiques
+     * Main method to build the
+     * graphical interface of the ConfirmView
+     * @param currentDate  the date of the pointing
+     * @param currentTime  the rounded time of the pointing
+     * @param employeeName the full name of the employee who pointed
      */
     private void buildUI(LocalDate currentDate, LocalTime currentTime, String employeeName) {
         // Frame
@@ -36,17 +43,17 @@ public class ConfirmView {
         frame.setSize(500, 400);
         frame.setLocationRelativeTo(null);
 
-        // Panel principal
+        // Main Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Style.pastelPeach);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        // Label "vous avez pointé"
+        // Label "You have clocked in"
         JLabel labelEnd = new JLabel("You have clocked in");
         labelEnd.setFont(new Font("Serif", Font.BOLD, 30));
         labelEnd.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Nom employé
+        // Name employee
         JLabel labelEmployee = new JLabel(employeeName);
         labelEmployee.setFont(new Font("Serif", Font.BOLD, 25));
         labelEmployee.setForeground(new Color(100, 80, 120));
@@ -57,14 +64,14 @@ public class ConfirmView {
         labelDate.setFont(new Font("Serif", Font.BOLD, 30));
         labelDate.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Heure
+        // Hour
         JLabel labelHour = new JLabel(
                 "at " + currentTime.format(DateTimeFormatter.ofPattern("HH:mm"))
         );
         labelHour.setFont(new Font("Serif", Font.BOLD, 30));
         labelHour.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Bouton retour
+        // Back button
         buttonMenu = new JButton("Back to menu");
         buttonMenu.setFont(new Font("Serif", Font.BOLD, 30));
         buttonMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -72,7 +79,7 @@ public class ConfirmView {
         buttonMenu.setBackground(Style.pastelPurple);
         buttonMenu.setFocusPainted(false);
 
-        // Ajout au panel
+        // Add in the panel
         mainPanel.add(Box.createVerticalStrut(20));
         mainPanel.add(labelEmployee);
         mainPanel.add(Box.createVerticalStrut(15));
@@ -89,7 +96,9 @@ public class ConfirmView {
         frame.setResizable(true);
     }
 
-    // Getter pour le controller
+    // Getter for the controller
+    /**@return the menu button*/
     public JButton getButtonMenu() { return buttonMenu; }
+    /** close the frame of ConfirmView*/
     public void close() { frame.dispose(); }
 }
