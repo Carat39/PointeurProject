@@ -35,6 +35,27 @@ public class PointingList implements Serializable {
      */
     public ArrayList<Pointing> getthelist(){return thelist;}
 
+    public ArrayList<Pointing> getElemList(LocalDate The_date){
+        Pointing a_pointing = null;
+        ArrayList<Pointing> the_pointings = new ArrayList<>();
+        boolean find = false;
+        int indice = 0;
+        while(indice < thelist.size() && !find){
+            a_pointing = thelist.get(indice);
+            if ((a_pointing.getDate()).equals(The_date)){
+                find = true;
+                the_pointings.add(a_pointing);
+                the_pointings.add(thelist.get(indice+1));
+            }
+            else{
+                indice ++;
+            }
+        }
+        return the_pointings;
+    }
+
+    public Pointing getElemList(UUID uui, LocalDate The_date){
+        Pointing the_pointing = null;
     /**
      * Returns the two time entries made during the previous day as a parameter
      * as an ArrayList of 2 elements (arrival time entry in first position
@@ -102,9 +123,35 @@ public class PointingList implements Serializable {
      *
      * @param pointing The date on which we want to check the scores.
      */
+    public boolean uniquePointing(Pointing the_pointing){
+        Pointing pointingInList = null;
+        boolean unique = true;
+        int cond = 0;
+        int indice = thelist.size()-1;
+        if (indice > 100){
+            //La liste est trop grande
+            cond = 100;
+        }
+        while(indice >= 0 && unique){
+            pointingInList = thelist.get(indice);
+            if ((the_pointing.getUuidStaff().equals(pointingInList.getUuidStaff()))
+                    && (the_pointing.getHour().equals(pointingInList.getHour()))
+                    && (the_pointing.getDate().equals(pointingInList.getDate()))){
+                unique = false;
+            }
+            indice --;
+        }
+        return unique;
+    }
+
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
-        thelist.add(pointing);
+        if (uniquePointing(pointing)){
+            thelist.add(pointing);
+        }
+        else{
+            System.out.println("This pointing already exists.");
+        }
     }
 
     public void addElem(String filename) throws Exception{
@@ -124,7 +171,7 @@ public class PointingList implements Serializable {
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         try(FileOutputStream fos = new FileOutputStream(arborescence+filename);
             ObjectOutputStream oos = new ObjectOutputStream(fos) // peut être ici le my_socket.getOutputStream()
@@ -142,6 +189,11 @@ public class PointingList implements Serializable {
      * @exception Exception Triggered if the file is not found in the given directory tree.
      */
     public Pointing deserialisationm(String filename) throws Exception{
+        String classPath = System.getProperty("java.class.path");
+        String arborescence = "src/";
+        if (classPath.equals(".")){
+            arborescence = "../";
+        }
         Pointing les_donnees = null;
         try(FileInputStream file = new FileInputStream(filename);
             ObjectInputStream in = new ObjectInputStream(file)
@@ -164,7 +216,7 @@ public class PointingList implements Serializable {
         String classPath = System.getProperty("java.class.path");
         String arborescence = "src/";
         if (classPath.equals(".")){
-            arborescence = "";
+            arborescence = "../";
         }
         PointingList les_donnees = null;
         try(FileInputStream file = new FileInputStream(arborescence+filename);
@@ -191,6 +243,11 @@ public class PointingList implements Serializable {
         System.out.println(lemploye.getEndHour());
         System.out.println(lemploye.getDate());
         */
+    }
+    public void removeLast() {
+        if (!thelist.isEmpty()) {
+            thelist.remove(thelist.size() - 1);
+        }
     }
 
 }

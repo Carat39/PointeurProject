@@ -1,8 +1,11 @@
 import mainApplication.management.*;
 import pointingApplication.Pointing;
 import Time.TimeManagement;
+import java.time.temporal.ChronoUnit;
 
 import java.awt.*;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 void main() throws Exception{
     //TimeManagement.roundtest();
@@ -37,57 +40,21 @@ void main() throws Exception{
     Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
     Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
     Arthur.addPointing(pointing1);
+    pointing2.setHour("20:00");
     Arthur.addPointing(pointing2);
 
 
     pointingList.addElem(pointing1);
     pointingList.addElem(pointing2);
-    pointingList.serialisation("pointingList.ser");
-    theStaffList.serialisationStaffList("staffList.ser");
+    System.out.println(pointing2.getHour());
 
-    //PointingList thePointingList = PointingList.deserialisation("pointingList.ser"); // Sera dans la version final de l'API de Romain!!!
-    /*
-     * Choses à faire:
-     * Je dois a tout pris acceder aux 2 API (surtout celle de Romain pour tester les envoient avec sérialisation et tout entre les applis)
-     * Ensuite, voir pour les doublons possible
-     *
-     * //theStaffList = StaffList.deserialisationStaffList("staffList.ser"); // Au début de l'API de Romain
-     * thePointingList.serialisation("pointingList.ser"); //Quand on quitte la pointeuse avec la croix
-     * */
+    LocalDate a = pointing1.getDate();
+    LocalDate b = LocalDate.now();
+    long days = ChronoUnit.DAYS.between(a,b);
+    System.out.println("Time"+days);
 
 
-    //PointingList thePointingList = new PointingList();
-    // Pointing.Jepointe("Blaquart","Romain",theStaffList,thePointingList,"192.168.1.19",1234);
 
-    /*Pointing.Jepointe("Blaquart","Romain",theStaffList);
-    try {
-        Pointing.Jepointe("Blaquart","Romain",theStaffList);
-    }
-    catch (Exception e){
-        System.out.println("no problem");
-    }
-    System.out.println("Romain a pointé " + Romain.getnbpointage() + " fois depuis qu'il travaille ici");
-    Pointing.Jepointe("Maigret","Nino",theStaffList);
-    Pointing.Jepointe("Sauger","Clément",theStaffList);
-
-    //Gerer les pairs de tableau dans pointingList
-    StaffList theStaffWorkingList = new StaffList();
-
-    //Petits tests pour Arthur
-    //Enregistre puis affiche les travailleurs qui n'ont pas pointé aujourd'hui
-    System.out.println("qui n'a pas embauché:");
-    theStaffWorkingList = theStaffList.saveworkersfilter(0);
-    theStaffWorkingList.showAllWorkers();
-
-    //Enregistre puis affiche les travailleurs qui sont en train de travailler
-    System.out.println("qui bosse encore:");
-    theStaffWorkingList = theStaffList.saveworkersfilter(1);
-    theStaffWorkingList.showAllWorkers();
-    //Enregistre puis affiche les travailleurs qui ont finit de travailler
-    System.out.println("qui a finit:");
-    theStaffWorkingList = theStaffList.saveworkersfilter(2);
-    theStaffWorkingList.showAllWorkers();
-    */
 
 
 }

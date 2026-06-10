@@ -1,5 +1,7 @@
 package views;
 
+import mainApplication.management.Staff;
+import mainApplication.management.StaffList;
 import views.utils.Style;
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class MainView {
     private JLabel labelDate;
     private JLabel labelHour;
     private JLabel labelRounded;
-    private JComboBox<String> comboEmployees;
+    private static JComboBox<String> comboEmployees;
     private JButton checkButton;
     private JTextField textFieldIp;
     private JTextField textFieldPort;
@@ -36,7 +38,7 @@ public class MainView {
      */
     private void buildUI() {
         // JFrame
-        frame = new JFrame("Pointeuse");
+        frame = new JFrame("TimeChecker");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
@@ -47,7 +49,7 @@ public class MainView {
         panel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 30));
 
         // Top : titre
-        JLabel titre = new JLabel("Pointeuse - Time Tracker", SwingConstants.CENTER);
+        JLabel titre = new JLabel("TimeChecker", SwingConstants.CENTER);
         titre.setFont(new Font("Serif", Font.BOLD, 22));
         titre.setForeground(new Color(100, 80, 120));
         titre.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -71,7 +73,7 @@ public class MainView {
         labelRounded.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Label pour message de connexion reussie
-        LabelSuccess = new JLabel("Connexion réussie");
+        LabelSuccess = new JLabel("Connection successful");
         LabelSuccess.setFont(new Font("Serif", Font.BOLD, 15));
         LabelSuccess.setForeground(Style.pastelPeach);
         LabelSuccess.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -91,7 +93,7 @@ public class MainView {
         textFieldPort.setFont(new Font("Serif", Font.PLAIN, 20));
 
         // bouton checkIp
-        checkButtonIP = new JButton("Connexion");
+        checkButtonIP = new JButton("Connect/Refresh");
         checkButtonIP.setPreferredSize(new Dimension(230, 30));
         checkButtonIP.setFont(new Font("Serif", Font.BOLD, 20));
         checkButtonIP.setBackground(Style.pastelPurple);
@@ -143,7 +145,7 @@ public class MainView {
     }
 
     // Getters pour le controller
-    public JComboBox<String> getComboEmployees() { return comboEmployees; }
+    public static JComboBox<String> getComboEmployees() { return comboEmployees; }
     public JButton getCheckButton() { return checkButton; }
     public void setDate(String date) { labelDate.setText(date); }
     public void setHour(String hour) { labelHour.setText(hour); }
@@ -152,5 +154,28 @@ public class MainView {
     public String getTextFieldPort(){return textFieldPort.getText();}
     public void close() {frame.dispose();}
     public JButton getCheckButtonIP(){return checkButtonIP;};
-    public void changeVisibilitySuccess(){LabelSuccess.setForeground(new Color(100, 80, 120));}
+    public JFrame getFrame(){return frame;}
+
+    public void changeVisibilitySuccess(boolean result){
+        if (result){
+            LabelSuccess.setText("Connection successful");
+            LabelSuccess.setForeground(new Color(100, 80, 120));
+        }
+        else{
+            LabelSuccess.setText("Connection failed");
+            LabelSuccess.setForeground(new Color(100, 80, 120));
+        }
+    }
+
+    public static void loadComboox(StaffList staffList){
+        for (Staff s : staffList.getStaffList()) {
+            getComboEmployees().addItem(s.getname() + " " + s.getsurname());
+        }
+    }
+    public static void updateCombobox(StaffList staffList){
+        // on detruit les anciens elements
+        getComboEmployees().removeAllItems();
+        // on affiche les nouveaux combobox
+        loadComboox(staffList);
+    }
 }
