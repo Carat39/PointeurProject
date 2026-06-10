@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * cet assembleur nous permet de les lier toutes
  * ensembles et de faciliter le travail du controller.
  */
-public class Assembleur_pages {
+public class AssemblyPage {
 
     private final JFrame frame;
     private final CardLayout cardLayout;
@@ -27,18 +27,21 @@ public class Assembleur_pages {
     private Page5 page5;
     private Page6 page6;
 
-    public Assembleur_pages() {
+    /**
+     * constructor
+     */
+    public AssemblyPage() {
         frame = new JFrame("Pointeuse Manager");
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
     }
 
     /**
-     * Assemble les pages.
+     * Assemble the pages
      *
-     * @param allEmployees liste de tous les employés
-     * @param workingEmployees liste des employés qui ont pointé 1 fois aujourd'hui
-     * @param years liste des années disponibles
+     * @param allEmployees List of all the employees
+     * @param workingEmployees Liste of all the employees who pointed once tody
+     * @param years list of the years we want to see
      */
     public void build(ArrayList<String> allEmployees, ArrayList<String> workingEmployees, ArrayList<String> years) {
 
@@ -47,8 +50,8 @@ public class Assembleur_pages {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         page1 = new Page1();
-        page2 = new Page2(allEmployees, years);      // tous les employés
-        page3 = new Page3(workingEmployees);         // seulement ceux qui bossent
+        page2 = new Page2(allEmployees, years);
+        page3 = new Page3(workingEmployees);
         page4 = new Page4(allEmployees);
         page5 = new Page5();
         page6 = new Page6();

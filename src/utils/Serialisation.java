@@ -4,20 +4,17 @@ import Time.TimeManagement;
 
 import java.awt.*;
 
+/**
+ * Main create fake data with staff members
+ */
 void main() throws Exception {
-    //TimeManagement.roundtest();
-    //Pointing.serialisationtest();
-    //PointingList.testArrayPointing();
-    //StaffList.testStaffList();
-    //Staff.testStaffPointing();
-
-    //Test Globale
-
-    LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(1), LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(2),
-            LocalTime.MIN.plusHours(9), LocalTime.MIN.plusHours(3), LocalTime.MIN.plusHours(10),
-            LocalTime.MIN.plusHours(4), LocalTime.MIN.plusHours(11), LocalTime.MIN.plusHours(5),
-            LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(6), LocalTime.MIN.plusHours(13),
-            LocalTime.MIN.plusHours(7), LocalTime.MIN.plusHours(14)};
+    LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
+            LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18),
+            LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(20),
+            LocalTime.MIN.plusHours(14), LocalTime.MIN.plusHours(22),
+            LocalTime.MIN.plusHours(6), LocalTime.MIN.plusHours(14),
+            LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
+            LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18)};
 
     WorkSchedule workSchedule1 = new WorkSchedule(tab_worSchedule1);
     Staff Romain = new Staff("Blaquart", "Romain", Departement.WORKERS, workSchedule1);
@@ -25,24 +22,27 @@ void main() throws Exception {
     Staff Clement = new Staff("Sauger", "Clement", Departement.COMMUNICATION, workSchedule1);
     Staff Nino = new Staff("Maigret", "Nino", Departement.MANAGEMENT, workSchedule1);
     Staff Michel = new Staff("Michel", "Jean", Departement.MANAGEMENT, workSchedule1);
-    Staff[] theStaff = {Romain, Arthur, Clement, Nino, Michel};
+    Staff Cou = new Staff("Cou", "Verture", Departement.ADMINISTRATION, workSchedule1);
+    Staff Salle = new Staff("Salle", "DeBain", Departement.ADMINISTRATION, workSchedule1);
+    Staff[] theStaff = {Romain, Arthur, Clement, Nino, Michel,Salle};
 
     StaffList theStaffList = new StaffList(theStaff);
 
     PointingList pointingList = new PointingList();
 
-    Pointing pointing1 = new Pointing(Arthur.getuuidStaff());
-    pointing1.setHour("18:00");
-    Pointing pointing2 = new Pointing(Arthur.getuuidStaff());
-    Pointing pointing3 = new Pointing(Nino.getuuidStaff());
-    Arthur.addPointing(pointing1);
-    Arthur.addPointing(pointing2);
-    Nino.addPointing(pointing3);
 
+    for (int index = 0; index < 735; index++){
+        for(Staff staff: theStaff){
+            Pointing pointingstart = new Pointing(staff.getuuidStaff(),tab_worSchedule1[index%14],LocalDate.now().minusDays(index));
+            Pointing pointingend = new Pointing(staff.getuuidStaff(),tab_worSchedule1[(index+1)%14],LocalDate.now().minusDays(index));
+            staff.addPointing(pointingstart);
+            staff.addPointing(pointingend);
+            pointingList.addElem(pointingstart);
+            pointingList.addElem(pointingend);
+        }
+    }
 
-    pointingList.addElem(pointing1);
-    pointingList.addElem(pointing2);
-    pointingList.addElem(pointing3);
+    //Serialisation
     pointingList.serialisation("pointingList.ser");
     theStaffList.serialisationStaffList("staffList.ser");
 

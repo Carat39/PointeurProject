@@ -2,11 +2,10 @@ package controller;
 
 import Time.TimeManagement;
 import mainApplication.management.WorkSchedule;
-import views.Assembleur_pages;
+import views.AssemblyPage;
 import utils.temp_serialisation;
 import mainApplication.management.Staff;
 import mainApplication.management.StaffList;
-import mainApplication.management.PointingList;
 import pointingApplication.Pointing;
 import views.utils.Variables;
 
@@ -22,19 +21,19 @@ import java.util.ArrayList;
  * and handles errors. (hopefully)
  */
 
-public class IHM_Manager {
+public class IHMManager {
 
     private final temp_serialisation model;
-    private final Assembleur_pages view;
+    private final AssemblyPage view;
     private java.util.ArrayList<String> allEmployees;
     private java.util.ArrayList<String> workingEmployees;
     private StaffList allStaff; //pour les recherches sur les données des 'listeners'
 
 
     //constructeuur
-    public IHM_Manager() {
+    public IHMManager() {
         model = new temp_serialisation();
-        view = new Assembleur_pages();
+        view = new AssemblyPage();
 
         loadData();
         System.out.println("Working employees: " + workingEmployees);
@@ -65,10 +64,10 @@ public class IHM_Manager {
     }
 
     /**This method updates the data in the JComboBox after
-    * we modified the employee list, or their pontings.
+     * we modified the employee list, or their pontings.
      * This allows us to be able to check on changes without havinig
      * to reroll the entire IHM application
-    * */
+     * */
     private void updateData(){
         loadData();
         Variables.updateComboBox(view.getPage2().getEmployeeList(), allEmployees);
@@ -282,12 +281,12 @@ public class IHM_Manager {
                 view.getPage5().getDeptCombo().getSelectedItem();
 
         LocalTime[] tab_worSchedule1 = {LocalTime.MIN.plusHours(6), LocalTime.MIN.plusHours(14),
-                                        LocalTime.MIN.plusHours(7), LocalTime.MIN.plusHours(15),
-                                        LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
-                                        LocalTime.MIN.plusHours(9), LocalTime.MIN.plusHours(17),
-                                        LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18),
-                                        LocalTime.MIN.plusHours(11), LocalTime.MIN.plusHours(19),
-                                        LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(20)};
+                LocalTime.MIN.plusHours(7), LocalTime.MIN.plusHours(15),
+                LocalTime.MIN.plusHours(8), LocalTime.MIN.plusHours(16),
+                LocalTime.MIN.plusHours(9), LocalTime.MIN.plusHours(17),
+                LocalTime.MIN.plusHours(10), LocalTime.MIN.plusHours(18),
+                LocalTime.MIN.plusHours(11), LocalTime.MIN.plusHours(19),
+                LocalTime.MIN.plusHours(12), LocalTime.MIN.plusHours(20)};
 
         WorkSchedule theworkschedule = null;
         try{
@@ -392,6 +391,6 @@ public class IHM_Manager {
      * @param args
      */
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(IHM_Manager::new);
+        javax.swing.SwingUtilities.invokeLater(IHMManager::new);
     }
 }
