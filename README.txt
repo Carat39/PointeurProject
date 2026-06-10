@@ -24,6 +24,6 @@ Clément:- Grande partie du back de Pointing.java
 	  selon l'objet reçu.
 Vous pouvez vous connectés entre 2 PC sur un même réseau UNIQUEMENT sur le port 1234.
 Nous avons configuré les chemins pour pouvoir le lancer depuis le terminal ou InteliJ Idea.
-Pour finir, le lien de la vidéo youtube est le suivant: 
+Pour finir, le lien de la vidéo youtube est le suivant: https://youtu.be/rppoIfpDRwc
 Cordialement,
 Les Scribes de Broadway
