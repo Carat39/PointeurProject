@@ -12,9 +12,9 @@ import java.util.Iterator;
 import java.util.UUID;
 
 /**
- * Cette classe permet de gérer et stocker, à terme, tous les pointages réalisés par les employés.
- * Elle stocke ces informations dans un attribut de type ArrayList et permet de récupérer, ajouter,
- * ou sérialiser les données à l'aide de ses méthodes.
+ * This class manages and eventually stores all employee time entries.
+ * It stores this information in an ArrayList attribute and allows you to retrieve, append,
+ * or serialize the data using its methods.
  *
  * @author Les Scribes de Broadway
  */
@@ -29,18 +29,18 @@ public class PointingList implements Serializable {
 
     //Methods
     /**
-     * Retourne la valeur de la liste de pointage.
+     * Returns the value of the score list.
      *
      * @return theList.
      */
     public ArrayList<Pointing> getthelist(){return thelist;}
 
     /**
-     * Retourne les deux pointages effectués dans la journée passée en paramètre
-     * sous forme d'une ArrayList de 2 élements (pointage d'arrivée en première position
-     * et pointage de départ en deuxième position).
+     * Returns the two time entries made during the previous day as a parameter
+     * as an ArrayList of 2 elements (arrival time entry in first position
+     * and departure time entry in second position).
      *
-     * @param The_date La date à laquelle on souhaite récupérer les pointages.
+     * @param The_date The date on which we wish to retrieve the scores.
      *
      * @return the_pointings.
      */
@@ -64,13 +64,13 @@ public class PointingList implements Serializable {
     }
 
     /**
-     * Vérifie si l'employé a pointé autant de fois qu'indiqué par le paramètre cond à la date donnée.
-     * Retourne vrai si le nombre de pointage(s) correspond à la condition, et faux sinon.
+     * Checks if the employee has clocked in as many times as specified by the `cond` parameter on the given date.
+     * Returns true if the number of clock-ins matches the condition, and false otherwise.
      *
-     * @param The_date La date à laquelle on souhaite vérifier les pointages.
-     * @param cond Le nombre de fois où l'employé aurait dû pointer pour que la méthode renvoie true.
+     * @param The_date The date on which we want to check the scores.
+     * @param cond The number of times the employee would have had to clock in for the method to return true.
      *
-     * @return true ou false.
+     * @return true or false.
      */
     //A-t-il pointé cond times à la date donnée ?
     public boolean pointingCondTimes(LocalDate The_date, int cond){
@@ -98,9 +98,9 @@ public class PointingList implements Serializable {
     }
 
     /**
-     * Ajoute un pointage (de type pointing) à la fin de la liste de pointages.
+     * Adds a pointer (of type pointing) to the end of the list of points.
      *
-     * @param pointing La date à laquelle on souhaite vérifier les pointages.
+     * @param pointing The date on which we want to check the scores.
      */
     public void addElem(Pointing pointing){
         // Tester exception on sait jamais
@@ -114,11 +114,11 @@ public class PointingList implements Serializable {
     }
 
     /**
-     * Sérialise les données des pointages stockés dans la liste sous forme d'un fichier de flux au format ser.
+     * Serializes the data from the score data stored in the list as a stream file in ser format.
      *
-     * @param filename Nom exact du fichier à générer (se créera dans le dossier src/ du projet).
+     * @param filename Exact name of the file to generate (will be created in the src/ folder of the project).
      *
-     * @exception Exception Déclenchée si le fichier ne peut être créé à l'arborescence souhaitée.
+     * @exception Exception Triggered if the file cannot be created in the desired directory structure.
      */
     public void serialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
@@ -134,13 +134,12 @@ public class PointingList implements Serializable {
     }
 
     /**
-     * Désérialise les données des pointages à partir d'un flux.
-     * Cela implique d'avoir réalisé une sérialisation au préalable et de donner le nom
-     * du fichier généré par cette action correctement (utilisation du chemin relatif).
+     * Deserializes timekeeping data from a stream.
+     * This requires prior serialization and correctly naming the generated file (using a relative path).
      *
-     * @param filename Nom du fichier à désérialiser.
+     * @param filename Name of the file to deserialize.
      *
-     * @exception Exception Déclenchée si le fichier n'est pas trouvable à l'arborescence donnée.
+     * @exception Exception Triggered if the file is not found in the given directory tree.
      */
     public Pointing deserialisationm(String filename) throws Exception{
         Pointing les_donnees = null;
@@ -152,6 +151,14 @@ public class PointingList implements Serializable {
         return les_donnees;
     }
 
+    /**
+     * Deserializes timekeeping data from a stream.
+     * This requires prior serialization and correctly naming the generated file (using a relative path).
+     *
+     * @param filename Name of the file to deserialize.
+     *
+     * @exception Exception Triggered if the file is not found in the given directory tree.
+     */
     //déserialise à partir d'un flux de données
     public static PointingList deserialisation(String filename) throws Exception{
         String classPath = System.getProperty("java.class.path");
@@ -169,7 +176,7 @@ public class PointingList implements Serializable {
     }
 
     /**
-     * Méthode de test sur l'instanciation de la classe PointingList.
+     * Test method on the instantiation of the PointingList class.
      */
     public void testArrayPointing(){
         PointingList TheList = new PointingList();

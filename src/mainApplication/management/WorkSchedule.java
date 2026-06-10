@@ -6,12 +6,11 @@ import java.time.LocalTime;
 import java.util.Arrays;
 
 /**
- * Cette classe permet de gérer l'emploi du temps d'un employé sur une semaine.
- * Il est considéré que chaque employé a une heure d'arrivée à l'entreprise et de départ
- * fixe et théorique. De plus, aucune pause n'est prévue dans cet emploi du temps.
- * Il est théoriquement possible qu'un employé travail 7j/7 pendant 20h chaque jour.
- * Cependant, aucun employé ne peut avoir une journée de travail étalée sur plusieurs jours
- * (commencer une journée le soir et terminer le lendemain matin par exemple).
+ * This class allows you to manage an employee's schedule over a week.
+ * It is assumed that each employee has a fixed and theoretical arrival and departure time at the company.
+ * Furthermore, no breaks are included in this schedule.
+ * It is theoretically possible for an employee to work 7 days a week for 20 hours each day.
+ * However, no employee can have a workday spread over several days (for example, starting one day in the evening and finishing the next morning).
  *
  * @author Les Scribes de Broadway
  */
@@ -22,18 +21,18 @@ public class WorkSchedule implements Serializable {
 
     //Constructors
     /**
-     * Ce constructeur produit un emploi du temps vide.
+     * This constructor produces an empty schedule.
      */
     public WorkSchedule(){
         schedule= new LocalTime[14];
     }
 
     /**
-     * Ce constructeur produit un emploi du temps avec le tableau d'horaires passé en paramètre.
+     * This constructor produces a timetable with the schedule table passed as a parameter.
      *
-     * @param timetable Le tableau d'horaires à transformer en emploi du temps.
+     * @param timetable The timetable chart to be transformed into a schedule.
      *
-     * @exception Exception Déclenchée si le tableau fournit possède plus de 14 données (impossibilité d'avoir plus de 7 jours en une semaine).
+     * @exception Exception Triggered if the provided table has more than 14 data points (it is impossible to have more than 7 days in a week).
      */
     public WorkSchedule(LocalTime[] timetable) throws Exception{
         schedule= new LocalTime[14];
@@ -51,12 +50,12 @@ public class WorkSchedule implements Serializable {
 
     //Methods
     /**
-     * Modifie l'emploi du temps créé par le constructeur avec le tableau passé en paramètre.
-     * (même fonctionnement que le constructeur de confort).
+     * Modifies the schedule created by the builder using the table passed as a parameter.
+     * (Same functionality as the comfort builder).
      *
      * @see WorkSchedule#WorkSchedule(LocalTime[])
      *
-     * @param timetable Le tableau d'horaires à transformer en emploi du temps.
+     * @param timetable The timetable chart to be transformed into a schedule.
      */
     public void setSchedule(LocalTime[] timetable) throws Exception{
         if (Arrays.stream(timetable).count()<14){
@@ -71,17 +70,17 @@ public class WorkSchedule implements Serializable {
     }
 
     /**
-     * Retourne l'emploi du temps de l'employé.
+     * Returns the employee's schedule.
      *
      * @return schedule.
      */
     public LocalTime[] getSchedule(){ return schedule; }
 
     /**
-     * Convertit le jour de type DayOfWeek en entier de 0 à 6
-     * (0 pour MONDAY, 6 pour SUNDAY).
+     * Converts the DayOfWeek type day to an integer from 0 to 6
+     * (0 for MONDAY, 6 for SUNDAY).
      *
-     * @param the_day Le jour à convertir.
+     * @param the_day The day to be converted.
      */
     //Convert the day of the week from 0 to 6
     public static int convertWeekDay(DayOfWeek the_day){
