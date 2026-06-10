@@ -68,21 +68,91 @@ public class Staff implements Serializable {
     }
 
     //Setters
+
+    /**
+     * @return the Id of the staff member.
+     */
     public UUID getuuidStaff(){return uuidStaff;}
+
+    /**
+     * @return the name of the staff member.
+     */
     public String getname(){return name;}
+
+    /**
+     * @return the last name of the staff member.
+     */
     public String getsurname(){return surname;}
+
+    /**
+     * @return the overtime of the staff member.
+     */
     public int getextratime(){return extratime;}
+
+    /**
+     * @return the department of the staff member.
+     */
     public Departement getdepartement(){return departement;}
+
+    /**
+     * @return the work schedule of the staff member.
+     */
     public WorkSchedule getworkschedule(){return workschedule;}
+
+    /**
+     * @return the list of pointings the staff member have done.
+     */
     public PointingList getPointingList(){return pointingList;}
 
     //Getters
+
+    /**
+     * Modifies the Id of the staff member.
+     *
+     * @param The_UUID
+     */
     public void setuuidStaff(UUID The_UUID){uuidStaff = The_UUID;}
+
+    /**
+     * Modifies the name of the staff member.
+     *
+     * @param The_Name
+     */
     public void setname(String The_Name){name = The_Name;}
+
+    /**
+     * Modifies the last name of the staff member.
+     *
+     * @param The_Surname
+     */
     public void setsurname(String The_Surname){surname = The_Surname;}
+
+    /**
+     * Modifies the overtime of the staff member.
+     *
+     * @param The_ExtraTime
+     */
     public void setextratime(int The_ExtraTime){extratime = The_ExtraTime;}
+
+    /**
+     * Modifies the department provenance of the staff member.
+     *
+     * @param The_Departement
+     */
     public void setdepartement(Departement The_Departement){departement = The_Departement;}
+
+    /**
+     * Modifies the work schedule of the staff member.
+     *
+     * @param The_WorkSchedule
+     */
     public void setworkschedule(WorkSchedule The_WorkSchedule){workschedule = The_WorkSchedule;}
+
+    /**
+     * Modifies the list of pointings of the staff member.
+     *
+     * @param The_PointingList
+     */
     public void setPointingList(PointingList The_PointingList){pointingList = The_PointingList;}
 
     /**

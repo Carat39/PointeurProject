@@ -35,27 +35,7 @@ public class PointingList implements Serializable {
      */
     public ArrayList<Pointing> getthelist(){return thelist;}
 
-    public ArrayList<Pointing> getElemList(LocalDate The_date){
-        Pointing a_pointing = null;
-        ArrayList<Pointing> the_pointings = new ArrayList<>();
-        boolean find = false;
-        int indice = 0;
-        while(indice < thelist.size() && !find){
-            a_pointing = thelist.get(indice);
-            if ((a_pointing.getDate()).equals(The_date)){
-                find = true;
-                the_pointings.add(a_pointing);
-                the_pointings.add(thelist.get(indice+1));
-            }
-            else{
-                indice ++;
-            }
-        }
-        return the_pointings;
-    }
 
-    public Pointing getElemList(UUID uui, LocalDate The_date){
-        Pointing the_pointing = null;
     /**
      * Returns the two time entries made during the previous day as a parameter
      * as an ArrayList of 2 elements (arrival time entry in first position
@@ -93,7 +73,6 @@ public class PointingList implements Serializable {
      *
      * @return true or false.
      */
-    //A-t-il pointé cond times à la date donnée ?
     public boolean pointingCondTimes(LocalDate The_date, int cond){
         Pointing the_pointing = null;
         LocalTime Hourprec = LocalTime.MIN;
@@ -119,9 +98,10 @@ public class PointingList implements Serializable {
     }
 
     /**
-     * Adds a pointer (of type pointing) to the end of the list of points.
+     * Check if a pointing already exist in the list.
      *
-     * @param pointing The date on which we want to check the scores.
+     * @param the_pointing to verify existence.
+     * @return true if it is unique, false if not.
      */
     public boolean uniquePointing(Pointing the_pointing){
         Pointing pointingInList = null;
@@ -144,8 +124,12 @@ public class PointingList implements Serializable {
         return unique;
     }
 
+    /**
+     * Adds a pointer (of type pointing) to the end of the list of points.
+     *
+     * @param pointing The date on which we want to check the scores.
+     */
     public void addElem(Pointing pointing){
-        // Tester exception on sait jamais
         if (uniquePointing(pointing)){
             thelist.add(pointing);
         }
@@ -154,6 +138,14 @@ public class PointingList implements Serializable {
         }
     }
 
+    /**
+     * Does the same thing as the addElem method above but extract data from a file.
+     *
+     * @see PointingList#addElem(Pointing)
+     *
+     * @param filename Name of the file to read from.
+     * @throws Exception
+     */
     public void addElem(String filename) throws Exception{
         Pointing pointing = new Pointing();
         pointing = deserialisationm(filename);
@@ -236,14 +228,12 @@ public class PointingList implements Serializable {
             Pointing Thepoint1 = new Pointing();
             TheList.addElem(Thepoint1);
         }
-        UUID stock = thelist.getFirst().getUuidStaff(); ;
-        /*Pointing lemploye = TheList.getElemList(stock, LocalDate.now());
-        System.out.println(lemploye.getUuidStaff());
-        System.out.println(lemploye.getStartHour());
-        System.out.println(lemploye.getEndHour());
-        System.out.println(lemploye.getDate());
-        */
+        UUID stock = thelist.getFirst().getUuidStaff();
     }
+
+    /**
+     * Remove the last element on the pointing list.
+     */
     public void removeLast() {
         if (!thelist.isEmpty()) {
             thelist.remove(thelist.size() - 1);

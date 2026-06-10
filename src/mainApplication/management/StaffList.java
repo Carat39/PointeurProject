@@ -38,12 +38,6 @@ public class StaffList implements Serializable {
         }
     }
 
-    public StaffList(ArrayList<Staff> otherStaffList) {
-        for (Staff s : otherStaffList) {
-            theStafflist.add(s);
-        }
-    }
-
     /**
      * Add a unique staff member to the staff list attribute.
      *
